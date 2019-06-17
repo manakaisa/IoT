@@ -1,0 +1,96 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "Type: Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: G1-W${work_id}\nInput: work_id, count\nOutput: fail_count"
+    },
+    "name": "Save G1-Worker-Fail",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 3,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 1103,
+          "layoutY": 152
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Timeseries",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 827,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change Origin",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "WORKER",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "WORKER",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 554,
+          "layoutY": 153
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Transform Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "// MetaData \nmetadata = {\n    targetDeviceName: 'G1-W' + msg.worker_id\n};\n\n// msg\nmsg = {\n    fail_count: msg.count\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 279,
+          "layoutY": 152
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbCheckMessageNode",
+        "name": "Check Input",
+        "debugMode": false,
+        "configuration": {
+          "messageNames": [
+            "worker_id",
+            "count"
+          ],
+          "metadataNames": [],
+          "checkAllKeys": true
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

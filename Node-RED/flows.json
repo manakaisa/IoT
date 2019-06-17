@@ -1,0 +1,2735 @@
+[
+    {
+        "id": "a9b927b3.834d18",
+        "type": "tab",
+        "label": "Modbus Gateway",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "62483486.da24ac",
+        "type": "tab",
+        "label": "Ping",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "f0df971c.4d54b8",
+        "type": "tab",
+        "label": "Modbus Gateway - Unit Test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7e1d8731.168108",
+        "type": "tab",
+        "label": "Ping Unit Test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d9b805d9.02c008",
+        "type": "tab",
+        "label": "Usecase - G1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "83934200.a308e",
+        "type": "tab",
+        "label": "Modbus Simulator",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b33d8180.c531b",
+        "type": "tab",
+        "label": "Test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e731cf17.14f9f",
+        "type": "subflow",
+        "name": "Test subflow context",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "859a7bd2.54b938"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 580,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "b77cf464.e72f58",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": []
+    },
+    {
+        "id": "aa73f9f9.4a1ce8",
+        "type": "subflow",
+        "name": "Test subflow context2",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "f8ea77df.053018"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 300,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "f8ea77df.053018",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": []
+    },
+    {
+        "id": "5f1ffc5e.8ba854",
+        "type": "subflow",
+        "name": "Modbus Gateway Subflow",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "398586ee.fedbda"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 780,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "5be4e221.551dbc",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": []
+    },
+    {
+        "id": "3ea40cca.9af3f4",
+        "type": "subflow",
+        "name": "Test subflow context3",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6ac5c706.291398"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 380,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "6ac5c706.291398",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": []
+    },
+    {
+        "id": "ad2491d8.6f9d",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost - Unit Test",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "6b4c93c8.59a22c",
+        "type": "modbus-client",
+        "z": "",
+        "name": "localhost",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyS0",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectTimeout": 2000
+    },
+    {
+        "id": "1e998288.5937dd",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost - gateway",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "a7f6088.a9b1bf8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "f6f75f38.3c415",
+        "type": "modbus-client",
+        "z": "",
+        "name": "localhost:5020",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "5020",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectTimeout": "2000"
+    },
+    {
+        "id": "1af2b6b9.48e7f9",
+        "type": "mqtt-broker",
+        "z": "d9b805d9.02c008",
+        "name": "localhost - G1-In",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "8a1a083a.a62238",
+        "type": "mqtt-broker",
+        "z": "d9b805d9.02c008",
+        "name": "localhost - G1--Success",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "a302f12e.5679d",
+        "type": "mqtt-broker",
+        "z": "d9b805d9.02c008",
+        "name": "localhost - G1-Fail",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "c0138232.74c19",
+        "type": "modbus-read",
+        "z": "a9b927b3.834d18",
+        "name": "Read Modbus",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "rate": "5000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "6b4c93c8.59a22c",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [],
+            [
+                "d099eda9.64c95"
+            ]
+        ]
+    },
+    {
+        "id": "273b3bb7.ab2cd4",
+        "type": "mqtt out",
+        "z": "a9b927b3.834d18",
+        "name": "Write to MQTT - ${device}",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "a7f6088.a9b1bf8",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "cbaf9d2.4d6c36",
+        "type": "modbus-read",
+        "z": "62483486.da24ac",
+        "name": "Ping Modbus",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "rate": "5000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "6b4c93c8.59a22c",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "e2032071.73c16"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f9deb1df.5276f",
+        "type": "mqtt out",
+        "z": "62483486.da24ac",
+        "name": "Write to MQTT - ${device}",
+        "topic": "v1/devices/me/attributes",
+        "qos": "",
+        "retain": "",
+        "broker": "a7f6088.a9b1bf8",
+        "x": 850,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "72802e8.b85bcd",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test subflow context",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "aa4d08d3.ce6378"
+            ]
+        ]
+    },
+    {
+        "id": "7496a5cf.d1644c",
+        "type": "debug",
+        "z": "b33d8180.c531b",
+        "name": "main",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 950,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "859a7bd2.54b938",
+        "type": "change",
+        "z": "e731cf17.14f9f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "foo",
+                "pt": "flow",
+                "to": "sub_bar",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 120,
+        "wires": [
+            [
+                "b77cf464.e72f58"
+            ]
+        ]
+    },
+    {
+        "id": "d4e4d4d.690f128",
+        "type": "subflow:e731cf17.14f9f",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "x": 560,
+        "y": 80,
+        "wires": [
+            [
+                "e7b4e22f.09cf8"
+            ]
+        ]
+    },
+    {
+        "id": "aa4d08d3.ce6378",
+        "type": "change",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "foo",
+                "pt": "flow",
+                "to": "bar",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 80,
+        "wires": [
+            [
+                "d4e4d4d.690f128"
+            ]
+        ]
+    },
+    {
+        "id": "e7b4e22f.09cf8",
+        "type": "change",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "foo",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 80,
+        "wires": [
+            [
+                "7496a5cf.d1644c"
+            ]
+        ]
+    },
+    {
+        "id": "9c539334.dfdbf",
+        "type": "debug",
+        "z": "e731cf17.14f9f",
+        "name": "subflow",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 620,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b77cf464.e72f58",
+        "type": "change",
+        "z": "e731cf17.14f9f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "foo",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 120,
+        "wires": [
+            [
+                "9c539334.dfdbf"
+            ]
+        ]
+    },
+    {
+        "id": "589dac3a.c370a4",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test loop",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "8a98a489.92e5b8"
+            ]
+        ]
+    },
+    {
+        "id": "8a98a489.92e5b8",
+        "type": "function",
+        "z": "b33d8180.c531b",
+        "name": "msgs",
+        "func": "var loop = flow.get('test_loop');\nif (loop) {\n    flow.set('test_loop', false);\n    return null;\n}\n\nmsg.payload = [2000, 3000];\n\nflow.set('test_loop', true);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "5bf079f5.10c448"
+            ]
+        ]
+    },
+    {
+        "id": "59be4115.e1872",
+        "type": "delay",
+        "z": "b33d8180.c531b",
+        "name": "delay",
+        "pauseType": "delayv",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 690,
+        "y": 360,
+        "wires": [
+            [
+                "4c73d334.154c1c",
+                "614d5ca0.6d19f4"
+            ]
+        ]
+    },
+    {
+        "id": "614d5ca0.6d19f4",
+        "type": "debug",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 830,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "5bf079f5.10c448",
+        "type": "split",
+        "z": "b33d8180.c531b",
+        "name": "split",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 410,
+        "y": 360,
+        "wires": [
+            [
+                "4c73d334.154c1c"
+            ]
+        ]
+    },
+    {
+        "id": "4c73d334.154c1c",
+        "type": "function",
+        "z": "b33d8180.c531b",
+        "name": "loop",
+        "func": "var loop = flow.get('test_loop');\nif(!loop) {\n    return null;\n}\n\nmsg.delay = msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 360,
+        "wires": [
+            [
+                "59be4115.e1872"
+            ]
+        ]
+    },
+    {
+        "id": "30f63923.b13fe6",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test interval",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "c5fba669.d82b08"
+            ]
+        ]
+    },
+    {
+        "id": "c5fba669.d82b08",
+        "type": "function",
+        "z": "b33d8180.c531b",
+        "name": "interval",
+        "func": "var interval = flow.get('interval');\n\nif(interval != null) {\n    clearInterval(interval);\n    flow.set('interval', null);\n    return null;\n}\n\ninterval = setInterval(function () {\n    node.send(msg);\n}, 1000)\nflow.set('interval', interval);\n\nreturn;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 440,
+        "wires": [
+            [
+                "d455e642.dbb188"
+            ]
+        ]
+    },
+    {
+        "id": "d455e642.dbb188",
+        "type": "debug",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 450,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7fb8e286.ddc0ac",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test subflow context2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 160,
+        "wires": [
+            [
+                "a0138386.94006"
+            ]
+        ]
+    },
+    {
+        "id": "f8ea77df.053018",
+        "type": "function",
+        "z": "aa73f9f9.4a1ce8",
+        "name": "Set flow",
+        "func": "var previous = flow.get('previous');\n\nmsg.payload = {\n    previous: previous,\n    current: msg.payload\n}\n\nflow.set('previous', msg.payload.current)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 180,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "204d0ec5.a96592",
+        "type": "subflow:aa73f9f9.4a1ce8",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "ffd0ca79.e5de98"
+            ]
+        ]
+    },
+    {
+        "id": "ffd0ca79.e5de98",
+        "type": "debug",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a0138386.94006",
+        "type": "function",
+        "z": "b33d8180.c531b",
+        "name": "msgs",
+        "func": "msg1 = { payload: 1 };\nmsg2 = { payload: 2 };\nmsg3 = { payload: 3 };\nmsg4 = { payload: 4 };\nmsg5 = { payload: 5 };\nreturn [[msg1, msg2, msg3, msg4, msg5]];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "204d0ec5.a96592"
+            ]
+        ]
+    },
+    {
+        "id": "d6dc5533.dcdd78",
+        "type": "comment",
+        "z": "b33d8180.c531b",
+        "name": "main context != subflow context",
+        "info": "",
+        "x": 1170,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "12f881ce.31436e",
+        "type": "comment",
+        "z": "b33d8180.c531b",
+        "name": "loop works, but msg id must be distinct",
+        "info": "",
+        "x": 1070,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "85c6c7c7.8209c8",
+        "type": "comment",
+        "z": "b33d8180.c531b",
+        "name": "interval works",
+        "info": "",
+        "x": 610,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b7e499b4.80fa38",
+        "type": "comment",
+        "z": "b33d8180.c531b",
+        "name": "subflow context on sequent msgs is the same",
+        "info": "",
+        "x": 990,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "1815c37d.e23c2d",
+        "type": "inject",
+        "z": "a9b927b3.834d18",
+        "name": "Init",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "60370914.abe3c8"
+            ]
+        ]
+    },
+    {
+        "id": "60370914.abe3c8",
+        "type": "change",
+        "z": "a9b927b3.834d18",
+        "name": "Set configuration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "device",
+                "pt": "flow",
+                "to": "${name}",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "fields",
+                "pt": "flow",
+                "to": "[{\"name\":\"name\",\"type\":\"BOOLEAN|INT|UINT|FLOAT|DOUBLE|STRING\",\"offset\":0,\"byteLength\":1}]",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "dropEmptyField",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "dropUnchangedField",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff38af93.1966e",
+        "type": "function",
+        "z": "a9b927b3.834d18",
+        "name": "Backup Resolve device name",
+        "func": "var device = flow.get('device');\nvar fields = flow.get('fields');\n\nif (device.search(/\\$\\{\\w+\\}/) === -1) {\n    return msg;\n}\n\nfields.forEach(function(field) {\n    device = device.replace('${' + field.name + '}', msg.payload[field.name]);\n});\n\nflow.set('device', device);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 190,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9281bc65.e6f3b",
+        "type": "modbus-read",
+        "z": "f0df971c.4d54b8",
+        "name": "Read Modbus",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "11",
+        "rate": "5000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "b86dda43.55c328"
+            ]
+        ]
+    },
+    {
+        "id": "ab670edb.5eeb9",
+        "type": "mqtt out",
+        "z": "f0df971c.4d54b8",
+        "name": "Write to MQTT - Unit Test",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "ad2491d8.6f9d",
+        "x": 750,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b33be6f9.8441c8",
+        "type": "inject",
+        "z": "f0df971c.4d54b8",
+        "name": "Init",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "3a8ac1db.b270be"
+            ]
+        ]
+    },
+    {
+        "id": "3a8ac1db.b270be",
+        "type": "change",
+        "z": "f0df971c.4d54b8",
+        "name": "Set configuration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "fields",
+                "pt": "flow",
+                "to": "[{\"name\":\"row_id\",\"type\":\"UINT\",\"offset\":0,\"byteLength\":2},{\"name\":\"name\",\"type\":\"STRING\",\"offset\":2,\"byteLength\":4},{\"name\":\"bool\",\"type\":\"BOOLEAN\",\"offset\":7},{\"name\":\"integer\",\"type\":\"INT\",\"offset\":8,\"byteLength\":2},{\"name\":\"float\",\"type\":\"FLOAT\",\"offset\":10},{\"name\":\"double\",\"type\":\"DOUBLE\",\"offset\":14},{\"name\":\"hex\",\"offset\":2,\"byteLength\":4}]",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "dropEmptyField",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "dropUnchangedField",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f77db69b.17d798",
+        "type": "debug",
+        "z": "f0df971c.4d54b8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 710,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9fe8859f.56a278",
+        "type": "function",
+        "z": "a9b927b3.834d18",
+        "name": "Backup Construct MQTT Gateway payload",
+        "func": "var device = flow.get('device');\nvar fields = flow.get('fields');\nvar payload = {};\n\npayload[device] = {};\nfields.forEach(function(field) {\n    payload[device][field.name] = msg.payload[field.name];\n});\n\nmsg = { payload: payload };\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 230,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c6662f0a.5ac07",
+        "type": "mqtt out",
+        "z": "a9b927b3.834d18",
+        "name": "Backup Write to MQTT Gateway",
+        "topic": "v1/gateway/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "1e998288.5937dd",
+        "x": 190,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "5a1dd786.5bf4e8",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test ping",
+        "topic": "",
+        "payload": "pong",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 520,
+        "wires": [
+            [
+                "760d8a9.22e4074",
+                "cc9ff523.f90968"
+            ]
+        ]
+    },
+    {
+        "id": "760d8a9.22e4074",
+        "type": "debug",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 630,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "cc9ff523.f90968",
+        "type": "trigger",
+        "z": "b33d8180.c531b",
+        "op1": "reset",
+        "op2": "true",
+        "op1type": "str",
+        "op2type": "bool",
+        "duration": "2",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 280,
+        "y": 560,
+        "wires": [
+            [
+                "360f11fc.aaa45e"
+            ]
+        ]
+    },
+    {
+        "id": "360f11fc.aaa45e",
+        "type": "trigger",
+        "z": "b33d8180.c531b",
+        "op1": "timeout",
+        "op2": "0",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "-2",
+        "extend": false,
+        "units": "s",
+        "reset": "reset",
+        "bytopic": "all",
+        "name": "",
+        "x": 460,
+        "y": 560,
+        "wires": [
+            [
+                "760d8a9.22e4074"
+            ]
+        ]
+    },
+    {
+        "id": "82411b5f.679988",
+        "type": "comment",
+        "z": "b33d8180.c531b",
+        "name": "ping works",
+        "info": "",
+        "x": 780,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "2818d420.ba9b3c",
+        "type": "trigger",
+        "z": "62483486.da24ac",
+        "op1": "reset",
+        "op2": "true",
+        "op1type": "str",
+        "op2type": "bool",
+        "duration": "5",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "f39834e.005dac8"
+            ]
+        ]
+    },
+    {
+        "id": "f39834e.005dac8",
+        "type": "trigger",
+        "z": "62483486.da24ac",
+        "op1": "{\"online\":false}",
+        "op2": "0",
+        "op1type": "json",
+        "op2type": "str",
+        "duration": "-5",
+        "extend": false,
+        "units": "s",
+        "reset": "reset",
+        "bytopic": "all",
+        "name": "Set offline",
+        "x": 640,
+        "y": 140,
+        "wires": [
+            [
+                "f9deb1df.5276f"
+            ]
+        ]
+    },
+    {
+        "id": "e2032071.73c16",
+        "type": "change",
+        "z": "62483486.da24ac",
+        "name": "Set online",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"online\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 80,
+        "wires": [
+            [
+                "f9deb1df.5276f",
+                "2818d420.ba9b3c"
+            ]
+        ]
+    },
+    {
+        "id": "67923ef4.2b072",
+        "type": "modbus-read",
+        "z": "7e1d8731.168108",
+        "name": "Ping Modbus",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "rate": "5000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "9382aa1.ce93258"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "ee4591d3.34679",
+        "type": "mqtt out",
+        "z": "7e1d8731.168108",
+        "name": "Write to MQTT - Unit Test",
+        "topic": "v1/devices/me/attributes",
+        "qos": "",
+        "retain": "",
+        "broker": "ad2491d8.6f9d",
+        "x": 870,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "64d67fda.9e51d",
+        "type": "debug",
+        "z": "7e1d8731.168108",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 830,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "cf35f791.78cf38",
+        "type": "trigger",
+        "z": "7e1d8731.168108",
+        "op1": "reset",
+        "op2": "true",
+        "op1type": "str",
+        "op2type": "bool",
+        "duration": "5",
+        "extend": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 500,
+        "y": 140,
+        "wires": [
+            [
+                "96661416.bc68b8"
+            ]
+        ]
+    },
+    {
+        "id": "96661416.bc68b8",
+        "type": "trigger",
+        "z": "7e1d8731.168108",
+        "op1": "{\"online\":false}",
+        "op2": "0",
+        "op1type": "json",
+        "op2type": "str",
+        "duration": "-5",
+        "extend": false,
+        "units": "s",
+        "reset": "reset",
+        "bytopic": "all",
+        "name": "Set offline",
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "64d67fda.9e51d",
+                "ee4591d3.34679"
+            ]
+        ]
+    },
+    {
+        "id": "9382aa1.ce93258",
+        "type": "change",
+        "z": "7e1d8731.168108",
+        "name": "Set online",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"online\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "ee4591d3.34679",
+                "cf35f791.78cf38",
+                "64d67fda.9e51d"
+            ]
+        ]
+    },
+    {
+        "id": "4a179246.ce5e6c",
+        "type": "modbus-server",
+        "z": "83934200.a308e",
+        "name": "",
+        "logEnabled": false,
+        "hostname": "0.0.0.0",
+        "serverPort": "5020",
+        "responseDelay": 100,
+        "delayUnit": "ms",
+        "coilsBufferSize": 10000,
+        "holdingBufferSize": "10000",
+        "inputBufferSize": 10000,
+        "discreteBufferSize": 10000,
+        "showErrors": false,
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "1db85f16.68b2b1",
+        "type": "modbus-write",
+        "z": "83934200.a308e",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "0",
+        "quantity": "11",
+        "server": "f6f75f38.3c415",
+        "x": 660,
+        "y": 280,
+        "wires": [
+            [
+                "b6ec0714.428b68"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6192d630.d0c5f8",
+        "type": "inject",
+        "z": "83934200.a308e",
+        "name": "Unit Test ",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "x": 140,
+        "y": 280,
+        "wires": [
+            [
+                "25636401.fdd86c"
+            ]
+        ]
+    },
+    {
+        "id": "824ea32f.7ffe1",
+        "type": "inject",
+        "z": "7e1d8731.168108",
+        "name": "Timeout",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "cf35f791.78cf38"
+            ]
+        ]
+    },
+    {
+        "id": "972d7e83.e91da",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write Data",
+        "func": "var startedDate = flow.get('startedDate');\nvar buf = Buffer.alloc(22);\nvar output = [];\n\n// row_id\nbuf.writeUInt16BE((Math.round((Date.now() - startedDate)/1000)), 0);\n// name\nbuf.write('demo', 2, 4, 'ascii');\n// bool\nbuf.writeInt16BE(1, 6);\n// integer\nbuf.writeInt16BE(-8888, 8);\n// float\nbuf.writeFloatBE(88.88, 10);\n// double\nbuf.writeDoubleBE(8888.8888, 14);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.payload = output;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 280,
+        "wires": [
+            [
+                "1db85f16.68b2b1"
+            ]
+        ]
+    },
+    {
+        "id": "b6ec0714.428b68",
+        "type": "debug",
+        "z": "83934200.a308e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 850,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "a4437b53.cf2758",
+        "type": "inject",
+        "z": "83934200.a308e",
+        "name": "Usecase - G1 In",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "cd8e3699.e20938"
+            ]
+        ]
+    },
+    {
+        "id": "2d32c37.f4ce93c",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write W1 In",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\ng1_row_id.row_id_in++;\nbuf.writeUInt16BE(g1_row_id.row_id_in, 0);\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('1\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\ng1_count.w1_in_count++;\nbuf.writeUInt16BE(g1_count.w1_in_count, 6);\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.worker_id = '1';\nmsg.payload = output;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 400,
+        "wires": [
+            [
+                "3ac6e249.f1489e",
+                "1ad7c6df.f7dc59"
+            ]
+        ]
+    },
+    {
+        "id": "31c63a18.2c3986",
+        "type": "inject",
+        "z": "83934200.a308e",
+        "name": "Init",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 130,
+        "y": 200,
+        "wires": [
+            [
+                "40d101ac.ff7bb"
+            ]
+        ]
+    },
+    {
+        "id": "40d101ac.ff7bb",
+        "type": "change",
+        "z": "83934200.a308e",
+        "name": "Set default",
+        "rules": [
+            {
+                "t": "set",
+                "p": "startedDate",
+                "pt": "flow",
+                "to": "",
+                "tot": "date"
+            },
+            {
+                "t": "set",
+                "p": "g1_count",
+                "pt": "flow",
+                "to": "{\"w1_in_count\":0,\"w1_success_count\":0,\"w1_fail_count\":0,\"w2_in_count\":0,\"w2_success_count\":0,\"w2_fail_count\":0,\"w3_in_count\":0,\"w3_success_count\":0,\"w3_fail_count\":0}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "g1_row_id",
+                "pt": "flow",
+                "to": "{\"row_id_in\":0,\"row_id_success\":0,\"row_id_fail\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "25636401.fdd86c",
+        "type": "trigger",
+        "z": "83934200.a308e",
+        "op1": "",
+        "op2": "0",
+        "op1type": "date",
+        "op2type": "str",
+        "duration": "-1000",
+        "extend": false,
+        "units": "ms",
+        "reset": "reset",
+        "bytopic": "all",
+        "name": "Interval",
+        "x": 300,
+        "y": 280,
+        "wires": [
+            [
+                "972d7e83.e91da"
+            ]
+        ]
+    },
+    {
+        "id": "e2023619.7ed218",
+        "type": "inject",
+        "z": "83934200.a308e",
+        "name": "Stop",
+        "topic": "",
+        "payload": "reset",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "25636401.fdd86c"
+            ]
+        ]
+    },
+    {
+        "id": "cd8e3699.e20938",
+        "type": "trigger",
+        "z": "83934200.a308e",
+        "op1": "",
+        "op2": "0",
+        "op1type": "date",
+        "op2type": "str",
+        "duration": "-60",
+        "extend": false,
+        "units": "s",
+        "reset": "reset",
+        "bytopic": "all",
+        "name": "Interval 1m",
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "2d32c37.f4ce93c"
+            ]
+        ]
+    },
+    {
+        "id": "e7aefdbb.d84b1",
+        "type": "debug",
+        "z": "83934200.a308e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1210,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "4390b9e3.e5e888",
+        "type": "inject",
+        "z": "83934200.a308e",
+        "name": "Stop",
+        "topic": "",
+        "payload": "reset",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "cd8e3699.e20938"
+            ]
+        ]
+    },
+    {
+        "id": "3ac6e249.f1489e",
+        "type": "delay",
+        "z": "83934200.a308e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 340,
+        "y": 460,
+        "wires": [
+            [
+                "54d0730c.32d21c"
+            ]
+        ]
+    },
+    {
+        "id": "54d0730c.32d21c",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write W2 In",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\ng1_row_id.row_id_in++;\nbuf.writeUInt16BE(g1_row_id.row_id_in, 0);\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('2\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\ng1_count.w2_in_count++;\nbuf.writeUInt16BE(g1_count.w2_in_count, 6);\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.worker_id = '2';\nmsg.payload = output;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 460,
+        "wires": [
+            [
+                "a71203b5.50b24",
+                "1ad7c6df.f7dc59"
+            ]
+        ]
+    },
+    {
+        "id": "a71203b5.50b24",
+        "type": "delay",
+        "z": "83934200.a308e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 340,
+        "y": 520,
+        "wires": [
+            [
+                "c8573aa5.769d98"
+            ]
+        ]
+    },
+    {
+        "id": "c8573aa5.769d98",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write W3 In",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\ng1_row_id.row_id_in++;\nbuf.writeUInt16BE(g1_row_id.row_id_in, 0);\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('3\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\ng1_count.w3_in_count++;\nbuf.writeUInt16BE(g1_count.w3_in_count, 6);\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.worker_id = '3';\nmsg.payload = output;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 520,
+        "wires": [
+            [
+                "1ad7c6df.f7dc59"
+            ]
+        ]
+    },
+    {
+        "id": "1ad7c6df.f7dc59",
+        "type": "modbus-write",
+        "z": "83934200.a308e",
+        "name": "Modbus In",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "1000",
+        "quantity": "4",
+        "server": "f6f75f38.3c415",
+        "x": 1010,
+        "y": 400,
+        "wires": [
+            [
+                "e7aefdbb.d84b1",
+                "3911d4ec.ebd2ec"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3911d4ec.ebd2ec",
+        "type": "delay",
+        "z": "83934200.a308e",
+        "name": "delay random",
+        "pauseType": "random",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "45",
+        "randomLast": "60",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "a7adb5b1.8c3df8"
+            ]
+        ]
+    },
+    {
+        "id": "a7adb5b1.8c3df8",
+        "type": "switch",
+        "z": "83934200.a308e",
+        "name": "",
+        "property": "worker_id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 570,
+        "y": 680,
+        "wires": [
+            [
+                "c55d1d23.e5c86"
+            ],
+            [
+                "af928824.fbb548"
+            ],
+            [
+                "e1723087.bd68d"
+            ]
+        ]
+    },
+    {
+        "id": "c55d1d23.e5c86",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write W1 Out",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.25 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('1\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w1_success_count++;\n    buf.writeUInt16BE(g1_count.w1_success_count, 6);\n} else {\n    g1_count.w1_fail_count++;\n    buf.writeUInt16BE(g1_count.w1_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '1',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 760,
+        "y": 640,
+        "wires": [
+            [
+                "67d919af.fa4448"
+            ],
+            [
+                "1eb259e2.d0eb56"
+            ]
+        ]
+    },
+    {
+        "id": "af928824.fbb548",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write W2 Out",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.25 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('2\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w2_success_count++;\n    buf.writeUInt16BE(g1_count.w2_success_count, 6);\n} else {\n    g1_count.w2_fail_count++;\n    buf.writeUInt16BE(g1_count.w2_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '2',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 760,
+        "y": 680,
+        "wires": [
+            [
+                "67d919af.fa4448"
+            ],
+            [
+                "1eb259e2.d0eb56"
+            ]
+        ]
+    },
+    {
+        "id": "e1723087.bd68d",
+        "type": "function",
+        "z": "83934200.a308e",
+        "name": "Write W3 Out",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.25 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('3\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w3_success_count++;\n    buf.writeUInt16BE(g1_count.w3_success_count, 6);\n} else {\n    g1_count.w3_fail_count++;\n    buf.writeUInt16BE(g1_count.w3_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '3',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 760,
+        "y": 720,
+        "wires": [
+            [
+                "67d919af.fa4448"
+            ],
+            [
+                "1eb259e2.d0eb56"
+            ]
+        ]
+    },
+    {
+        "id": "67d919af.fa4448",
+        "type": "modbus-write",
+        "z": "83934200.a308e",
+        "name": "Modbus Success",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "2000",
+        "quantity": "4",
+        "server": "f6f75f38.3c415",
+        "x": 1030,
+        "y": 640,
+        "wires": [
+            [
+                "e7aefdbb.d84b1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1eb259e2.d0eb56",
+        "type": "modbus-write",
+        "z": "83934200.a308e",
+        "name": "Modbus Fail",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "MHoldingRegisters",
+        "adr": "3000",
+        "quantity": "4",
+        "server": "f6f75f38.3c415",
+        "x": 1010,
+        "y": 720,
+        "wires": [
+            [
+                "e7aefdbb.d84b1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "fdfa1754.4e4a38",
+        "type": "inject",
+        "z": "62483486.da24ac",
+        "name": "Timeout",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "2818d420.ba9b3c"
+            ]
+        ]
+    },
+    {
+        "id": "74295b42.bea204",
+        "type": "modbus-read",
+        "z": "d9b805d9.02c008",
+        "name": "Read Modbus G1-In",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "1000",
+        "quantity": "4",
+        "rate": "1000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "a67bc462.9020f8"
+            ]
+        ]
+    },
+    {
+        "id": "1b2e5f45.95dec1",
+        "type": "mqtt out",
+        "z": "d9b805d9.02c008",
+        "name": "Write to MQTT - G1-In",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "1af2b6b9.48e7f9",
+        "x": 780,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "38ecd3de.01869c",
+        "type": "inject",
+        "z": "d9b805d9.02c008",
+        "name": "Init",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "ee36e59b.fabae8"
+            ]
+        ]
+    },
+    {
+        "id": "ee36e59b.fabae8",
+        "type": "change",
+        "z": "d9b805d9.02c008",
+        "name": "Set configuration",
+        "rules": [
+            {
+                "t": "set",
+                "p": "fields",
+                "pt": "flow",
+                "to": "[{\"name\":\"row_id\",\"type\":\"UINT\",\"offset\":0,\"byteLength\":2},{\"name\":\"worker_id\",\"type\":\"STRING\",\"offset\":2,\"byteLength\":4},{\"name\":\"count\",\"type\":\"UINT\",\"offset\":6,\"byteLength\":2}]",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "dropEmptyField",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "dropUnchangedField",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3d244ea.6c61a8",
+        "type": "debug",
+        "z": "d9b805d9.02c008",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 750,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "7e778ebf.04cc",
+        "type": "modbus-read",
+        "z": "d9b805d9.02c008",
+        "name": "Read Modbus - G1-Success",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "2000",
+        "quantity": "4",
+        "rate": "1000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [],
+            [
+                "39d9d6a0.70140a"
+            ]
+        ]
+    },
+    {
+        "id": "18b418c9.5d72c7",
+        "type": "mqtt out",
+        "z": "d9b805d9.02c008",
+        "name": "Write to MQTT - G1-Success",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "8a1a083a.a62238",
+        "x": 860,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "a5e89f7f.a27b",
+        "type": "debug",
+        "z": "d9b805d9.02c008",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 810,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "2a99590e.365c06",
+        "type": "modbus-read",
+        "z": "d9b805d9.02c008",
+        "name": "Read Modbus - G1-Fail",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "3000",
+        "quantity": "4",
+        "rate": "1000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 200,
+        "y": 420,
+        "wires": [
+            [],
+            [
+                "77edd7d1.272808"
+            ]
+        ]
+    },
+    {
+        "id": "fb086111.7de24",
+        "type": "mqtt out",
+        "z": "d9b805d9.02c008",
+        "name": "Write to MQTT - G1-Fail",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "a302f12e.5679d",
+        "x": 810,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "780323b4.d4caec",
+        "type": "debug",
+        "z": "d9b805d9.02c008",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 770,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "99d295a1.95ebc8",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test subflow context3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "bcd7c90c.7c2a28"
+            ]
+        ]
+    },
+    {
+        "id": "9e3e45da.de5548",
+        "type": "debug",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 590,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "63fb21e3.5f72e",
+        "type": "comment",
+        "z": "b33d8180.c531b",
+        "name": "context in each subflow is not the same",
+        "info": "",
+        "x": 830,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "398586ee.fedbda",
+        "type": "function",
+        "z": "5f1ffc5e.8ba854",
+        "name": "Translate data",
+        "func": "var fields = msg.metadata.fields;\nvar buffer = msg.payload.buffer;\nvar output = {};\n\nfields.forEach(function(field) {\n    if(field.type === 'BOOLEAN') {\n        output[field.name] = Boolean(buffer.readInt8(field.offset));\n    } else if (field.type === 'INT') {\n        output[field.name] = buffer.readIntBE(field.offset, field.byteLength);\n    } else if (field.type === 'UINT') {\n        output[field.name] = buffer.readUIntBE(field.offset, field.byteLength);\n    } else if (field.type === 'FLOAT') {\n       output[field.name] = buffer.readFloatBE(field.offset);\n    } else if (field.type === 'DOUBLE') {\n        output[field.name] = buffer.readDoubleBE(field.offset);\n    } else if (field.type === 'STRING') {\n        output[field.name] = buffer.toString('ascii', field.offset, field.offset + field.byteLength).replace(/\\0/g, '');\n    } else {\n        output[field.name] = buffer.toString('hex', field.offset, field.offset + field.byteLength);\n    }\n});\n\nmsg.payload = output;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 60,
+        "wires": [
+            [
+                "7239c059.fc6f6"
+            ]
+        ]
+    },
+    {
+        "id": "7239c059.fc6f6",
+        "type": "function",
+        "z": "5f1ffc5e.8ba854",
+        "name": "Drop empty",
+        "func": "var dropEmptyField = msg.metadata.dropEmptyField;\n\nif (dropEmptyField) {\n    if(typeof msg.payload[dropEmptyField] === 'string' && msg.payload[dropEmptyField] === '') {\n        return null;\n    } \n    if (typeof msg.payload[dropEmptyField] === 'number' && msg.payload[dropEmptyField] === 0) {\n        return null;\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 60,
+        "wires": [
+            [
+                "5be4e221.551dbc"
+            ]
+        ]
+    },
+    {
+        "id": "5be4e221.551dbc",
+        "type": "function",
+        "z": "5f1ffc5e.8ba854",
+        "name": "Drop unchanged",
+        "func": "var previous_value = flow.get('previous_value', 'file');\nvar dropUnchangedField = msg.metadata.dropUnchangedField;\n\nif (dropUnchangedField) {\n    if(msg.payload[dropUnchangedField] === previous_value) {\n        return null;\n    }\n    \n    flow.set('previous_value', msg.payload[dropUnchangedField], 'file');\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "808e1755.dd72c8",
+        "type": "subflow:5f1ffc5e.8ba854",
+        "z": "a9b927b3.834d18",
+        "name": "Sub Process",
+        "env": [],
+        "x": 510,
+        "y": 160,
+        "wires": [
+            [
+                "273b3bb7.ab2cd4"
+            ]
+        ]
+    },
+    {
+        "id": "364da080.e5aca",
+        "type": "subflow:5f1ffc5e.8ba854",
+        "z": "f0df971c.4d54b8",
+        "name": "Sub Process",
+        "env": [],
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "ab670edb.5eeb9",
+                "f77db69b.17d798"
+            ]
+        ]
+    },
+    {
+        "id": "d099eda9.64c95",
+        "type": "change",
+        "z": "a9b927b3.834d18",
+        "name": "Set metadata",
+        "rules": [
+            {
+                "t": "set",
+                "p": "metadata.fields",
+                "pt": "msg",
+                "to": "fields",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropEmptyField",
+                "pt": "msg",
+                "to": "dropEmptyField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropUnchangedField",
+                "pt": "msg",
+                "to": "dropUnchangedField",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 160,
+        "wires": [
+            [
+                "808e1755.dd72c8"
+            ]
+        ]
+    },
+    {
+        "id": "7a5addaf.b87054",
+        "type": "subflow:5f1ffc5e.8ba854",
+        "z": "d9b805d9.02c008",
+        "name": "Sub Process",
+        "env": [],
+        "x": 570,
+        "y": 180,
+        "wires": [
+            [
+                "1b2e5f45.95dec1",
+                "a3d244ea.6c61a8"
+            ]
+        ]
+    },
+    {
+        "id": "227d9770.db3c68",
+        "type": "subflow:5f1ffc5e.8ba854",
+        "z": "d9b805d9.02c008",
+        "name": "Sub Process",
+        "env": [],
+        "x": 630,
+        "y": 300,
+        "wires": [
+            [
+                "18b418c9.5d72c7",
+                "a5e89f7f.a27b"
+            ]
+        ]
+    },
+    {
+        "id": "e0e41eaf.aa4f",
+        "type": "subflow:5f1ffc5e.8ba854",
+        "z": "d9b805d9.02c008",
+        "name": "Sub Process",
+        "env": [],
+        "x": 590,
+        "y": 420,
+        "wires": [
+            [
+                "fb086111.7de24",
+                "780323b4.d4caec"
+            ]
+        ]
+    },
+    {
+        "id": "1ef5654a.060b9b",
+        "type": "change",
+        "z": "3ea40cca.9af3f4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "row_id",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e0817abb.d5a558",
+        "type": "inject",
+        "z": "3ea40cca.9af3f4",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "1ef5654a.060b9b"
+            ]
+        ]
+    },
+    {
+        "id": "6ac5c706.291398",
+        "type": "change",
+        "z": "3ea40cca.9af3f4",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "row_id",
+                "pt": "msg",
+                "to": "row_id",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "row_id",
+                "pt": "msg",
+                "to": "row_id+1",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "row_id",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bcd7c90c.7c2a28",
+        "type": "subflow:3ea40cca.9af3f4",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "9e3e45da.de5548"
+            ]
+        ]
+    },
+    {
+        "id": "823cc80d.c7e648",
+        "type": "inject",
+        "z": "b33d8180.c531b",
+        "name": "Test subflow context3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "5264e5c4.e76bdc"
+            ]
+        ]
+    },
+    {
+        "id": "5264e5c4.e76bdc",
+        "type": "subflow:3ea40cca.9af3f4",
+        "z": "b33d8180.c531b",
+        "name": "",
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "9e3e45da.de5548"
+            ]
+        ]
+    },
+    {
+        "id": "b86dda43.55c328",
+        "type": "change",
+        "z": "f0df971c.4d54b8",
+        "name": "Set metadata",
+        "rules": [
+            {
+                "t": "set",
+                "p": "metadata.fields",
+                "pt": "msg",
+                "to": "fields",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropEmptyField",
+                "pt": "msg",
+                "to": "dropEmptyField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropUnchangedField",
+                "pt": "msg",
+                "to": "dropUnchangedField",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "364da080.e5aca"
+            ]
+        ]
+    },
+    {
+        "id": "a67bc462.9020f8",
+        "type": "change",
+        "z": "d9b805d9.02c008",
+        "name": "Set metadata",
+        "rules": [
+            {
+                "t": "set",
+                "p": "metadata.fields",
+                "pt": "msg",
+                "to": "fields",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropEmptyField",
+                "pt": "msg",
+                "to": "dropEmptyField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropUnchangedField",
+                "pt": "msg",
+                "to": "dropUnchangedField",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "7a5addaf.b87054"
+            ]
+        ]
+    },
+    {
+        "id": "39d9d6a0.70140a",
+        "type": "change",
+        "z": "d9b805d9.02c008",
+        "name": "Set metadata",
+        "rules": [
+            {
+                "t": "set",
+                "p": "metadata.fields",
+                "pt": "msg",
+                "to": "fields",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropEmptyField",
+                "pt": "msg",
+                "to": "dropEmptyField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropUnchangedField",
+                "pt": "msg",
+                "to": "dropUnchangedField",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 300,
+        "wires": [
+            [
+                "227d9770.db3c68"
+            ]
+        ]
+    },
+    {
+        "id": "77edd7d1.272808",
+        "type": "change",
+        "z": "d9b805d9.02c008",
+        "name": "Set metadata",
+        "rules": [
+            {
+                "t": "set",
+                "p": "metadata.fields",
+                "pt": "msg",
+                "to": "fields",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropEmptyField",
+                "pt": "msg",
+                "to": "dropEmptyField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.dropUnchangedField",
+                "pt": "msg",
+                "to": "dropUnchangedField",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 420,
+        "wires": [
+            [
+                "e0e41eaf.aa4f"
+            ]
+        ]
+    }
+]

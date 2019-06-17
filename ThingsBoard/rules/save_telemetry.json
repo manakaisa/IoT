@@ -1,0 +1,140 @@
+{
+  "ruleChain": {
+    "additionalInfo": null,
+    "name": "Save Telemetry",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 1,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 57,
+          "layoutY": 450
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Post Rules",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var strPostRules = metadata.ss_postRules;\n\nif(!strPostRules) {\n    return true;\n}\n\nreturn strPostRules.replace(' ', '').split(',');"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 276,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Configuration",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "requiredFields",
+            "postRules"
+          ],
+          "latestTsKeyNames": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 576,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Required Fields",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var strFields = metadata.ss_requiredFields;\n\nif(!strFields) {\n    return true;\n}\n\nfields = strFields.replace(' ', '').split(',');\n\nreturn fields.every(function (field) {\n    return msg[field] !== undefined;\n});"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 851,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 0,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "48056da0-8d31-11e9-8cc2-9ff4637358aa"
+        },
+        "additionalInfo": {
+          "layoutX": 576,
+          "layoutY": 450,
+          "ruleChainNodeId": "rule-chain-node-6"
+        },
+        "type": "Save_Asset_Unit_Test"
+      },
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 575,
+          "layoutY": 525,
+          "ruleChainNodeId": "rule-chain-node-7"
+        },
+        "type": "Save_G1-Worker-In"
+      },
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "8ac316c0-8dbc-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 574,
+          "layoutY": 601,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Save_G1-Worker-Success"
+      },
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "9de61360-8dbc-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 574,
+          "layoutY": 675,
+          "ruleChainNodeId": "rule-chain-node-9"
+        },
+        "type": "Save_G1-Worker-Fail"
+      }
+    ]
+  }
+}
