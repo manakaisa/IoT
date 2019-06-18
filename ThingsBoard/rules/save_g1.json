@@ -1,0 +1,135 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: G1\nRequired Fields: work_id, {in_count|success_count|fail_count}\nSave Fields: {all_in_count|all_success_count|all_fail_count}\nPost Rules: \nScope: Private"
+    },
+    "name": "Save G1",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 5,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 1651,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.transaction.TbSynchronizationEndNode",
+        "name": "Transaction End",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.transaction.TbSynchronizationBeginNode",
+        "name": "Transaction Start",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 827,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Originator Attributes",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "datasource"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Transform Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var datasource = JSON.parse(metadata.datasource || \"{}\");\nvar newMsg = {};\n\nif (!datasource[msg.worker_id]) {\n    datasource[msg.worker_id] = {\n        in_count: 0,\n        success_count: 0,\n        fail_count: 0\n    };\n}\n    \nif (metadata.sensorType === 'IN_COUNT') {\n    datasource[msg.worker_id].in_count = msg.in_count;\n    \n    newMsg.all_in_count = 0;\n    for (var worker_id in datasource) {\n        newMsg.all_in_count += datasource[worker_id].in_count;\n    }\n} else if (metadata.sensorType === 'SUCCESS_COUNT') {\n    datasource[msg.worker_id].success_count = msg.success_count;\n    \n    newMsg.all_success_count = 0;\n    for (var worker_id in datasource) {\n        newMsg.all_success_count += datasource[worker_id].success_count;\n    }\n} else if (metadata.sensorType === 'FAIL_COUNT') {\n    datasource[msg.worker_id].fail_count = msg.fail_count;\n    \n    newMsg.all_fail_count = 0;\n    for (var worker_id in datasource) {\n        newMsg.all_fail_count += datasource[worker_id].fail_count;\n    }\n}\n\nnewMsg.datasource = JSON.stringify(datasource);\n    \nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1374,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Timeseries",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 276,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change Originator",
+        "debugMode": false,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "WORKER",
+          "entityType": "ASSET",
+          "entityNamePattern": "G1",
+          "entityTypePattern": "GROUP",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 1,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

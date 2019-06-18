@@ -74,6 +74,11 @@
     "connections": [
       {
         "fromIndex": 1,
+        "toIndex": 4,
+        "type": "RPC Request to Device"
+      },
+      {
+        "fromIndex": 1,
         "toIndex": 3,
         "type": "Other"
       },
@@ -86,11 +91,6 @@
         "fromIndex": 1,
         "toIndex": 2,
         "type": "RPC Request from Device"
-      },
-      {
-        "fromIndex": 1,
-        "toIndex": 4,
-        "type": "RPC Request to Device"
       }
     ],
     "ruleChainConnections": [
@@ -103,9 +103,74 @@
         "additionalInfo": {
           "layoutX": 652,
           "layoutY": 150,
-          "ruleChainNodeId": "rule-chain-node-9"
+          "ruleChainNodeId": "rule-chain-node-7"
         },
         "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 650,
+          "layoutY": 552,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Entity Created"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 650,
+          "layoutY": 552,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Entity Updated"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 650,
+          "layoutY": 552,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Entity Deleted"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 650,
+          "layoutY": 552,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Entity Assigned"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 650,
+          "layoutY": 552,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Entity Unassigned"
       }
     ]
   }

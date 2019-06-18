@@ -1,0 +1,78 @@
+{
+  "ruleChain": {
+    "additionalInfo": null,
+    "name": "Split Messages",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 2,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 551,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Empty",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "return msg !== null;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 56,
+          "layoutY": 351
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Return to Originator",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "return [metadata.originatorRule];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Split Messages",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var msgs = JSON.parse(metadata.msgs);\n\nmsg = msgs.shift() || null;\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.split = \"true\";\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "b04f6770-90f2-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 549,
+          "layoutY": 351,
+          "ruleChainNodeId": "rule-chain-node-5"
+        },
+        "type": "Reset_G1-Worker"
+      }
+    ]
+  }
+}

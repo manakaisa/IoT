@@ -1,0 +1,163 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Reset G1-Worker",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 4,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 500,
+          "layoutY": 225
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Message",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "delete metadata.msgs;\ndelete metadata.split;\ndelete metadata.reset_workers;\ndelete metadata.originatorRule;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 501,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Create Metadata Relation",
+        "debugMode": true,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "Metadata",
+          "entityTypePattern": "META",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": false,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 777,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode",
+        "name": "Get Metadata Attributes",
+        "debugMode": true,
+        "configuration": {
+          "attrMapping": {
+            "workers": "reset_workers"
+          },
+          "relationsQuery": {
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "META",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          },
+          "telemetry": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1049,
+          "layoutY": 75
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Split Messages",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var workers = JSON.parse(metadata.reset_workers || '{}');\nvar msgs = [];\n\nfor (var worker_id in workers) {\n    msgs.push({ \n        worker_id: workers[worker_id].name.replace('G1-W', ''),\n        count: 0\n    });\n}\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.originatorRule = 'Reset_G1-Worker';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Check Split",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata.split === \"true\") {\n    return ['Split', 'Execute'];\n}\n\nreturn ['For'];"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 1,
+        "type": "For"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "Execute"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 776,
+          "layoutY": 224,
+          "ruleChainNodeId": "rule-chain-node-7"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "6728ba90-91a3-11e9-a444-f17d9b7c69b1"
+        },
+        "additionalInfo": {
+          "layoutX": 1274,
+          "layoutY": 151,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "6728ba90-91a3-11e9-a444-f17d9b7c69b1"
+        },
+        "additionalInfo": {
+          "layoutX": 1274,
+          "layoutY": 151,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "Split"
+      }
+    ]
+  }
+}

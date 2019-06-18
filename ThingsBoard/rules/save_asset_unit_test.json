@@ -1,7 +1,7 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "Type: Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: Unit Test\nInput: *\nOutput: *"
+      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: Unit Test\nInput: row_id, *\nOutput: *\nPost Rules:\nScope: Public"
     },
     "name": "Save Asset Unit Test",
     "firstRuleNodeId": null,
@@ -10,12 +10,48 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 3,
+    "firstNodeIndex": 1,
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 1100,
+          "layoutX": 552,
+          "layoutY": 225
+        },
+        "type": "org.thingsboard.rule.engine.action.TbLogNode",
+        "name": "Log",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return 'Incoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Reset",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (msg.reset === undefined) {\n    msg.reset = false;\n}\n\nreturn msg.reset;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1377,
           "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Transform Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1649,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
         "name": "Save Timeseries",
@@ -26,11 +62,11 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 824,
-          "layoutY": 149
+          "layoutX": 1100,
+          "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Change Origin",
+        "name": "Change Originator",
         "debugMode": false,
         "configuration": {
           "direction": "TO",
@@ -46,20 +82,20 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 551,
-          "layoutY": 151
+          "layoutX": 826,
+          "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Transform Message",
+        "name": "Set Metadata",
         "debugMode": false,
         "configuration": {
-          "jsScript": "// MetaData \nmetadata = {\n    targetDeviceName: 'Unit Test'\n}\n\n// Msg\nmsg = msg;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "metadata = {\n    targetDeviceName: 'Unit Test'\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 276,
-          "layoutY": 150
+          "layoutX": 552,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.filter.TbCheckMessageNode",
         "name": "Check Input",
@@ -76,17 +112,32 @@
     "connections": [
       {
         "fromIndex": 1,
+        "toIndex": 6,
+        "type": "False"
+      },
+      {
+        "fromIndex": 1,
         "toIndex": 0,
-        "type": "Success"
+        "type": "True"
       },
       {
         "fromIndex": 2,
-        "toIndex": 1,
+        "toIndex": 3,
         "type": "Success"
       },
       {
-        "fromIndex": 3,
+        "fromIndex": 4,
         "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 5,
         "type": "True"
       }
     ],

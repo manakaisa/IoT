@@ -24,7 +24,7 @@
         "id": "7e1d8731.168108",
         "type": "tab",
         "label": "Ping Unit Test",
-        "disabled": false,
+        "disabled": true,
         "info": ""
     },
     {
@@ -129,7 +129,7 @@
         ],
         "out": [
             {
-                "x": 780,
+                "x": 960,
                 "y": 60,
                 "wires": [
                     {
@@ -939,6 +939,13 @@
                 "pt": "flow",
                 "to": "",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "resetField",
+                "pt": "flow",
+                "to": "",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -1052,6 +1059,13 @@
             {
                 "t": "set",
                 "p": "dropUnchangedField",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "resetField",
                 "pt": "flow",
                 "to": "row_id",
                 "tot": "str"
@@ -1494,7 +1508,7 @@
         "type": "function",
         "z": "83934200.a308e",
         "name": "Write Data",
-        "func": "var startedDate = flow.get('startedDate');\nvar buf = Buffer.alloc(22);\nvar output = [];\n\n// row_id\nbuf.writeUInt16BE((Math.round((Date.now() - startedDate)/1000)), 0);\n// name\nbuf.write('demo', 2, 4, 'ascii');\n// bool\nbuf.writeInt16BE(1, 6);\n// integer\nbuf.writeInt16BE(-8888, 8);\n// float\nbuf.writeFloatBE(88.88, 10);\n// double\nbuf.writeDoubleBE(8888.8888, 14);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.payload = output;\n\nreturn msg;",
+        "func": "var buf = Buffer.alloc(22);\nvar output = [];\n\n// row_id\nvar row_id = flow.get('row_id');\nrow_id++;\nbuf.writeUInt16BE(row_id, 0);\nflow.set('row_id', row_id);\n// name\nbuf.write('demo', 2, 4, 'ascii');\n// bool\nbuf.writeInt16BE(1, 6);\n// integer\nbuf.writeInt16BE(-8888, 8);\n// float\nbuf.writeFloatBE(88.88, 10);\n// double\nbuf.writeDoubleBE(8888.8888, 14);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.payload = output;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 470,
@@ -1585,10 +1599,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "startedDate",
+                "p": "row_id",
                 "pt": "flow",
-                "to": "",
-                "tot": "date"
+                "to": "0",
+                "tot": "num"
             },
             {
                 "t": "set",
@@ -1885,7 +1899,7 @@
         "type": "function",
         "z": "83934200.a308e",
         "name": "Write W1 Out",
-        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.25 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('1\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w1_success_count++;\n    buf.writeUInt16BE(g1_count.w1_success_count, 6);\n} else {\n    g1_count.w1_fail_count++;\n    buf.writeUInt16BE(g1_count.w1_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '1',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.5 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('1\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w1_success_count++;\n    buf.writeUInt16BE(g1_count.w1_success_count, 6);\n} else {\n    g1_count.w1_fail_count++;\n    buf.writeUInt16BE(g1_count.w1_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '1',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
         "outputs": 2,
         "noerr": 0,
         "x": 760,
@@ -1904,7 +1918,7 @@
         "type": "function",
         "z": "83934200.a308e",
         "name": "Write W2 Out",
-        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.25 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('2\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w2_success_count++;\n    buf.writeUInt16BE(g1_count.w2_success_count, 6);\n} else {\n    g1_count.w2_fail_count++;\n    buf.writeUInt16BE(g1_count.w2_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '2',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.5 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('2\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w2_success_count++;\n    buf.writeUInt16BE(g1_count.w2_success_count, 6);\n} else {\n    g1_count.w2_fail_count++;\n    buf.writeUInt16BE(g1_count.w2_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '2',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
         "outputs": 2,
         "noerr": 0,
         "x": 760,
@@ -1923,7 +1937,7 @@
         "type": "function",
         "z": "83934200.a308e",
         "name": "Write W3 Out",
-        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.25 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('3\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w3_success_count++;\n    buf.writeUInt16BE(g1_count.w3_success_count, 6);\n} else {\n    g1_count.w3_fail_count++;\n    buf.writeUInt16BE(g1_count.w3_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '3',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
+        "func": "var buf = Buffer.alloc(8);\nvar output = [];\nvar isSuccess = 0.5 < Math.random();\n\n// row_id\nvar g1_row_id = flow.get('g1_row_id');\nif(isSuccess) {\n    g1_row_id.row_id_success++;\n    buf.writeUInt16BE(g1_row_id.row_id_success, 0);\n} else {\n    g1_row_id.row_id_fail++;\n    buf.writeUInt16BE(g1_row_id.row_id_fail, 0);\n}\nflow.set('g1_row_id', g1_row_id);\n// work_id\nbuf.write('3\\0\\0\\0', 2, 4, 'ascii');\n// count\nvar g1_count = flow.get('g1_count');\nif(isSuccess) {\n    g1_count.w3_success_count++;\n    buf.writeUInt16BE(g1_count.w3_success_count, 6);\n} else {\n    g1_count.w3_fail_count++;\n    buf.writeUInt16BE(g1_count.w3_fail_count, 6);\n}\nflow.set('g1_count', g1_count);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg = { \n    worker_id: '3',\n    payload: output,\n    isSuccess: isSuccess\n};\n\nif(isSuccess) {\n    return [msg, null];\n} else {\n    return [null, msg];\n}",
         "outputs": 2,
         "noerr": 0,
         "x": 760,
@@ -2085,6 +2099,13 @@
             {
                 "t": "set",
                 "p": "dropUnchangedField",
+                "pt": "flow",
+                "to": "row_id",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "resetField",
                 "pt": "flow",
                 "to": "row_id",
                 "tot": "str"
@@ -2289,7 +2310,7 @@
         "y": 60,
         "wires": [
             [
-                "7239c059.fc6f6"
+                "4efff6a3.9deee8"
             ]
         ]
     },
@@ -2298,10 +2319,10 @@
         "type": "function",
         "z": "5f1ffc5e.8ba854",
         "name": "Drop empty",
-        "func": "var dropEmptyField = msg.metadata.dropEmptyField;\n\nif (dropEmptyField) {\n    if(typeof msg.payload[dropEmptyField] === 'string' && msg.payload[dropEmptyField] === '') {\n        return null;\n    } \n    if (typeof msg.payload[dropEmptyField] === 'number' && msg.payload[dropEmptyField] === 0) {\n        return null;\n    }\n}\n\nreturn msg;",
+        "func": "var dropEmptyField = msg.metadata.dropEmptyField;\n\nif (dropEmptyField) {\n    if(typeof msg.payload[dropEmptyField] === 'string' && msg.payload[dropEmptyField] === '') {\n        return null;\n    } else if (typeof msg.payload[dropEmptyField] === 'number' && msg.payload[dropEmptyField] === 0) {\n        return null;\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 430,
+        "x": 610,
         "y": 60,
         "wires": [
             [
@@ -2317,7 +2338,7 @@
         "func": "var previous_value = flow.get('previous_value', 'file');\nvar dropUnchangedField = msg.metadata.dropUnchangedField;\n\nif (dropUnchangedField) {\n    if(msg.payload[dropUnchangedField] === previous_value) {\n        return null;\n    }\n    \n    flow.set('previous_value', msg.payload[dropUnchangedField], 'file');\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 630,
+        "x": 810,
         "y": 60,
         "wires": [
             []
@@ -2377,6 +2398,13 @@
                 "p": "metadata.dropUnchangedField",
                 "pt": "msg",
                 "to": "dropUnchangedField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.resetField",
+                "pt": "msg",
+                "to": "resetField",
                 "tot": "flow"
             }
         ],
@@ -2594,6 +2622,13 @@
                 "pt": "msg",
                 "to": "dropUnchangedField",
                 "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.resetField",
+                "pt": "msg",
+                "to": "resetField",
+                "tot": "flow"
             }
         ],
         "action": "",
@@ -2634,6 +2669,13 @@
                 "p": "metadata.dropUnchangedField",
                 "pt": "msg",
                 "to": "dropUnchangedField",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.resetField",
+                "pt": "msg",
+                "to": "resetField",
                 "tot": "flow"
             }
         ],
@@ -2676,6 +2718,13 @@
                 "pt": "msg",
                 "to": "dropUnchangedField",
                 "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.resetField",
+                "pt": "msg",
+                "to": "resetField",
+                "tot": "flow"
             }
         ],
         "action": "",
@@ -2717,6 +2766,13 @@
                 "pt": "msg",
                 "to": "dropUnchangedField",
                 "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "metadata.resetField",
+                "pt": "msg",
+                "to": "resetField",
+                "tot": "flow"
             }
         ],
         "action": "",
@@ -2729,6 +2785,22 @@
         "wires": [
             [
                 "e0e41eaf.aa4f"
+            ]
+        ]
+    },
+    {
+        "id": "4efff6a3.9deee8",
+        "type": "function",
+        "z": "5f1ffc5e.8ba854",
+        "name": "Check Reset",
+        "func": "var resetField = msg.metadata.resetField;\nvar isReset = false;\n\nif (resetField) {\n    if(typeof msg.payload[resetField] === 'string' && msg.payload[resetField] === '') {\n        isReset = true;\n    } else if (typeof msg.payload[resetField] === 'number' && msg.payload[resetField] === 0) {\n        isReset = true;\n    }\n}\n\nif(isReset) {\n    msg.metadata.dropUnchangedField = 'reset';\n    msg.payload = { reset: true };\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 60,
+        "wires": [
+            [
+                "7239c059.fc6f6"
             ]
         ]
     }

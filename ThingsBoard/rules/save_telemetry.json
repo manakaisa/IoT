@@ -8,18 +8,30 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 1,
+    "firstNodeIndex": 2,
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 57,
-          "layoutY": 450
+          "layoutX": 549,
+          "layoutY": 152
         },
-        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
-        "name": "Post Rules",
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var strPostRules = metadata.ss_postRules;\n\nif(!strPostRules) {\n    return true;\n}\n\nreturn strPostRules.replace(' ', '').split(',');"
+          "jsScript": "if(msg.reset === undefined) {\n    msg.reset = false;\n}\n\nreturn msg.reset;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 52,
+          "layoutY": 350
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Sensor Type Switch",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return [metadata.ss_sensorType];"
         }
       },
       {
@@ -35,15 +47,15 @@
           "sharedAttributeNames": [],
           "serverAttributeNames": [
             "requiredFields",
-            "postRules"
+            "sensorType"
           ],
           "latestTsKeyNames": []
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 576,
-          "layoutY": 150
+          "layoutX": 825,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Required Fields",
@@ -54,7 +66,7 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 851,
+          "layoutX": 1099,
           "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
@@ -67,73 +79,88 @@
     ],
     "connections": [
       {
-        "fromIndex": 1,
-        "toIndex": 2,
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "False"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
         "type": "Success"
       },
       {
         "fromIndex": 2,
-        "toIndex": 3,
-        "type": "True"
+        "toIndex": 0,
+        "type": "Failure"
       },
       {
         "fromIndex": 3,
-        "toIndex": 0,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 1,
         "type": "Success"
       }
     ],
     "ruleChainConnections": [
       {
-        "fromIndex": 0,
+        "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
           "id": "48056da0-8d31-11e9-8cc2-9ff4637358aa"
         },
         "additionalInfo": {
-          "layoutX": 576,
-          "layoutY": 450,
-          "ruleChainNodeId": "rule-chain-node-6"
+          "layoutX": 549,
+          "layoutY": 349,
+          "ruleChainNodeId": "rule-chain-node-7"
         },
-        "type": "Save_Asset_Unit_Test"
+        "type": "TEST"
       },
       {
-        "fromIndex": 0,
+        "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
           "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 575,
-          "layoutY": 525,
-          "ruleChainNodeId": "rule-chain-node-7"
-        },
-        "type": "Save_G1-Worker-In"
-      },
-      {
-        "fromIndex": 0,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "8ac316c0-8dbc-11e9-9a48-3561c8147044"
-        },
-        "additionalInfo": {
-          "layoutX": 574,
-          "layoutY": 601,
+          "layoutX": 551,
+          "layoutY": 426,
           "ruleChainNodeId": "rule-chain-node-8"
         },
-        "type": "Save_G1-Worker-Success"
+        "type": "IN_COUNT"
       },
       {
-        "fromIndex": 0,
+        "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "9de61360-8dbc-11e9-9a48-3561c8147044"
+          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 574,
-          "layoutY": 675,
-          "ruleChainNodeId": "rule-chain-node-9"
+          "layoutX": 551,
+          "layoutY": 426,
+          "ruleChainNodeId": "rule-chain-node-8"
         },
-        "type": "Save_G1-Worker-Fail"
+        "type": "SUCCESS_COUNT"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 551,
+          "layoutY": 426,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "FAIL_COUNT"
       }
     ]
   }
