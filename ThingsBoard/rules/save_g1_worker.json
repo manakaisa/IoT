@@ -10,51 +10,15 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 0,
+    "firstNodeIndex": 6,
     "nodes": [
-      {
-        "additionalInfo": {
-          "layoutX": 275,
-          "layoutY": 151
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Check Reset",
-        "debugMode": true,
-        "configuration": {
-          "jsScript": "if (msg.reset === undefined) {\n    msg.reset = false;\n}\n\nreturn msg.reset;"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1374,
-          "layoutY": 249
-        },
-        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Prepare G1 Message",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "var newMsg = {\n    worker_id: metadata.worker_id\n};\n\nif(metadata.sensorType === 'IN_COUNT') {\n    newMsg.in_count = msg.in_count;\n} else if(metadata.sensorType === 'SUCCESS_COUNT') {\n    newMsg.success_count = msg.success_count;\n} else if(metadata.sensorType === 'FAIL_COUNT') {\n    newMsg.fail_count = msg.fail_count;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1375,
-          "layoutY": 153
-        },
-        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Transform Message",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "var newMsg = {};\n\nif(metadata.sensorType === 'IN_COUNT') {\n    newMsg.in_count = msg.count;\n} else if(metadata.sensorType === 'SUCCESS_COUNT') {\n    newMsg.success_count = msg.count;\n} else if(metadata.sensorType === 'FAIL_COUNT') {\n    newMsg.fail_count = msg.count;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
-        }
-      },
       {
         "additionalInfo": {
           "layoutX": 1652,
           "layoutY": 153
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
-        "name": "Save Timeseries",
+        "name": "Save Telemetry",
         "debugMode": false,
         "configuration": {
           "defaultTTL": 0
@@ -89,7 +53,7 @@
         "name": "Set Metadata",
         "debugMode": false,
         "configuration": {
-          "jsScript": "metadata = {\n    targetDeviceName: 'G1-W' + msg.worker_id,\n    worker_id: msg.worker_id,\n    sensorType: metadata.ss_sensorType\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "metadata.targetDeviceName = 'G1-W' + msg.worker_id;\nmetadata.worker_id = msg.worker_id;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -108,56 +72,79 @@
           "metadataNames": [],
           "checkAllKeys": true
         }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1375,
+          "layoutY": 153
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nif(metadata.sensorType === 'IN_COUNT') {\n    newMsg.in_count = msg.count;\n} else if(metadata.sensorType === 'SUCCESS_COUNT') {\n    newMsg.success_count = msg.count;\n} else if(metadata.sensorType === 'FAIL_COUNT') {\n    newMsg.fail_count = msg.count;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1374,
+          "layoutY": 249
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare G1 Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {\n    worker_id: metadata.worker_id\n};\n\nif(metadata.sensorType === 'IN_COUNT') {\n    newMsg.in_count = msg.in_count;\n} else if(metadata.sensorType === 'SUCCESS_COUNT') {\n    newMsg.success_count = msg.success_count;\n} else if(metadata.sensorType === 'FAIL_COUNT') {\n    newMsg.fail_count = msg.fail_count;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Reset",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return msg.reset||false;"
+        }
       }
     ],
     "connections": [
       {
         "fromIndex": 0,
-        "toIndex": 6,
-        "type": "False"
-      },
-      {
-        "fromIndex": 2,
-        "toIndex": 3,
+        "toIndex": 5,
         "type": "Success"
       },
       {
-        "fromIndex": 3,
-        "toIndex": 1,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 4,
-        "toIndex": 2,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 5,
+        "fromIndex": 1,
         "toIndex": 4,
         "type": "Success"
       },
       {
-        "fromIndex": 6,
-        "toIndex": 5,
+        "fromIndex": 2,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
         "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 3,
+        "type": "False"
       }
     ],
     "ruleChainConnections": [
       {
-        "fromIndex": 0,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "b04f6770-90f2-11e9-b8c1-3344d403337e"
-        },
-        "additionalInfo": {
-          "layoutX": 551,
-          "layoutY": 224,
-          "ruleChainNodeId": "rule-chain-node-9"
-        },
-        "type": "True"
-      },
-      {
-        "fromIndex": 1,
+        "fromIndex": 5,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
           "id": "4b6cc660-9064-11e9-b38f-0b2a9f963f32"
@@ -168,6 +155,19 @@
           "ruleChainNodeId": "rule-chain-node-10"
         },
         "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "b04f6770-90f2-11e9-b8c1-3344d403337e"
+        },
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 251,
+          "ruleChainNodeId": "rule-chain-node-9"
+        },
+        "type": "True"
       }
     ]
   }

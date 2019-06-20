@@ -18,7 +18,7 @@
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
-        "name": "Switch Metadata",
+        "name": "Switch Metadata Type",
         "debugMode": false,
         "configuration": {
           "jsScript": "return ['Workers'];"
@@ -38,8 +38,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1378,
-          "layoutY": 152
+          "layoutX": 1375,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
         "name": "Get Attributes",
@@ -59,10 +59,10 @@
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Transform Message",
+        "name": "Set Message",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var workers = JSON.parse(metadata.ss_workers||'{}');\n\nif (metadata.entity_action === 'ENTITY_CREATED') {\n    workers[metadata.entity_id] = {\n        name: metadata.entity_name\n    };\n} else if (metadata.entity_action === 'ENTITY_UPDATED') {\n    workers[metadata.entity_id] = {\n        name: metadata.entity_name\n    };\n} else if (metadata.entity_action === 'ENTITY_DELETED') {\n    delete workers[metadata.entity_id];\n} \n\nmsg = { \n    workers: JSON.stringify(workers) \n};\n\nmsgType = 'POST_ATTRIBUTES_REQUEST';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "var workers = JSON.parse(metadata.ss_workers||'{}');\n\nif (metadata.entity_action === 'ENTITY_CREATED') {\n    workers[metadata.entity_id] = {\n        name: metadata.entity_name\n    };\n} else if (metadata.entity_action === 'ENTITY_UPDATED') {\n    workers[metadata.entity_id] = {\n        name: metadata.entity_name\n    };\n} else if (metadata.entity_action === 'ENTITY_DELETED') {\n    delete workers[metadata.entity_id];\n} \n\nmsg = { \n    workers: JSON.stringify(workers) \n};\nmsgType = 'POST_ATTRIBUTES_REQUEST';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -71,7 +71,7 @@
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Filter Entity",
+        "name": "Filter for Workers",
         "debugMode": false,
         "configuration": {
           "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED' && msgType !== 'ENTITY_DELETED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'ASSET') {\n    return false;\n}\n\nif (msg.type !== 'WORKER') {\n    return false;\n}\n\nreturn true;"
@@ -83,13 +83,13 @@
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Change To Metadata",
+        "name": "Change to Metadata",
         "debugMode": false,
         "configuration": {
           "direction": "FROM",
           "relationType": "META",
           "entityType": "ASSET",
-          "entityNamePattern": "${targetDeviceName}",
+          "entityNamePattern": "Metadata",
           "entityTypePattern": "META",
           "entityCacheExpiration": 300,
           "createEntityIfNotExists": false,
@@ -106,7 +106,7 @@
         "name": "Set Metadata",
         "debugMode": false,
         "configuration": {
-          "jsScript": "metadata = {\n    targetDeviceName: 'Metadata',\n    entity_id: msg.id.id,\n    entity_name: msg.name,\n    entity_action: msgType\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "metadata.entity_id = msg.id.id;\nmetadata.entity_name = msg.name;\nmetadata.entity_action = msgType;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       }
     ],

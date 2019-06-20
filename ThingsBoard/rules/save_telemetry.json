@@ -12,32 +12,32 @@
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 549,
-          "layoutY": 152
+          "layoutX": 1098,
+          "layoutY": 153
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 824,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Check Reset",
+        "name": "Check Required Fields",
         "debugMode": false,
         "configuration": {
-          "jsScript": "if(msg.reset === undefined) {\n    msg.reset = false;\n}\n\nreturn msg.reset;"
+          "jsScript": "var strFields = metadata.ss_requiredFields;\n\nif(!strFields) {\n    return true;\n}\n\nfields = strFields.replace(' ', '').split(',');\n\nreturn fields.every(function (field) {\n    return msg[field] !== undefined;\n});"
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 52,
-          "layoutY": 350
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
-        "name": "Sensor Type Switch",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "return [metadata.ss_sensorType];"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 276,
-          "layoutY": 149
+          "layoutX": 275,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
         "name": "Get Configuration",
@@ -54,113 +54,130 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 825,
-          "layoutY": 149
+          "layoutX": 547,
+          "layoutY": 351
         },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Check Required Fields",
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Sensor Type",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var strFields = metadata.ss_requiredFields;\n\nif(!strFields) {\n    return true;\n}\n\nfields = strFields.replace(' ', '').split(',');\n\nreturn fields.every(function (field) {\n    return msg[field] !== undefined;\n});"
+          "jsScript": "return [metadata.sensorType];"
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 1099,
-          "layoutY": 151
+          "layoutX": 549,
+          "layoutY": 152
         },
-        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
-        "name": "Save",
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "defaultTTL": 0
+          "jsScript": "return msg.reset||false;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 352
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Global Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "metadata = {\n    sensorType: metadata.ss_sensorType || ''\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       }
     ],
     "connections": [
       {
         "fromIndex": 0,
-        "toIndex": 3,
-        "type": "False"
-      },
-      {
-        "fromIndex": 0,
-        "toIndex": 1,
-        "type": "True"
-      },
-      {
-        "fromIndex": 2,
-        "toIndex": 0,
+        "toIndex": 5,
         "type": "Success"
       },
       {
-        "fromIndex": 2,
+        "fromIndex": 1,
         "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 4,
         "type": "Failure"
       },
       {
-        "fromIndex": 3,
+        "fromIndex": 2,
         "toIndex": 4,
-        "type": "True"
+        "type": "Success"
       },
       {
         "fromIndex": 4,
         "toIndex": 1,
+        "type": "False"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 3,
         "type": "Success"
       }
     ],
     "ruleChainConnections": [
       {
-        "fromIndex": 1,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "48056da0-8d31-11e9-8cc2-9ff4637358aa"
-        },
-        "additionalInfo": {
-          "layoutX": 549,
-          "layoutY": 349,
-          "ruleChainNodeId": "rule-chain-node-7"
-        },
-        "type": "TEST"
-      },
-      {
-        "fromIndex": 1,
+        "fromIndex": 3,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
           "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 551,
+          "layoutX": 827,
+          "layoutY": 426,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "FAIL_COUNT"
+      },
+      {
+        "fromIndex": 3,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 827,
           "layoutY": 426,
           "ruleChainNodeId": "rule-chain-node-8"
         },
         "type": "IN_COUNT"
       },
       {
-        "fromIndex": 1,
+        "fromIndex": 3,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
           "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 551,
+          "layoutX": 827,
           "layoutY": 426,
           "ruleChainNodeId": "rule-chain-node-8"
         },
         "type": "SUCCESS_COUNT"
       },
       {
-        "fromIndex": 1,
+        "fromIndex": 3,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
+          "id": "48056da0-8d31-11e9-8cc2-9ff4637358aa"
         },
         "additionalInfo": {
-          "layoutX": 551,
-          "layoutY": 426,
-          "ruleChainNodeId": "rule-chain-node-8"
+          "layoutX": 825,
+          "layoutY": 352,
+          "ruleChainNodeId": "rule-chain-node-9"
         },
-        "type": "FAIL_COUNT"
+        "type": "TEST"
       }
     ]
   }

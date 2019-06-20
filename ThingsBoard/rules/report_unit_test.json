@@ -1,0 +1,404 @@
+{
+  "ruleChain": {
+    "additionalInfo": null,
+    "name": "Report Unit Test",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 5,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 50,
+          "layoutY": 350
+        },
+        "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
+        "name": "Daily Report",
+        "debugMode": true,
+        "configuration": {
+          "msgCount": 0,
+          "periodInSeconds": 60,
+          "originatorId": "ef297280-91e5-11e9-a444-f17d9b7c69b1",
+          "originatorType": "ASSET",
+          "jsScript": "return { msg: {}, metadata: {}, msgType: 'POST_TELEMETRY_REQUEST' };"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 325,
+          "layoutY": 352
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Report Configuration",
+        "debugMode": true,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "reportTime"
+          ],
+          "latestTsKeyNames": [
+            "lastReportDateUnitTest"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1149,
+          "layoutY": 352
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Split Messages",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var now = new Date();\nvar workers = JSON.parse(metadata.ss_workers || '{}');\nvar msgs = [];\n\n// Unit Test\nmsgs.push({ \n    name: 'Unit Test',\n    type: 'TEST'\n});\n\nmetadata.msgs = JSON.stringify(msgs);\n// Report\n// Daily\n//metadata.reportDate = (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime();\n//metadata.reportStart = metadata.reportDate - (1000*60*60*24);\n//metadata.reportEnd = metadata.reportDate;\n// Hourly\n//metadata.reportDate = (new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours())).getTime();\n//metadata.reportStart = metadata.reportDate - (1000*60*60);\n//metadata.reportEnd = metadata.reportDate;\n// Minutely  \nmetadata.reportDate = (new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes())).getTime();\nmetadata.reportStart = metadata.reportDate - (1000*60);\nmetadata.reportEnd = metadata.reportDate;\n\nmetadata.originatorRule = 'Report_Unit_Test';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 600,
+          "layoutY": 353
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Report Time",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (!metadata.ss_reportTime) {\n    return false;\n}\n\nvar arrReportTime = metadata.ss_reportTime.split(':');\nvar now = new Date();\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(arrReportTime[0]), parseInt(arrReportTime[1]));\n\nreturn now > reportDate;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 875,
+          "layoutY": 353
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Last Report Date",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (!metadata.lastReportDateUnitTest) {\n    return true;\n}\n\nvar now = new Date();\nvar lastReportDate = new Date(parseInt(metadata.lastReportDateUnitTest));\n// Daily\n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());\n// Hourly\n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours());\n// Minutely  \nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());\n\nreturn reportDate > lastReportDate;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 326,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Check Split",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (metadata.split === \"true\") {\n    return ['Split', 'Execute'];\n}\n\nreturn [];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 603,
+          "layoutY": 152
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Metadata",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "metadata.targetDeviceName = msg.name;\nmetadata.targetDeviceType = msg.type;\nmetadata.lastReportDate = \"0\";\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 874,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change Originator",
+        "debugMode": true,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "${targetDeviceType}",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1697,
+          "layoutY": 147
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Type",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "return msg.type;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1148,
+          "layoutY": 148
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Report Attributes",
+        "debugMode": true,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "lastReportDate"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1423,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Last Report Date",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (!metadata.lastReportDate) {\n    return true;\n}\n\nvar lastReportDate = parseInt(metadata.lastReportDate);\nvar reportDate = parseInt(metadata.reportDate);\n\nreturn reportDate > lastReportDate;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1975,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetTelemetryNode",
+        "name": "Get Worker Telemetry",
+        "debugMode": true,
+        "configuration": {
+          "startInterval": 2,
+          "endInterval": 1,
+          "startIntervalPattern": "${reportStart}",
+          "endIntervalPattern": "${reportEnd}",
+          "useMetadataIntervalPatterns": true,
+          "startIntervalTimeUnit": "MINUTES",
+          "endIntervalTimeUnit": "MINUTES",
+          "fetchMode": "LAST",
+          "orderBy": "ASC",
+          "latestTsKeyNames": [
+            "row_id",
+            "name",
+            "bool",
+            "integer",
+            "float",
+            "double",
+            "hex"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2250,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg = {\n    minutely_row_id: parseInt((metadata.row_id||'0').replace(/\\\"/g, '')),\n    minutely_name: (metadata.name||'').replace(/\\\"/g, ''),\n    minutely_bool: (!metadata.bool)?null:(metadata.bool==='\\\"true\\\"'),\n    minutely_integer: parseInt((metadata.float||'0').replace(/\\\"/g, '')),\n    minutely_float: parseFloat((metadata.float||'0').replace(/\\\"/g, '')),\n    minutely_double: parseFloat((metadata.double||'0').replace(/\\\"/g, '')),\n    minutely_hex: (metadata.hex||'').replace(/\\\"/g, ''),\n    lastReportDate: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2527,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": true,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1974,
+          "layoutY": 351
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
+        "name": "Change to Metadata",
+        "debugMode": true,
+        "configuration": {
+          "originatorSource": "RELATED",
+          "relationsQuery": {
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "META",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2250,
+          "layoutY": 351
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Last Report Date",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "msg = {\n    lastReportDateUnitTest: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2525,
+          "layoutY": 349
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Last Report Date",
+        "debugMode": true,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1699,
+          "layoutY": 350
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Last Message",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var msgs = JSON.parse(metadata.msgs);\n\nreturn msgs.length===0;"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 3,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Execute"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 11,
+        "type": "TEST"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 10,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 13,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 17,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 16,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 14,
+        "type": "True"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 2,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "6728ba90-91a3-11e9-a444-f17d9b7c69b1"
+        },
+        "additionalInfo": {
+          "layoutX": 1424,
+          "layoutY": 349,
+          "ruleChainNodeId": "rule-chain-node-20"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "6728ba90-91a3-11e9-a444-f17d9b7c69b1"
+        },
+        "additionalInfo": {
+          "layoutX": 602,
+          "layoutY": 252,
+          "ruleChainNodeId": "rule-chain-node-21"
+        },
+        "type": "Split"
+      }
+    ]
+  }
+}
