@@ -24,7 +24,7 @@
         "id": "7e1d8731.168108",
         "type": "tab",
         "label": "Ping Unit Test",
-        "disabled": true,
+        "disabled": false,
         "info": ""
     },
     {
@@ -968,7 +968,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 190,
-        "y": 680,
+        "y": 600,
         "wires": [
             []
         ]
@@ -1106,7 +1106,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 230,
-        "y": 720,
+        "y": 640,
         "wires": [
             []
         ]
@@ -1121,7 +1121,7 @@
         "retain": "",
         "broker": "1e998288.5937dd",
         "x": 190,
-        "y": 760,
+        "y": 680,
         "wires": []
     },
     {
@@ -1222,13 +1222,13 @@
         "op2": "true",
         "op1type": "str",
         "op2type": "bool",
-        "duration": "5",
-        "extend": true,
+        "duration": "5.5",
+        "extend": false,
         "units": "s",
         "reset": "",
         "bytopic": "all",
         "name": "",
-        "x": 480,
+        "x": 490,
         "y": 140,
         "wires": [
             [
@@ -1270,6 +1270,13 @@
                 "pt": "msg",
                 "to": "{\"online\":true}",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -1352,13 +1359,13 @@
         "op2": "true",
         "op1type": "str",
         "op2type": "bool",
-        "duration": "5",
-        "extend": true,
+        "duration": "5.5",
+        "extend": false,
         "units": "s",
         "reset": "",
         "bytopic": "all",
         "name": "",
-        "x": 500,
+        "x": 510,
         "y": 140,
         "wires": [
             [
@@ -1401,6 +1408,13 @@
                 "pt": "msg",
                 "to": "{\"online\":true}",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",

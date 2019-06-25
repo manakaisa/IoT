@@ -1,0 +1,29 @@
+{
+  "widgetsBundle": {
+    "alias": "charts_extended",
+    "title": "Charts - Extended",
+    "image": null
+  },
+  "widgetTypes": [
+    {
+      "alias": "bar_side_by_side",
+      "name": "Bar - Entities",
+      "descriptor": {
+        "type": "latest",
+        "sizeX": 7,
+        "sizeY": 5,
+        "resources": [
+          {
+            "url": "http://192.168.194.130:1880/Chart.min.js"
+          }
+        ],
+        "templateHtml": "<canvas id=\"barChart\"></canvas>\n",
+        "templateCss": "",
+        "controllerScript": "self.onInit = function() {\n    var barData = {\n        labels: [],\n        datasets: []\n    };\n    \n    if (self.ctx.datasources.length > 0) {\n        var datasource = self.ctx.datasources[0];\n        datasource.dataKeys.forEach(function(dataKey, index) {\n            var dataset = {\n                label: dataKey.label,\n                data: [],\n                backgroundColor: [],\n                borderColor: [],\n                borderWidth: 1\n            }\n            barData.datasets.push(dataset);\n        });\n    }\n    \n    self.ctx.datasources.forEach(function(datasource, indexDatasource) {\n        barData.labels[indexDatasource] = datasource.name;\n        \n        datasource.dataKeys.forEach(function(dataKey, indexDataKey) {\n            barData.datasets[indexDataKey].data[indexDatasource] = 0;\n            barData.datasets[indexDataKey].backgroundColor[indexDatasource] = self.ctx.datasources[0].dataKeys[indexDataKey].color;\n            barData.datasets[indexDataKey].borderColor[indexDatasource] = self.ctx.datasources[0].dataKeys[indexDataKey].color;\n        });\n    });\n\n    var ctx = $('#barChart', self.ctx.$container);\n    self.ctx.chart = new Chart(ctx, {\n        type: 'bar',\n        data: barData,\n        options: {\n            responsive: false,\n            maintainAspectRatio: false,\n            scales: {\n                yAxes: [{\n                    ticks: {\n                        beginAtZero:true\n                    }\n                }]\n            }\n        }\n    });\n    \n    self.onResize();\n}\n\nself.onDataUpdated = function() {\n    self.ctx.data.forEach(function(cellData) {\n        if (cellData.data.length > 0) {\n            var datasourceName = cellData.datasource.name;\n            var dataKeyHash = cellData.dataKey._hash;\n            \n            var datasetIndex = cellData.datasource.dataKeys.findIndex(function(dataKey) {\n                return dataKey._hash === dataKeyHash;\n            });\n            var dataIndex = self.ctx.chart.data.labels.indexOf(datasourceName);\n        \n            var value = parseFloat(cellData.data[cellData.data.length - 1][1]);\n            self.ctx.chart.data.datasets[datasetIndex].data[dataIndex] = value;\n        }\n    });\n    \n    self.ctx.chart.update();\n}\n\nself.typeParameters = function() {\n    return {\n        maxDatasources: 1,\n        dataKeysOptional: true\n    };\n}\n\nself.onResize = function() {\n    self.ctx.chart.resize();\n}\n\n",
+        "settingsSchema": "{}",
+        "dataKeySettingsSchema": "{}\n",
+        "defaultConfig": "{\"datasources\":[{\"type\":\"function\",\"name\":\"function\",\"dataKeys\":[{\"name\":\"f(x)\",\"type\":\"function\",\"label\":\"First\",\"color\":\"#2196f3\",\"settings\":{},\"_hash\":0.15479322438769105,\"funcBody\":\"var value = (prevValue-50) + Math.random() * 2 - 1;\\nif (value < 0) {\\n\\tvalue = 0;\\n} else if (value > 100) {\\n\\tvalue = 100;\\n}\\nreturn value+50;\"},{\"name\":\"f(x)\",\"type\":\"function\",\"label\":\"Second\",\"color\":\"#4caf50\",\"settings\":{},\"_hash\":0.545701115289893,\"funcBody\":\"var value = (prevValue-20) + Math.random() * 2 - 1;\\nif (value < 0) {\\n\\tvalue = 0;\\n} else if (value > 100) {\\n\\tvalue = 100;\\n}\\nreturn value+20;\"},{\"name\":\"f(x)\",\"type\":\"function\",\"label\":\"Third\",\"color\":\"#f44336\",\"settings\":{},\"_hash\":0.2592906835158064,\"funcBody\":\"var value = (prevValue-40) + Math.random() * 2 - 1;\\nif (value < 0) {\\n\\tvalue = 0;\\n} else if (value > 100) {\\n\\tvalue = 100;\\n}\\nreturn value+40;\"}]}],\"timewindow\":{\"realtime\":{\"timewindowMs\":60000}},\"showTitle\":true,\"backgroundColor\":\"#fff\",\"color\":\"rgba(0, 0, 0, 0.87)\",\"padding\":\"8px\",\"settings\":{},\"title\":\"Bar - Entities\",\"dropShadow\":true,\"enableFullscreen\":true,\"widgetStyle\":{},\"titleStyle\":{\"fontSize\":\"16px\",\"fontWeight\":400},\"useDashboardTimewindow\":true,\"showLegend\":false,\"actions\":{}}"
+      }
+    }
+  ]
+}

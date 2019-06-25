@@ -1,90 +1,129 @@
 {
-  "title": "G1",
+  "title": "G1 - Workers",
   "configuration": {
     "widgets": {
-      "46319d35-0807-9aed-58e9-4b7d922a1f51": {
+      "fd688db8-b2e7-4a4c-0d4e-4920d0a9fb3b": {
         "isSystemType": true,
         "bundleAlias": "cards",
-        "typeAlias": "attributes_card",
+        "typeAlias": "entities_table",
         "type": "latest",
         "title": "New widget",
-        "sizeX": 7,
-        "sizeY": 3,
+        "sizeX": 10,
+        "sizeY": 5,
         "config": {
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 86400000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "4px",
+          "settings": {
+            "enableSearch": true,
+            "displayPagination": true,
+            "defaultPageSize": 10,
+            "defaultSortOrder": "entityName",
+            "displayEntityName": true,
+            "displayEntityType": false,
+            "entitiesTitle": "Count Table",
+            "entityNameColumnTitle": "Entity Name"
+          },
+          "title": "Count Table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400,
+            "padding": "5px 10px 5px 10px"
+          },
+          "useDashboardTimewindow": false,
+          "showLegend": false,
           "datasources": [
             {
               "type": "entity",
               "dataKeys": [
                 {
-                  "name": "all_in_count",
+                  "name": "in_count",
                   "type": "timeseries",
-                  "label": "all_in_count",
-                  "color": "#2196f3",
-                  "settings": {},
-                  "_hash": 0.3884831337249237
-                },
-                {
-                  "name": "all_success_count",
-                  "type": "timeseries",
-                  "label": "all_success_count",
+                  "label": "Count In",
                   "color": "#4caf50",
-                  "settings": {},
-                  "_hash": 0.1123033688312598
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false,
+                    "cellContentFunction": "return value.value;"
+                  },
+                  "_hash": 0.36560258372509424
                 },
                 {
-                  "name": "all_fail_count",
+                  "name": "success_count",
                   "type": "timeseries",
-                  "label": "all_fail_count",
+                  "label": "Count Success",
                   "color": "#f44336",
-                  "settings": {},
-                  "_hash": 0.62150691488822
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.6355699438109965
+                },
+                {
+                  "name": "fail_count",
+                  "type": "timeseries",
+                  "label": "Count Fail",
+                  "color": "#ffc107",
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.7911161947678167
+                },
+                {
+                  "name": "name",
+                  "type": "attribute",
+                  "label": "Name",
+                  "color": "#2196f3",
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.7287354559951997
                 }
               ],
-              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
             }
           ],
-          "timewindow": {
-            "realtime": {
-              "timewindowMs": 60000
-            }
-          },
-          "showTitle": true,
-          "backgroundColor": "#fff",
-          "color": "rgba(0, 0, 0, 0.87)",
-          "padding": "8px",
-          "settings": {},
-          "title": "Count Table",
-          "dropShadow": true,
-          "enableFullscreen": true,
           "widgetStyle": {},
-          "titleStyle": {
-            "fontSize": "16px",
-            "fontWeight": 400
-          },
-          "useDashboardTimewindow": true,
-          "showLegend": false,
-          "actions": {},
-          "decimals": 0
+          "actions": {}
         },
-        "id": "46319d35-0807-9aed-58e9-4b7d922a1f51"
+        "id": "fd688db8-b2e7-4a4c-0d4e-4920d0a9fb3b"
       },
-      "cc5b94a2-5b41-3919-2d3a-66505b43b745": {
+      "ad1afa54-ae17-abbf-7cc7-3d972cab450b": {
         "isSystemType": true,
         "bundleAlias": "cards",
         "typeAlias": "timeseries_table",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 9,
-        "sizeY": 8,
+        "sizeX": 8,
+        "sizeY": 5,
         "config": {
           "datasources": [
             {
               "type": "entity",
               "dataKeys": [
                 {
-                  "name": "all_in_count",
+                  "name": "in_count",
                   "type": "timeseries",
-                  "label": "all_in_count",
+                  "label": "in_count",
                   "color": "#2196f3",
                   "settings": {
                     "useCellStyleFunction": false,
@@ -92,12 +131,12 @@
                     "useCellContentFunction": false,
                     "cellContentFunction": ""
                   },
-                  "_hash": 0.13116178725342897
+                  "_hash": 0.35182116993704193
                 },
                 {
-                  "name": "all_success_count",
+                  "name": "success_count",
                   "type": "timeseries",
-                  "label": "all_success_count",
+                  "label": "success_count",
                   "color": "#4caf50",
                   "settings": {
                     "useCellStyleFunction": false,
@@ -105,12 +144,12 @@
                     "useCellContentFunction": false,
                     "cellContentFunction": ""
                   },
-                  "_hash": 0.18738650943930946
+                  "_hash": 0.9885087267221266
                 },
                 {
-                  "name": "all_fail_count",
+                  "name": "fail_count",
                   "type": "timeseries",
-                  "label": "all_fail_count",
+                  "label": "fail_count",
                   "color": "#f44336",
                   "settings": {
                     "useCellStyleFunction": false,
@@ -118,10 +157,10 @@
                     "useCellContentFunction": false,
                     "cellContentFunction": ""
                   },
-                  "_hash": 0.4353924249857759
+                  "_hash": 0.2654050462585773
                 }
               ],
-              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
             }
           ],
           "timewindow": {
@@ -155,15 +194,15 @@
           "widgetStyle": {},
           "actions": {}
         },
-        "id": "cc5b94a2-5b41-3919-2d3a-66505b43b745"
+        "id": "ad1afa54-ae17-abbf-7cc7-3d972cab450b"
       },
-      "a51c3807-32b6-8e90-1fe1-924672f6751c": {
+      "4806c3cb-f1c5-01c8-c6c2-841ddd021d22": {
         "isSystemType": true,
         "bundleAlias": "cards",
         "typeAlias": "timeseries_table",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 16,
+        "sizeX": 12,
         "sizeY": 5,
         "config": {
           "datasources": [
@@ -171,9 +210,9 @@
               "type": "entity",
               "dataKeys": [
                 {
-                  "name": "hourly_all_in_count",
+                  "name": "hourly_in_count",
                   "type": "timeseries",
-                  "label": "hourly_all_in_count",
+                  "label": "hourly_in_count",
                   "color": "#2196f3",
                   "settings": {
                     "useCellStyleFunction": false,
@@ -181,12 +220,12 @@
                     "useCellContentFunction": false,
                     "cellContentFunction": ""
                   },
-                  "_hash": 0.06632045078244397
+                  "_hash": 0.15527585568871882
                 },
                 {
-                  "name": "hourly_all_success_count",
+                  "name": "hourly_success_count",
                   "type": "timeseries",
-                  "label": "hourly_all_success_count",
+                  "label": "hourly_success_count",
                   "color": "#4caf50",
                   "settings": {
                     "useCellStyleFunction": false,
@@ -194,12 +233,12 @@
                     "useCellContentFunction": false,
                     "cellContentFunction": ""
                   },
-                  "_hash": 0.18011677949570903
+                  "_hash": 0.21132789648521055
                 },
                 {
-                  "name": "hourly_all_fail_count",
+                  "name": "hourly_fail_count",
                   "type": "timeseries",
-                  "label": "hourly_all_fail_count",
+                  "label": "hourly_fail_count",
                   "color": "#f44336",
                   "settings": {
                     "useCellStyleFunction": false,
@@ -207,7 +246,7 @@
                     "useCellContentFunction": false,
                     "cellContentFunction": ""
                   },
-                  "_hash": 0.8749122475790196
+                  "_hash": 0.5417377480605872
                 },
                 {
                   "name": "lastReportDate",
@@ -219,11 +258,11 @@
                     "useCellContentFunction": true,
                     "cellContentFunction": "return value.toLocaleString();"
                   },
-                  "_hash": 0.8273128934335827,
+                  "_hash": 0.6035766401520934,
                   "postFuncBody": "var reportDate = new Date(value);\nreportDate.setMinutes(0);\nreportDate.setSeconds(0);\nreportDate.setMilliseconds(0);\nreturn reportDate;"
                 }
               ],
-              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
             }
           ],
           "timewindow": {
@@ -257,15 +296,15 @@
           "widgetStyle": {},
           "actions": {}
         },
-        "id": "a51c3807-32b6-8e90-1fe1-924672f6751c"
+        "id": "4806c3cb-f1c5-01c8-c6c2-841ddd021d22"
       },
-      "2ccb5f91-13e3-07e2-8c64-7d3cabd7e586": {
-        "isSystemType": true,
-        "bundleAlias": "charts",
-        "typeAlias": "bars",
+      "01439197-1e0c-27d5-8f4a-0cae75176c73": {
+        "isSystemType": false,
+        "bundleAlias": "charts_extended",
+        "typeAlias": "bar_side_by_side",
         "type": "latest",
         "title": "New widget",
-        "sizeX": 7,
+        "sizeX": 6,
         "sizeY": 5,
         "config": {
           "datasources": [
@@ -273,31 +312,31 @@
               "type": "entity",
               "dataKeys": [
                 {
-                  "name": "all_in_count",
+                  "name": "in_count",
                   "type": "timeseries",
-                  "label": "all_in_count",
+                  "label": "in_count",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.9542875486944524
+                  "_hash": 0.19898888731508158
                 },
                 {
-                  "name": "all_success_count",
+                  "name": "success_count",
                   "type": "timeseries",
-                  "label": "all_success_count",
+                  "label": "success_count",
                   "color": "#4caf50",
                   "settings": {},
-                  "_hash": 0.6553782390660774
+                  "_hash": 0.8994162211116794
                 },
                 {
-                  "name": "all_fail_count",
+                  "name": "fail_count",
                   "type": "timeseries",
-                  "label": "all_fail_count",
+                  "label": "fail_count",
                   "color": "#f44336",
                   "settings": {},
-                  "_hash": 0.10567227403147261
+                  "_hash": 0.5732113470424167
                 }
               ],
-              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
             }
           ],
           "timewindow": {
@@ -320,41 +359,42 @@
           },
           "useDashboardTimewindow": true,
           "showLegend": false,
-          "actions": {}
+          "actions": {},
+          "decimals": null
         },
-        "id": "2ccb5f91-13e3-07e2-8c64-7d3cabd7e586"
+        "id": "01439197-1e0c-27d5-8f4a-0cae75176c73"
       }
     },
     "states": {
       "default": {
-        "name": "G1",
+        "name": "G1 - Workers",
         "root": true,
         "layouts": {
           "main": {
             "widgets": {
-              "46319d35-0807-9aed-58e9-4b7d922a1f51": {
-                "sizeX": 7,
-                "sizeY": 3,
+              "fd688db8-b2e7-4a4c-0d4e-4920d0a9fb3b": {
+                "sizeX": 10,
+                "sizeY": 5,
                 "row": 0,
-                "col": 9
+                "col": 8
               },
-              "cc5b94a2-5b41-3919-2d3a-66505b43b745": {
-                "sizeX": 9,
-                "sizeY": 8,
+              "ad1afa54-ae17-abbf-7cc7-3d972cab450b": {
+                "sizeX": 8,
+                "sizeY": 5,
                 "row": 0,
                 "col": 0
               },
-              "a51c3807-32b6-8e90-1fe1-924672f6751c": {
-                "sizeX": 16,
+              "4806c3cb-f1c5-01c8-c6c2-841ddd021d22": {
+                "sizeX": 12,
                 "sizeY": 5,
-                "row": 8,
+                "row": 5,
                 "col": 0
               },
-              "2ccb5f91-13e3-07e2-8c64-7d3cabd7e586": {
-                "sizeX": 7,
+              "01439197-1e0c-27d5-8f4a-0cae75176c73": {
+                "sizeX": 6,
                 "sizeY": 5,
-                "row": 3,
-                "col": 9
+                "row": 5,
+                "col": 12
               }
             },
             "gridSettings": {
@@ -365,23 +405,28 @@
                 10,
                 10
               ],
-              "backgroundSizeMode": "100%"
+              "backgroundSizeMode": "100%",
+              "autoFillHeight": false,
+              "mobileAutoFillHeight": false,
+              "mobileRowHeight": 70
             }
           }
         }
       }
     },
     "entityAliases": {
-      "55218165-a5da-3ccd-154a-16c9350762b3": {
-        "id": "55218165-a5da-3ccd-154a-16c9350762b3",
-        "alias": "G1",
+      "4bbaf569-2969-e1f4-f944-e448c8fa89cb": {
+        "id": "4bbaf569-2969-e1f4-f944-e448c8fa89cb",
+        "alias": "G1-Workers",
         "filter": {
-          "type": "singleEntity",
-          "resolveMultiple": false,
-          "singleEntity": {
-            "entityType": "ASSET",
-            "id": "35c8eb40-9064-11e9-b38f-0b2a9f963f32"
-          }
+          "type": "entityList",
+          "resolveMultiple": true,
+          "entityType": "ASSET",
+          "entityList": [
+            "514b86c0-876d-11e9-befc-45b2158e8ded",
+            "66110fd0-876d-11e9-befc-45b2158e8ded",
+            "7814b9c0-876d-11e9-befc-45b2158e8ded"
+          ]
         }
       }
     },
@@ -402,8 +447,9 @@
       "showEntitiesSelect": true,
       "showDashboardTimewindow": true,
       "showDashboardExport": true,
-      "toolbarAlwaysOpen": true
+      "toolbarAlwaysOpen": true,
+      "titleColor": "rgba(0,0,0,0.870588)"
     }
   },
-  "name": "G1"
+  "name": "G1 - Workers"
 }

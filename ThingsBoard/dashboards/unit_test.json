@@ -8,7 +8,7 @@
         "typeAlias": "timeseries_table",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 17,
+        "sizeX": 20,
         "sizeY": 5,
         "config": {
           "datasources": [
@@ -147,7 +147,7 @@
         "typeAlias": "timeseries_table",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 17,
+        "sizeX": 20,
         "sizeY": 5,
         "config": {
           "datasources": [
@@ -244,6 +244,19 @@
                     "cellContentFunction": ""
                   },
                   "_hash": 0.34509968733056273
+                },
+                {
+                  "name": "lastReportDate",
+                  "type": "timeseries",
+                  "label": "lastReportDate",
+                  "color": "#3f51b5",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": true,
+                    "cellContentFunction": "return value.toLocaleString();"
+                  },
+                  "_hash": 0.5661635122388575,
+                  "postFuncBody": "var reportDate = new Date(value);\nreportDate.setMinutes(0);\nreportDate.setSeconds(0);\nreportDate.setMilliseconds(0);\nreturn reportDate;"
                 }
               ],
               "entityAliasId": "a2d9ba6c-da27-f606-7689-8fe516a00587"
@@ -291,13 +304,13 @@
           "main": {
             "widgets": {
               "47ffb1f2-6da1-44a9-1539-9e69af28acaf": {
-                "sizeX": 17,
+                "sizeX": 20,
                 "sizeY": 5,
                 "row": 0,
                 "col": 0
               },
               "ef59564f-0760-a017-4eca-b03462293a37": {
-                "sizeX": 17,
+                "sizeX": 20,
                 "sizeY": 5,
                 "row": 5,
                 "col": 0
