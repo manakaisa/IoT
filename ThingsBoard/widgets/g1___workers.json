@@ -348,7 +348,9 @@
           "backgroundColor": "#fff",
           "color": "rgba(0, 0, 0, 0.87)",
           "padding": "8px",
-          "settings": {},
+          "settings": {
+            "entityNameAttribute": "name"
+          },
           "title": "Count Bar",
           "dropShadow": true,
           "enableFullscreen": true,
