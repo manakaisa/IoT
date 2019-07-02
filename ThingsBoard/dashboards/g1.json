@@ -8,8 +8,8 @@
         "typeAlias": "attributes_card",
         "type": "latest",
         "title": "New widget",
-        "sizeX": 7,
-        "sizeY": 3,
+        "sizeX": 4,
+        "sizeY": 5,
         "config": {
           "datasources": [
             {
@@ -75,7 +75,7 @@
         "type": "timeseries",
         "title": "New widget",
         "sizeX": 9,
-        "sizeY": 8,
+        "sizeY": 5,
         "config": {
           "datasources": [
             {
@@ -163,7 +163,7 @@
         "typeAlias": "timeseries_table",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 16,
+        "sizeX": 13,
         "sizeY": 5,
         "config": {
           "datasources": [
@@ -333,28 +333,28 @@
           "main": {
             "widgets": {
               "46319d35-0807-9aed-58e9-4b7d922a1f51": {
-                "sizeX": 7,
-                "sizeY": 3,
+                "sizeX": 4,
+                "sizeY": 5,
                 "row": 0,
                 "col": 9
               },
               "cc5b94a2-5b41-3919-2d3a-66505b43b745": {
                 "sizeX": 9,
-                "sizeY": 8,
+                "sizeY": 5,
                 "row": 0,
                 "col": 0
               },
               "a51c3807-32b6-8e90-1fe1-924672f6751c": {
-                "sizeX": 16,
+                "sizeX": 13,
                 "sizeY": 5,
-                "row": 8,
+                "row": 5,
                 "col": 0
               },
               "2ccb5f91-13e3-07e2-8c64-7d3cabd7e586": {
                 "sizeX": 7,
                 "sizeY": 5,
-                "row": 3,
-                "col": 9
+                "row": 0,
+                "col": 13
               }
             },
             "gridSettings": {
