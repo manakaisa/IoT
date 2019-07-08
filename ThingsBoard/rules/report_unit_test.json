@@ -204,7 +204,7 @@
         "name": "Set Message",
         "debugMode": true,
         "configuration": {
-          "jsScript": "msg = {\n    minutely_row_id: parseInt((metadata.row_id||'0').replace(/\\\"/g, '')),\n    minutely_name: (metadata.name||'').replace(/\\\"/g, ''),\n    minutely_bool: (!metadata.bool)?null:(metadata.bool==='\\\"true\\\"'),\n    minutely_integer: parseInt((metadata.float||'0').replace(/\\\"/g, '')),\n    minutely_float: parseFloat((metadata.float||'0').replace(/\\\"/g, '')),\n    minutely_double: parseFloat((metadata.double||'0').replace(/\\\"/g, '')),\n    minutely_hex: (metadata.hex||'').replace(/\\\"/g, ''),\n    lastReportDate: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "msg = {\n    minutely_row_id: parseInt((metadata.row_id||'0').replace(/\\\"/g, '')),\n    minutely_name: (metadata.name||'').replace(/\\\"/g, ''),\n    minutely_bool: (!metadata.bool)?false:(metadata.bool==='\\\"true\\\"'),\n    minutely_integer: parseInt((metadata.float||'0').replace(/\\\"/g, '')),\n    minutely_float: parseFloat((metadata.float||'0').replace(/\\\"/g, '')),\n    minutely_double: parseFloat((metadata.double||'0').replace(/\\\"/g, '')),\n    minutely_hex: (metadata.hex||'').replace(/\\\"/g, ''),\n    lastReportDate: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
