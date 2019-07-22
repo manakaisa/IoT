@@ -1,6 +1,8 @@
 {
   "ruleChain": {
-    "additionalInfo": null,
+    "additionalInfo": {
+      "description": "Type: Report\nTarget Entity Type: Asset\nTarget Entity Name: G1, G1-W${work_id}\nInput:\nOutput: \n  - For G1: all_in_count=latest, all_success_count=latest, all_fail_count=latest\n  - For G1-W${work_id}: in_count=latest, success_count=latest, fail_count=latest\nSchedule: Yes"
+    },
     "name": "Report G1",
     "firstRuleNodeId": null,
     "root": false,
@@ -17,7 +19,7 @@
         },
         "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
         "name": "Daily Report",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "msgCount": 0,
           "periodInSeconds": 3600,
@@ -32,8 +34,8 @@
           "layoutY": 350
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
-        "name": "Get Report Configuration",
-        "debugMode": true,
+        "name": "Get Configurations",
+        "debugMode": false,
         "configuration": {
           "clientAttributeNames": [],
           "sharedAttributeNames": [],
@@ -53,7 +55,7 @@
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Prepare Split Messages",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "var now = new Date();\nvar workers = JSON.parse(metadata.ss_workers || '{}');\nvar msgs = [];\n\n// Workers\nfor (var worker_id in workers) {\n    msgs.push({ \n        name: workers[worker_id].name,\n        type: 'WORKER'\n    });\n}\n\n// G1\nmsgs.push({ \n    name: 'G1',\n    type: 'GROUP'\n});\n\nmetadata.msgs = JSON.stringify(msgs);\n// Report\n// Daily\n//metadata.reportDate = (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime();\n//metadata.reportStart = metadata.reportDate - (1000*60*60*24);\n//metadata.reportEnd = metadata.reportDate;\n// Hourly\nmetadata.reportDate = (new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours())).getTime();\nmetadata.reportStart = metadata.reportDate - (1000*60*60);\nmetadata.reportEnd = metadata.reportDate;\n// Minutely  \n//metadata.reportDate = (new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes())).getTime();\n//metadata.reportStart = metadata.reportDate - (1000*60);\n//metadata.reportEnd = metadata.reportDate;\n\nmetadata.originatorRule = 'Report_G1';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
@@ -65,7 +67,7 @@
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Report Time",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "if (!metadata.ss_reportTime) {\n    return false;\n}\n\nvar arrReportTime = metadata.ss_reportTime.split(':');\nvar now = new Date();\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(arrReportTime[0]), parseInt(arrReportTime[1]));\n\nreturn now > reportDate;"
         }
@@ -77,7 +79,7 @@
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Last Report Date",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "if (!metadata.lastReportDate) {\n    return true;\n}\n\nvar now = new Date();\nvar lastReportDate = new Date(parseInt(metadata.lastReportDate));\n// Daily\n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());\n// Hourly\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours());\n// Minutely  \n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());\n\nreturn reportDate > lastReportDate;"
         }
@@ -89,7 +91,7 @@
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
         "name": "Check Split",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "if (metadata.split === \"true\") {\n    return ['Split', 'Execute'];\n}\n\nreturn [];"
         }
@@ -101,7 +103,7 @@
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Metadata",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "metadata.targetDeviceName = msg.name;\nmetadata.targetDeviceType = msg.type;\nmetadata.lastReportDate = \"0\";\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
@@ -113,7 +115,7 @@
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
         "name": "Change Originator",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "direction": "TO",
           "relationType": "META",
@@ -133,7 +135,7 @@
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
         "name": "Switch Type",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "return msg.type;"
         }
@@ -144,8 +146,8 @@
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
-        "name": "Get Report Attributes",
-        "debugMode": true,
+        "name": "Get Attributes",
+        "debugMode": false,
         "configuration": {
           "clientAttributeNames": [],
           "sharedAttributeNames": [],
@@ -162,7 +164,7 @@
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Last Report Date",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "if (!metadata.lastReportDate) {\n    return true;\n}\n\nvar lastReportDate = parseInt(metadata.lastReportDate);\nvar reportDate = parseInt(metadata.reportDate);\n\nreturn reportDate > lastReportDate;"
         }
@@ -174,7 +176,7 @@
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetTelemetryNode",
         "name": "Get Worker Telemetry",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "startInterval": 2,
           "endInterval": 1,
@@ -199,7 +201,7 @@
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetTelemetryNode",
         "name": "Get Group Telemetry",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "startInterval": 2,
           "endInterval": 1,
@@ -224,9 +226,9 @@
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Message",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
-          "jsScript": "msg = {\n    hourly_in_count: parseInt((metadata.in_count||'0').replace(/\\\"/g, '')),\n    hourly_success_count: parseInt((metadata.success_count||'0').replace(/\\\"/g, '')),\n    hourly_fail_count: parseInt((metadata.fail_count||'0').replace(/\\\"/g, '')),\n    lastReportDate: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "msg = {};\n\nif (metadata.in_count) {\n    msg.hourly_in_count = parseInt(JSON.parse(metadata.in_count));\n}\n\nif (metadata.success_count) {\n    msg.hourly_success_count = parseInt(JSON.parse(metadata.success_count));\n}\n\nif (metadata.fail_count) {\n    msg.hourly_fail_count = parseInt(JSON.parse(metadata.fail_count));\n}\n\nmsg.lastReportDate = Date.now();\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -236,9 +238,9 @@
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Message",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
-          "jsScript": "msg = {\n    hourly_all_in_count: parseInt((metadata.all_in_count||'0').replace(/\\\"/g, '')),\n    hourly_all_success_count: parseInt((metadata.all_success_count||'0').replace(/\\\"/g, '')),\n    hourly_all_fail_count: parseInt((metadata.all_fail_count||'0').replace(/\\\"/g, '')),\n    lastReportDate: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "msg = {};\n\nif (metadata.in_count) {\n    msg.hourly_all_in_count = parseInt(JSON.parse(metadata.all_in_count));\n}\n\nif (metadata.success_count) {\n    msg.hourly_all_success_count = parseInt(JSON.parse(metadata.all_success_count));\n}\n\nif (metadata.fail_count) {\n    msg.hourly_all_fail_count = parseInt(JSON.parse(metadata.all_fail_count));\n}\n\nmsg.lastReportDate = Date.now();\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -248,7 +250,7 @@
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
         "name": "Save Telemetry",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "defaultTTL": 0
         }
@@ -260,7 +262,7 @@
         },
         "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
         "name": "Change to Metadata",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "originatorSource": "RELATED",
           "relationsQuery": {
@@ -284,7 +286,7 @@
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Last Report Date",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "jsScript": "msg = {\n    lastReportDate: Date.now()\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
@@ -296,7 +298,7 @@
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
         "name": "Save Last Report Date",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
           "defaultTTL": 0
         }
@@ -308,9 +310,9 @@
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Last Message",
-        "debugMode": true,
+        "debugMode": false,
         "configuration": {
-          "jsScript": "var msgs = JSON.parse(metadata.msgs);\n\nreturn msgs.length===0;"
+          "jsScript": "var msgs = JSON.parse(metadata.msgs);\n\nreturn msgs.length === 0;"
         }
       }
     ],

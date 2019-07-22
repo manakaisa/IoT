@@ -1,6 +1,8 @@
 {
   "ruleChain": {
-    "additionalInfo": null,
+    "additionalInfo": {
+      "description": "Type: Utility"
+    },
     "name": "Split Messages",
     "firstRuleNodeId": null,
     "root": false,
@@ -69,7 +71,7 @@
         "additionalInfo": {
           "layoutX": 550,
           "layoutY": 426,
-          "ruleChainNodeId": "rule-chain-node-6"
+          "ruleChainNodeId": "rule-chain-node-5"
         },
         "type": "Report_G1"
       },
@@ -82,7 +84,7 @@
         "additionalInfo": {
           "layoutX": 550,
           "layoutY": 501,
-          "ruleChainNodeId": "rule-chain-node-7"
+          "ruleChainNodeId": "rule-chain-node-6"
         },
         "type": "Report_Unit_Test"
       },
@@ -95,9 +97,9 @@
         "additionalInfo": {
           "layoutX": 549,
           "layoutY": 351,
-          "ruleChainNodeId": "rule-chain-node-5"
+          "ruleChainNodeId": "rule-chain-node-7"
         },
-        "type": "Reset_G1-Worker"
+        "type": "Reset_G1-Workers"
       }
     ]
   }

@@ -1,7 +1,7 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: G1-W${work_id}\nRequired Fields: work_id, count\nSave Fields: {in_count|success_count|fail_count}\nPost Rule Chain: Save G1\nScope: Public"
+      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: G1-W${work_id}\nInput: work_id, count\nOutput: {in_count|success_count|fail_count}\nSensor Type: IN_COUNT, SUCCESS_COUNT, FAIL_COUNT"
     },
     "name": "Save G1-Worker",
     "firstRuleNodeId": null,
@@ -14,8 +14,8 @@
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 1652,
-          "layoutY": 153
+          "layoutX": 2200,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
         "name": "Save Telemetry",
@@ -26,8 +26,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1100,
-          "layoutY": 153
+          "layoutX": 1650,
+          "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
         "name": "Change Originator",
@@ -46,14 +46,14 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 824,
-          "layoutY": 150
+          "layoutX": 1376,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Metadata",
         "debugMode": false,
         "configuration": {
-          "jsScript": "metadata.targetDeviceName = 'G1-W' + msg.worker_id;\nmetadata.worker_id = msg.worker_id;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "metadata.targetDeviceName = (metadata.ss_worker_prefix||'') + msg.worker_id;\nmetadata.worker_id = msg.worker_id;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -75,8 +75,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1375,
-          "layoutY": 153
+          "layoutX": 1925,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Message",
@@ -87,8 +87,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1374,
-          "layoutY": 249
+          "layoutX": 1925,
+          "layoutY": 251
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Prepare G1 Message",
@@ -106,7 +106,54 @@
         "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg.reset||false;"
+          "jsScript": "return msg.reset || false;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 824,
+          "layoutY": 152
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Create Metadata Relation",
+        "debugMode": false,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "Metadata",
+          "entityTypePattern": "META",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": false,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1099,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode",
+        "name": "Get Metadata Attributes",
+        "debugMode": false,
+        "configuration": {
+          "attrMapping": {
+            "worker_prefix": "ss_worker_prefix"
+          },
+          "relationsQuery": {
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "META",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          },
+          "telemetry": false
         }
       }
     ],
@@ -128,7 +175,7 @@
       },
       {
         "fromIndex": 3,
-        "toIndex": 2,
+        "toIndex": 7,
         "type": "True"
       },
       {
@@ -140,6 +187,16 @@
         "fromIndex": 6,
         "toIndex": 3,
         "type": "False"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 2,
+        "type": "Success"
       }
     ],
     "ruleChainConnections": [
@@ -150,9 +207,9 @@
           "id": "4b6cc660-9064-11e9-b38f-0b2a9f963f32"
         },
         "additionalInfo": {
-          "layoutX": 1652,
-          "layoutY": 249,
-          "ruleChainNodeId": "rule-chain-node-10"
+          "layoutX": 2200,
+          "layoutY": 250,
+          "ruleChainNodeId": "rule-chain-node-11"
         },
         "type": "Success"
       },
@@ -165,7 +222,7 @@
         "additionalInfo": {
           "layoutX": 550,
           "layoutY": 251,
-          "ruleChainNodeId": "rule-chain-node-9"
+          "ruleChainNodeId": "rule-chain-node-12"
         },
         "type": "True"
       }

@@ -1,0 +1,263 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: G1-W${work_id}\nInput: reset=true\nOutput: in_count=0, success_count=0, fail_count=0"
+    },
+    "name": "Reset G1-Workers",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 0,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Check Split",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (metadata.split !== \"true\") {\n    return ['Init'];\n}\n\nreturn ['Split', 'Execute'];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2150,
+          "layoutY": 77
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Split Messages",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var prefix = metadata.ss_worker_prefix || '';\nvar workers = JSON.parse(metadata.ss_workers || '{}');\nvar msgs = [];\n\nfor (var worker_id in workers) {\n    msgs.push({ \n        worker_id: workers[worker_id].name.replace(prefix, ''),\n        count: 0\n    });\n}\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.originatorRule = 'Reset_G1-Workers';\n\nmsg = {};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1599,
+          "layoutY": 75
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Metadata",
+        "debugMode": false,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "Metadata",
+          "entityTypePattern": "META",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 500,
+          "layoutY": 225
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "delete metadata.msgs;\ndelete metadata.split;\ndelete metadata.ss_worker_prefix\ndelete metadata.ss_workers;\ndelete metadata.originatorRule;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 775,
+          "layoutY": 75
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to G1",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "SENSOR",
+          "entityType": "ASSET",
+          "entityNamePattern": "G1",
+          "entityTypePattern": "GROUP",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1050,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (metadata.sensorType === 'IN_COUNT') {\n    msg = { datasource_in_count: JSON.stringify({}) };\n}\nelse if (metadata.sensorType === 'SUCCESS_COUNT') {\n    msg = { datasource_success_count: JSON.stringify({}) };\n}\nelse if (metadata.sensorType === 'FAIL_COUNT') {\n    msg = { datasource_fail_count: JSON.stringify({}) };\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1325,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1876,
+          "layoutY": 77
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Attributes",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "workers",
+            "worker_prefix"
+          ],
+          "latestTsKeyNames": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 776,
+          "layoutY": 225
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Originator",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "META",
+          "entityType": "DEVICE",
+          "entityNamePattern": "${originatorName}",
+          "entityTypePattern": "${originatorType}",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 500,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Get Originator Attributes",
+        "debugMode": false,
+        "configuration": {
+          "fieldsMapping": {
+            "name": "originatorName",
+            "type": "originatorType"
+          }
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 3,
+        "type": "Execute"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 9,
+        "type": "Init"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 1,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 4,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "6728ba90-91a3-11e9-a444-f17d9b7c69b1"
+        },
+        "additionalInfo": {
+          "layoutX": 1050,
+          "layoutY": 151,
+          "ruleChainNodeId": "rule-chain-node-12"
+        },
+        "type": "Split"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "6728ba90-91a3-11e9-a444-f17d9b7c69b1"
+        },
+        "additionalInfo": {
+          "layoutX": 1050,
+          "layoutY": 151,
+          "ruleChainNodeId": "rule-chain-node-12"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "28a73130-8dba-11e9-9a48-3561c8147044"
+        },
+        "additionalInfo": {
+          "layoutX": 1051,
+          "layoutY": 225,
+          "ruleChainNodeId": "rule-chain-node-13"
+        },
+        "type": "Success"
+      }
+    ]
+  }
+}

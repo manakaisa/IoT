@@ -24,14 +24,14 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 824,
-          "layoutY": 151
+          "layoutX": 823,
+          "layoutY": 99
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Required Fields",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var strFields = metadata.ss_requiredFields;\n\nif(!strFields) {\n    return true;\n}\n\nfields = strFields.replace(' ', '').split(',');\n\nreturn fields.every(function (field) {\n    return msg[field] !== undefined;\n});"
+          "jsScript": "var strFields = metadata.ss_requiredFields;\nif(!strFields) {\n    return true;\n}\n\nvar fields = strFields.replace(' ', '').split(',');\nreturn fields.every(function (field) {\n    return msg[field] != null;\n});"
         }
       },
       {
@@ -73,7 +73,7 @@
         "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg.reset||false;"
+          "jsScript": "return msg.reset || false;"
         }
       },
       {
@@ -86,6 +86,18 @@
         "debugMode": false,
         "configuration": {
           "jsScript": "metadata = {\n    sensorType: metadata.ss_sensorType || ''\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 826,
+          "layoutY": 200
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Reset Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "msg = { \n    reset: true,\n    lastResetDate: Date.now()\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       }
     ],
@@ -117,12 +129,17 @@
       },
       {
         "fromIndex": 4,
-        "toIndex": 5,
+        "toIndex": 6,
         "type": "True"
       },
       {
         "fromIndex": 5,
         "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 0,
         "type": "Success"
       }
     ],
@@ -134,9 +151,9 @@
           "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 827,
-          "layoutY": 426,
-          "ruleChainNodeId": "rule-chain-node-8"
+          "layoutX": 825,
+          "layoutY": 427,
+          "ruleChainNodeId": "rule-chain-node-9"
         },
         "type": "FAIL_COUNT"
       },
@@ -147,9 +164,9 @@
           "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 827,
-          "layoutY": 426,
-          "ruleChainNodeId": "rule-chain-node-8"
+          "layoutX": 825,
+          "layoutY": 427,
+          "ruleChainNodeId": "rule-chain-node-9"
         },
         "type": "IN_COUNT"
       },
@@ -160,9 +177,9 @@
           "id": "28a73130-8dba-11e9-9a48-3561c8147044"
         },
         "additionalInfo": {
-          "layoutX": 827,
-          "layoutY": 426,
-          "ruleChainNodeId": "rule-chain-node-8"
+          "layoutX": 825,
+          "layoutY": 427,
+          "ruleChainNodeId": "rule-chain-node-9"
         },
         "type": "SUCCESS_COUNT"
       },
@@ -175,7 +192,7 @@
         "additionalInfo": {
           "layoutX": 825,
           "layoutY": 352,
-          "ruleChainNodeId": "rule-chain-node-9"
+          "ruleChainNodeId": "rule-chain-node-10"
         },
         "type": "TEST"
       }

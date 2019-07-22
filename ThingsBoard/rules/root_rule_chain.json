@@ -98,24 +98,11 @@
         "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+          "id": "93f3a1a0-ab0e-11e9-be14-29c77927f436"
         },
         "additionalInfo": {
-          "layoutX": 650,
-          "layoutY": 552,
-          "ruleChainNodeId": "rule-chain-node-8"
-        },
-        "type": "Entity Assigned"
-      },
-      {
-        "fromIndex": 1,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
-        },
-        "additionalInfo": {
-          "layoutX": 650,
-          "layoutY": 552,
+          "layoutX": 649,
+          "layoutY": 548,
           "ruleChainNodeId": "rule-chain-node-8"
         },
         "type": "Entity Created"
@@ -124,11 +111,11 @@
         "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+          "id": "93f3a1a0-ab0e-11e9-be14-29c77927f436"
         },
         "additionalInfo": {
-          "layoutX": 650,
-          "layoutY": 552,
+          "layoutX": 649,
+          "layoutY": 548,
           "ruleChainNodeId": "rule-chain-node-8"
         },
         "type": "Entity Deleted"
@@ -137,24 +124,11 @@
         "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
+          "id": "93f3a1a0-ab0e-11e9-be14-29c77927f436"
         },
         "additionalInfo": {
-          "layoutX": 650,
-          "layoutY": 552,
-          "ruleChainNodeId": "rule-chain-node-8"
-        },
-        "type": "Entity Unassigned"
-      },
-      {
-        "fromIndex": 1,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "aa104bd0-911b-11e9-b8c1-3344d403337e"
-        },
-        "additionalInfo": {
-          "layoutX": 650,
-          "layoutY": 552,
+          "layoutX": 649,
+          "layoutY": 548,
           "ruleChainNodeId": "rule-chain-node-8"
         },
         "type": "Entity Updated"

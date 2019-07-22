@@ -1,9 +1,9 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: Unit Test\nInput: row_id, *\nOutput: *\nPost Rules:\nScope: Public"
+      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: Unit Test\nInput: row_id, *\nOutput: *\nSensor Type: TEST"
     },
-    "name": "Save Asset Unit Test",
+    "name": "Save Unit Test",
     "firstRuleNodeId": null,
     "root": false,
     "debugMode": false,
@@ -93,7 +93,7 @@
         "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg.reset||false;"
+          "jsScript": "return msg.reset || false;"
         }
       },
       {
