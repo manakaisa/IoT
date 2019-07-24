@@ -21,13 +21,6 @@
         "info": ""
     },
     {
-        "id": "7e1d8731.168108",
-        "type": "tab",
-        "label": "Ping Unit Test",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "d9b805d9.02c008",
         "type": "tab",
         "label": "Usecase - G1",
@@ -129,11 +122,11 @@
         ],
         "out": [
             {
-                "x": 960,
+                "x": 1220,
                 "y": 60,
                 "wires": [
                     {
-                        "id": "5be4e221.551dbc",
+                        "id": "1cb7c055.97ae7",
                         "port": 0
                     }
                 ]
@@ -354,7 +347,7 @@
         "id": "c0138232.74c19",
         "type": "modbus-read",
         "z": "a9b927b3.834d18",
-        "name": "Read Modbus",
+        "name": "Read Modbus - ${sensor}",
         "topic": "",
         "showStatusActivities": false,
         "logIOActivities": false,
@@ -363,7 +356,7 @@
         "dataType": "HoldingRegister",
         "adr": "0",
         "quantity": "1",
-        "rate": "5000",
+        "rate": "1000",
         "rateUnit": "ms",
         "delayOnStart": true,
         "startDelayTime": "1",
@@ -371,7 +364,7 @@
         "useIOFile": false,
         "ioFile": "",
         "useIOForPayload": false,
-        "x": 150,
+        "x": 190,
         "y": 160,
         "wires": [
             [],
@@ -389,7 +382,7 @@
         "qos": "",
         "retain": "",
         "broker": "a7f6088.a9b1bf8",
-        "x": 730,
+        "x": 810,
         "y": 160,
         "wires": []
     },
@@ -432,7 +425,7 @@
         "qos": "",
         "retain": "",
         "broker": "a7f6088.a9b1bf8",
-        "x": 850,
+        "x": 870,
         "y": 80,
         "wires": []
     },
@@ -910,20 +903,13 @@
         "id": "60370914.abe3c8",
         "type": "change",
         "z": "a9b927b3.834d18",
-        "name": "Set configuration",
+        "name": "Set configurations",
         "rules": [
-            {
-                "t": "set",
-                "p": "device",
-                "pt": "flow",
-                "to": "${name}",
-                "tot": "str"
-            },
             {
                 "t": "set",
                 "p": "fields",
                 "pt": "flow",
-                "to": "[{\"name\":\"name\",\"type\":\"BOOLEAN|INT|UINT|FLOAT|DOUBLE|STRING\",\"offset\":0,\"byteLength\":1}]",
+                "to": "[{\"name\":\"name\",\"type\":\"BOOLEAN|INT|UINT|FLOAT|DOUBLE|STRING\",\"offset\":0,\"byteLength\":2,\"export\":true}]",
                 "tot": "json"
             },
             {
@@ -946,6 +932,13 @@
                 "pt": "flow",
                 "to": "",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "clearReadyFlag",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -960,24 +953,10 @@
         ]
     },
     {
-        "id": "ff38af93.1966e",
-        "type": "function",
-        "z": "a9b927b3.834d18",
-        "name": "Backup Resolve device name",
-        "func": "var device = flow.get('device');\nvar fields = flow.get('fields');\n\nif (device.search(/\\$\\{\\w+\\}/) === -1) {\n    return msg;\n}\n\nfields.forEach(function(field) {\n    device = device.replace('${' + field.name + '}', msg.payload[field.name]);\n});\n\nflow.set('device', device);\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 190,
-        "y": 600,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "9281bc65.e6f3b",
         "type": "modbus-read",
         "z": "f0df971c.4d54b8",
-        "name": "Read Modbus",
+        "name": "Read Modbus - Unit Test",
         "topic": "",
         "showStatusActivities": false,
         "logIOActivities": false,
@@ -985,8 +964,8 @@
         "unitid": "",
         "dataType": "HoldingRegister",
         "adr": "0",
-        "quantity": "11",
-        "rate": "5000",
+        "quantity": "12",
+        "rate": "1000",
         "rateUnit": "ms",
         "delayOnStart": true,
         "startDelayTime": "1",
@@ -994,8 +973,8 @@
         "useIOFile": false,
         "ioFile": "",
         "useIOForPayload": false,
-        "x": 170,
-        "y": 180,
+        "x": 210,
+        "y": 200,
         "wires": [
             [],
             [
@@ -1012,8 +991,8 @@
         "qos": "",
         "retain": "",
         "broker": "ad2491d8.6f9d",
-        "x": 750,
-        "y": 180,
+        "x": 830,
+        "y": 200,
         "wires": []
     },
     {
@@ -1040,20 +1019,20 @@
         "id": "3a8ac1db.b270be",
         "type": "change",
         "z": "f0df971c.4d54b8",
-        "name": "Set configuration",
+        "name": "Set configurations",
         "rules": [
             {
                 "t": "set",
                 "p": "fields",
                 "pt": "flow",
-                "to": "[{\"name\":\"row_id\",\"type\":\"UINT\",\"offset\":0,\"byteLength\":2},{\"name\":\"name\",\"type\":\"STRING\",\"offset\":2,\"byteLength\":4},{\"name\":\"bool\",\"type\":\"BOOLEAN\",\"offset\":7},{\"name\":\"integer\",\"type\":\"INT\",\"offset\":8,\"byteLength\":2},{\"name\":\"float\",\"type\":\"FLOAT\",\"offset\":10},{\"name\":\"double\",\"type\":\"DOUBLE\",\"offset\":14},{\"name\":\"hex\",\"offset\":2,\"byteLength\":4}]",
+                "to": "[{\"name\":\"readyFlag\",\"type\":\"INT\",\"offset\":0,\"byteLength\":2,\"export\":false},{\"name\":\"row_id\",\"type\":\"UINT\",\"offset\":2,\"byteLength\":2},{\"name\":\"name\",\"type\":\"STRING\",\"offset\":4,\"byteLength\":4},{\"name\":\"bool\",\"type\":\"BOOLEAN\",\"offset\":9},{\"name\":\"integer\",\"type\":\"INT\",\"offset\":10,\"byteLength\":2},{\"name\":\"float\",\"type\":\"FLOAT\",\"offset\":12},{\"name\":\"double\",\"type\":\"DOUBLE\",\"offset\":16},{\"name\":\"hex\",\"offset\":0,\"byteLength\":24}]",
                 "tot": "json"
             },
             {
                 "t": "set",
                 "p": "dropEmptyField",
                 "pt": "flow",
-                "to": "row_id",
+                "to": "readyFlag",
                 "tot": "str"
             },
             {
@@ -1069,6 +1048,13 @@
                 "pt": "flow",
                 "to": "row_id",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "clearReadyFlag",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -1093,35 +1079,8 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 710,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "9fe8859f.56a278",
-        "type": "function",
-        "z": "a9b927b3.834d18",
-        "name": "Backup Construct MQTT Gateway payload",
-        "func": "var device = flow.get('device');\nvar fields = flow.get('fields');\nvar payload = {};\n\npayload[device] = {};\nfields.forEach(function(field) {\n    payload[device][field.name] = msg.payload[field.name];\n});\n\nmsg = { payload: payload };\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 230,
-        "y": 640,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "c6662f0a.5ac07",
-        "type": "mqtt out",
-        "z": "a9b927b3.834d18",
-        "name": "Backup Write to MQTT Gateway",
-        "topic": "v1/gateway/telemetry",
-        "qos": "",
-        "retain": "",
-        "broker": "1e998288.5937dd",
-        "x": 190,
-        "y": 680,
+        "x": 790,
+        "y": 320,
         "wires": []
     },
     {
@@ -1250,7 +1209,7 @@
         "reset": "reset",
         "bytopic": "all",
         "name": "Set offline",
-        "x": 640,
+        "x": 660,
         "y": 140,
         "wires": [
             [
@@ -1294,145 +1253,6 @@
         ]
     },
     {
-        "id": "67923ef4.2b072",
-        "type": "modbus-read",
-        "z": "7e1d8731.168108",
-        "name": "Ping Modbus",
-        "topic": "",
-        "showStatusActivities": false,
-        "logIOActivities": false,
-        "showErrors": false,
-        "unitid": "",
-        "dataType": "Coil",
-        "adr": "0",
-        "quantity": "1",
-        "rate": "5000",
-        "rateUnit": "ms",
-        "delayOnStart": true,
-        "startDelayTime": "1",
-        "server": "f6f75f38.3c415",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "x": 170,
-        "y": 80,
-        "wires": [
-            [
-                "9382aa1.ce93258"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "ee4591d3.34679",
-        "type": "mqtt out",
-        "z": "7e1d8731.168108",
-        "name": "Write to MQTT - Unit Test",
-        "topic": "v1/devices/me/attributes",
-        "qos": "",
-        "retain": "",
-        "broker": "ad2491d8.6f9d",
-        "x": 870,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "64d67fda.9e51d",
-        "type": "debug",
-        "z": "7e1d8731.168108",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 830,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "cf35f791.78cf38",
-        "type": "trigger",
-        "z": "7e1d8731.168108",
-        "op1": "reset",
-        "op2": "true",
-        "op1type": "str",
-        "op2type": "bool",
-        "duration": "5.5",
-        "extend": false,
-        "units": "s",
-        "reset": "",
-        "bytopic": "all",
-        "name": "",
-        "x": 510,
-        "y": 140,
-        "wires": [
-            [
-                "96661416.bc68b8"
-            ]
-        ]
-    },
-    {
-        "id": "96661416.bc68b8",
-        "type": "trigger",
-        "z": "7e1d8731.168108",
-        "op1": "{\"online\":false}",
-        "op2": "0",
-        "op1type": "json",
-        "op2type": "str",
-        "duration": "-5",
-        "extend": false,
-        "units": "s",
-        "reset": "reset",
-        "bytopic": "all",
-        "name": "Set offline",
-        "x": 660,
-        "y": 140,
-        "wires": [
-            [
-                "64d67fda.9e51d",
-                "ee4591d3.34679"
-            ]
-        ]
-    },
-    {
-        "id": "9382aa1.ce93258",
-        "type": "change",
-        "z": "7e1d8731.168108",
-        "name": "Set online",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"online\":true}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "reset",
-                "pt": "msg",
-                "to": "true",
-                "tot": "bool"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 340,
-        "y": 80,
-        "wires": [
-            [
-                "ee4591d3.34679",
-                "cf35f791.78cf38",
-                "64d67fda.9e51d"
-            ]
-        ]
-    },
-    {
         "id": "4a179246.ce5e6c",
         "type": "modbus-server",
         "z": "83934200.a308e",
@@ -1448,7 +1268,7 @@
         "discreteBufferSize": 10000,
         "showErrors": false,
         "x": 140,
-        "y": 100,
+        "y": 80,
         "wires": [
             [],
             [],
@@ -1466,10 +1286,10 @@
         "unitid": "",
         "dataType": "MHoldingRegisters",
         "adr": "0",
-        "quantity": "11",
+        "quantity": "12",
         "server": "f6f75f38.3c415",
-        "x": 660,
-        "y": 280,
+        "x": 920,
+        "y": 240,
         "wires": [
             [
                 "b6ec0714.428b68"
@@ -1490,30 +1310,10 @@
         "once": false,
         "onceDelay": "1",
         "x": 140,
-        "y": 280,
+        "y": 240,
         "wires": [
             [
                 "25636401.fdd86c"
-            ]
-        ]
-    },
-    {
-        "id": "824ea32f.7ffe1",
-        "type": "inject",
-        "z": "7e1d8731.168108",
-        "name": "Timeout",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "30",
-        "x": 340,
-        "y": 140,
-        "wires": [
-            [
-                "cf35f791.78cf38"
             ]
         ]
     },
@@ -1522,11 +1322,11 @@
         "type": "function",
         "z": "83934200.a308e",
         "name": "Write Data",
-        "func": "var buf = Buffer.alloc(22);\nvar output = [];\n\n// row_id\nvar row_id = flow.get('row_id');\nrow_id++;\nbuf.writeUInt16BE(row_id, 0);\nflow.set('row_id', row_id);\n// name\nbuf.write('demo', 2, 4, 'ascii');\n// bool\nbuf.writeInt16BE(1, 6);\n// integer\nbuf.writeInt16BE(-8888, 8);\n// float\nbuf.writeFloatBE(88.88, 10);\n// double\nbuf.writeDoubleBE(8888.8888, 14);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.payload = output;\n\nreturn msg;",
+        "func": "var buf = Buffer.alloc(24);\nvar output = [];\n\n// Read flag\nbuf.writeInt16BE(1, 0);\n// row_id\nvar row_id = flow.get('row_id');\nrow_id++;\nbuf.writeUInt16BE(row_id, 2);\nflow.set('row_id', row_id);\n// name\nbuf.write('demo', 4, 8, 'ascii');\n// bool\nbuf.writeInt16BE(1, 8);\n// integer\nbuf.writeInt16BE(-8888, 10);\n// float\nbuf.writeFloatBE(88.88, 12);\n// double\nbuf.writeDoubleBE(8888.8888, 16);\n\nfor(var i=0; i<buf.length/2; i++) {\n    output.push(buf.readUInt16BE(i*2));\n}\n\nmsg.payload = output;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 470,
-        "y": 280,
+        "x": 730,
+        "y": 240,
         "wires": [
             [
                 "1db85f16.68b2b1"
@@ -1544,8 +1344,8 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 850,
-        "y": 280,
+        "x": 1110,
+        "y": 240,
         "wires": []
     },
     {
@@ -1597,8 +1397,8 @@
         "crontab": "",
         "once": true,
         "onceDelay": "0.1",
-        "x": 130,
-        "y": 200,
+        "x": 330,
+        "y": 60,
         "wires": [
             [
                 "40d101ac.ff7bb"
@@ -1631,6 +1431,13 @@
                 "pt": "flow",
                 "to": "{\"row_id_in\":0,\"row_id_success\":0,\"row_id_fail\":0}",
                 "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "checkReadyFlag",
+                "pt": "flow",
+                "to": "true",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -1638,8 +1445,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 290,
-        "y": 200,
+        "x": 490,
+        "y": 60,
         "wires": [
             []
         ]
@@ -1652,17 +1459,17 @@
         "op2": "0",
         "op1type": "date",
         "op2type": "str",
-        "duration": "-1000",
+        "duration": "-5000",
         "extend": false,
         "units": "ms",
         "reset": "reset",
         "bytopic": "all",
         "name": "Interval",
         "x": 300,
-        "y": 280,
+        "y": 240,
         "wires": [
             [
-                "972d7e83.e91da"
+                "b13788ed.1eef18"
             ]
         ]
     },
@@ -1679,7 +1486,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 320,
+        "y": 280,
         "wires": [
             [
                 "25636401.fdd86c"
@@ -2011,7 +1818,7 @@
         "id": "fdfa1754.4e4a38",
         "type": "inject",
         "z": "62483486.da24ac",
-        "name": "Timeout",
+        "name": "Timeout {N}s",
         "topic": "",
         "payload": "",
         "payloadType": "date",
@@ -2019,7 +1826,7 @@
         "crontab": "",
         "once": true,
         "onceDelay": "30",
-        "x": 320,
+        "x": 310,
         "y": 140,
         "wires": [
             [
@@ -2031,7 +1838,7 @@
         "id": "74295b42.bea204",
         "type": "modbus-read",
         "z": "d9b805d9.02c008",
-        "name": "Read Modbus G1-In",
+        "name": "Read Modbus - G1-In",
         "topic": "",
         "showStatusActivities": false,
         "logIOActivities": false,
@@ -2048,8 +1855,8 @@
         "useIOFile": false,
         "ioFile": "",
         "useIOForPayload": false,
-        "x": 190,
-        "y": 180,
+        "x": 200,
+        "y": 160,
         "wires": [
             [],
             [
@@ -2066,8 +1873,8 @@
         "qos": "",
         "retain": "",
         "broker": "1af2b6b9.48e7f9",
-        "x": 780,
-        "y": 180,
+        "x": 800,
+        "y": 160,
         "wires": []
     },
     {
@@ -2094,7 +1901,7 @@
         "id": "ee36e59b.fabae8",
         "type": "change",
         "z": "d9b805d9.02c008",
-        "name": "Set configuration",
+        "name": "Set configurations",
         "rules": [
             {
                 "t": "set",
@@ -2123,6 +1930,13 @@
                 "pt": "flow",
                 "to": "row_id",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "clearReadyFlag",
+                "pt": "flow",
+                "to": "false",
+                "tot": "bool"
             }
         ],
         "action": "",
@@ -2147,8 +1961,8 @@
         "tostatus": false,
         "complete": "payload",
         "targetType": "msg",
-        "x": 750,
-        "y": 240,
+        "x": 770,
+        "y": 280,
         "wires": []
     },
     {
@@ -2173,7 +1987,7 @@
         "ioFile": "",
         "useIOForPayload": false,
         "x": 220,
-        "y": 300,
+        "y": 360,
         "wires": [
             [],
             [
@@ -2191,7 +2005,7 @@
         "retain": "",
         "broker": "8a1a083a.a62238",
         "x": 860,
-        "y": 300,
+        "y": 360,
         "wires": []
     },
     {
@@ -2206,7 +2020,7 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 810,
-        "y": 360,
+        "y": 480,
         "wires": []
     },
     {
@@ -2231,7 +2045,7 @@
         "ioFile": "",
         "useIOForPayload": false,
         "x": 200,
-        "y": 420,
+        "y": 560,
         "wires": [
             [],
             [
@@ -2249,7 +2063,7 @@
         "retain": "",
         "broker": "a302f12e.5679d",
         "x": 810,
-        "y": 420,
+        "y": 560,
         "wires": []
     },
     {
@@ -2264,7 +2078,7 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 770,
-        "y": 480,
+        "y": 680,
         "wires": []
     },
     {
@@ -2355,7 +2169,9 @@
         "x": 810,
         "y": 60,
         "wires": [
-            []
+            [
+                "1cb7c055.97ae7"
+            ]
         ]
     },
     {
@@ -2364,11 +2180,12 @@
         "z": "a9b927b3.834d18",
         "name": "Sub Process",
         "env": [],
-        "x": 510,
+        "x": 590,
         "y": 160,
         "wires": [
             [
-                "273b3bb7.ab2cd4"
+                "273b3bb7.ab2cd4",
+                "cced7aee.f7fcb8"
             ]
         ]
     },
@@ -2378,12 +2195,13 @@
         "z": "f0df971c.4d54b8",
         "name": "Sub Process",
         "env": [],
-        "x": 530,
-        "y": 180,
+        "x": 610,
+        "y": 200,
         "wires": [
             [
                 "ab670edb.5eeb9",
-                "f77db69b.17d798"
+                "f77db69b.17d798",
+                "8a5007a1.e56fc8"
             ]
         ]
     },
@@ -2427,7 +2245,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 330,
+        "x": 410,
         "y": 160,
         "wires": [
             [
@@ -2441,12 +2259,13 @@
         "z": "d9b805d9.02c008",
         "name": "Sub Process",
         "env": [],
-        "x": 570,
-        "y": 180,
+        "x": 590,
+        "y": 160,
         "wires": [
             [
                 "1b2e5f45.95dec1",
-                "a3d244ea.6c61a8"
+                "a3d244ea.6c61a8",
+                "abdc0013.e4848"
             ]
         ]
     },
@@ -2457,11 +2276,12 @@
         "name": "Sub Process",
         "env": [],
         "x": 630,
-        "y": 300,
+        "y": 360,
         "wires": [
             [
                 "18b418c9.5d72c7",
-                "a5e89f7f.a27b"
+                "a5e89f7f.a27b",
+                "d62596d4.729068"
             ]
         ]
     },
@@ -2472,11 +2292,12 @@
         "name": "Sub Process",
         "env": [],
         "x": 590,
-        "y": 420,
+        "y": 560,
         "wires": [
             [
                 "fb086111.7de24",
-                "780323b4.d4caec"
+                "780323b4.d4caec",
+                "5c957e64.dd454"
             ]
         ]
     },
@@ -2650,8 +2471,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 350,
-        "y": 180,
+        "x": 430,
+        "y": 200,
         "wires": [
             [
                 "364da080.e5aca"
@@ -2698,8 +2519,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 390,
-        "y": 180,
+        "x": 410,
+        "y": 160,
         "wires": [
             [
                 "7a5addaf.b87054"
@@ -2747,7 +2568,7 @@
         "to": "",
         "reg": false,
         "x": 450,
-        "y": 300,
+        "y": 360,
         "wires": [
             [
                 "227d9770.db3c68"
@@ -2795,7 +2616,7 @@
         "to": "",
         "reg": false,
         "x": 410,
-        "y": 420,
+        "y": 560,
         "wires": [
             [
                 "e0e41eaf.aa4f"
@@ -2806,7 +2627,7 @@
         "id": "4efff6a3.9deee8",
         "type": "function",
         "z": "5f1ffc5e.8ba854",
-        "name": "Check Reset",
+        "name": "Check reset",
         "func": "var resetField = msg.metadata.resetField;\nvar isReset = false;\n\nif (resetField) {\n    if(typeof msg.payload[resetField] === 'string' && msg.payload[resetField] === '') {\n        isReset = true;\n    } else if (typeof msg.payload[resetField] === 'number' && msg.payload[resetField] === 0) {\n        isReset = true;\n    }\n}\n\nif(isReset) {\n    msg.metadata.dropUnchangedField = 'reset';\n    msg.payload = { reset: true };\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -2815,6 +2636,433 @@
         "wires": [
             [
                 "7239c059.fc6f6"
+            ]
+        ]
+    },
+    {
+        "id": "94d7af40.85a58",
+        "type": "modbus-read",
+        "z": "f0df971c.4d54b8",
+        "name": "Ping Modbus",
+        "topic": "",
+        "showStatusActivities": false,
+        "logIOActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "Coil",
+        "adr": "0",
+        "quantity": "1",
+        "rate": "5000",
+        "rateUnit": "ms",
+        "delayOnStart": true,
+        "startDelayTime": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 170,
+        "y": 440,
+        "wires": [
+            [
+                "2114f16e.4b9a5e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b016559e.767048",
+        "type": "mqtt out",
+        "z": "f0df971c.4d54b8",
+        "name": "Write to MQTT - Unit Test",
+        "topic": "v1/devices/me/attributes",
+        "qos": "",
+        "retain": "",
+        "broker": "ad2491d8.6f9d",
+        "x": 870,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "884cfb59.91da98",
+        "type": "debug",
+        "z": "f0df971c.4d54b8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 830,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "aba60f28.4dd5c",
+        "type": "trigger",
+        "z": "f0df971c.4d54b8",
+        "op1": "reset",
+        "op2": "true",
+        "op1type": "str",
+        "op2type": "bool",
+        "duration": "5.5",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "name": "",
+        "x": 510,
+        "y": 500,
+        "wires": [
+            [
+                "3c04e240.a00a4e"
+            ]
+        ]
+    },
+    {
+        "id": "3c04e240.a00a4e",
+        "type": "trigger",
+        "z": "f0df971c.4d54b8",
+        "op1": "{\"online\":false}",
+        "op2": "0",
+        "op1type": "json",
+        "op2type": "str",
+        "duration": "-5",
+        "extend": false,
+        "units": "s",
+        "reset": "reset",
+        "bytopic": "all",
+        "name": "Set offline",
+        "x": 660,
+        "y": 500,
+        "wires": [
+            [
+                "884cfb59.91da98",
+                "b016559e.767048"
+            ]
+        ]
+    },
+    {
+        "id": "2114f16e.4b9a5e",
+        "type": "change",
+        "z": "f0df971c.4d54b8",
+        "name": "Set online",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"online\":true}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "b016559e.767048",
+                "aba60f28.4dd5c",
+                "884cfb59.91da98"
+            ]
+        ]
+    },
+    {
+        "id": "a70a2774.8d6b18",
+        "type": "inject",
+        "z": "f0df971c.4d54b8",
+        "name": "Timeout 30s",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "x": 330,
+        "y": 500,
+        "wires": [
+            [
+                "aba60f28.4dd5c"
+            ]
+        ]
+    },
+    {
+        "id": "b13788ed.1eef18",
+        "type": "switch",
+        "z": "83934200.a308e",
+        "name": "Check Ready Flag",
+        "property": "checkReadyFlag",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 490,
+        "y": 240,
+        "wires": [
+            [
+                "582b64bc.57115c"
+            ],
+            [
+                "972d7e83.e91da"
+            ]
+        ]
+    },
+    {
+        "id": "582b64bc.57115c",
+        "type": "modbus-getter",
+        "z": "83934200.a308e",
+        "name": "Get Ready Flag",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "server": "f6f75f38.3c415",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [],
+            [
+                "46243eb4.854a"
+            ]
+        ]
+    },
+    {
+        "id": "46243eb4.854a",
+        "type": "switch",
+        "z": "83934200.a308e",
+        "name": "Validate Ready Flag",
+        "property": "payload.data[0]",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 760,
+        "y": 180,
+        "wires": [
+            [
+                "972d7e83.e91da"
+            ]
+        ]
+    },
+    {
+        "id": "7c78e2b7.1f294c",
+        "type": "modbus-write",
+        "z": "f0df971c.4d54b8",
+        "name": "Write to Modbus",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "server": "f6f75f38.3c415",
+        "x": 1020,
+        "y": 260,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "8a5007a1.e56fc8",
+        "type": "function",
+        "z": "f0df971c.4d54b8",
+        "name": "Clear Ready Flag",
+        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 810,
+        "y": 260,
+        "wires": [
+            [
+                "7c78e2b7.1f294c"
+            ]
+        ]
+    },
+    {
+        "id": "1cb7c055.97ae7",
+        "type": "function",
+        "z": "5f1ffc5e.8ba854",
+        "name": "Remove unexport fields",
+        "func": "var fields = msg.metadata.fields;\n\nfields.forEach(function(field) {\n    if (field.export === false) {\n        delete msg.payload[field.name];\n    }\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cced7aee.f7fcb8",
+        "type": "function",
+        "z": "a9b927b3.834d18",
+        "name": "Clear Ready Flag",
+        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 220,
+        "wires": [
+            [
+                "a105b931.e91248"
+            ]
+        ]
+    },
+    {
+        "id": "a105b931.e91248",
+        "type": "modbus-write",
+        "z": "a9b927b3.834d18",
+        "name": "Write to Modbus",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "1",
+        "server": "6b4c93c8.59a22c",
+        "x": 1000,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "31808f2b.f9472",
+        "type": "modbus-write",
+        "z": "d9b805d9.02c008",
+        "name": "Write to Modbus",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "1000",
+        "quantity": "1",
+        "server": "f6f75f38.3c415",
+        "x": 1000,
+        "y": 220,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "abdc0013.e4848",
+        "type": "function",
+        "z": "d9b805d9.02c008",
+        "name": "Clear Ready Flag",
+        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 220,
+        "wires": [
+            [
+                "31808f2b.f9472"
+            ]
+        ]
+    },
+    {
+        "id": "ea97a69.fd84958",
+        "type": "modbus-write",
+        "z": "d9b805d9.02c008",
+        "name": "Write to Modbus",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "2000",
+        "quantity": "1",
+        "server": "f6f75f38.3c415",
+        "x": 1040,
+        "y": 420,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d62596d4.729068",
+        "type": "function",
+        "z": "d9b805d9.02c008",
+        "name": "Clear Ready Flag",
+        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 420,
+        "wires": [
+            [
+                "ea97a69.fd84958"
+            ]
+        ]
+    },
+    {
+        "id": "d7c3849e.5cba98",
+        "type": "modbus-write",
+        "z": "d9b805d9.02c008",
+        "name": "Write to Modbus",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "3000",
+        "quantity": "1",
+        "server": "f6f75f38.3c415",
+        "x": 980,
+        "y": 620,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5c957e64.dd454",
+        "type": "function",
+        "z": "d9b805d9.02c008",
+        "name": "Clear Ready Flag",
+        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 620,
+        "wires": [
+            [
+                "d7c3849e.5cba98"
             ]
         ]
     }

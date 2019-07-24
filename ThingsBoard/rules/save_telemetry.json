@@ -24,8 +24,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 823,
-          "layoutY": 99
+          "layoutX": 825,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "Check Required Fields",
@@ -73,7 +73,7 @@
         "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg.reset || false;"
+          "jsScript": "if (msg.reset === true) {\n    return true\n}\n\nreturn false;"
         }
       },
       {
@@ -90,14 +90,14 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 826,
-          "layoutY": 200
+          "layoutX": 825,
+          "layoutY": 75
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Reset Message",
         "debugMode": false,
         "configuration": {
-          "jsScript": "msg = { \n    reset: true,\n    lastResetDate: Date.now()\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "msg.lastResetDate =  Date.now();\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       }
     ],
