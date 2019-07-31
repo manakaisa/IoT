@@ -342,19 +342,19 @@
           "resolveMultiple": false,
           "singleEntity": {
             "entityType": "ASSET",
-            "id": "e206bec0-877f-11e9-a829-0738a5cfdb07"
+            "id": "448c0c50-b136-11e9-9979-3d9ea7c5489c"
           }
         }
       }
     },
     "timewindow": {
-      "history": {
+      "realtime": {
         "interval": 1000,
-        "timewindowMs": 300000
+        "timewindowMs": 1800000
       },
       "aggregation": {
         "type": "NONE",
-        "limit": 100
+        "limit": 250
       }
     },
     "settings": {

@@ -1,0 +1,180 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "- Schedule reset for Sensors\n- Send message to \"Root Rule Chain\" rule: reset=true"
+    },
+    "name": "Schedule Reset",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": null,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 50,
+          "layoutY": 404
+        },
+        "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
+        "name": "Reset Count - Fail",
+        "debugMode": false,
+        "configuration": {
+          "msgCount": 0,
+          "periodInSeconds": 3600,
+          "originatorId": "6fb8d140-b11a-11e9-9979-3d9ea7c5489c",
+          "originatorType": "DEVICE",
+          "jsScript": "var msg = { reset: true };\nvar metadata = {};\n\nreturn { msg: msg, metadata: metadata, msgType: 'POST_TELEMETRY_REQUEST' };"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 49,
+          "layoutY": 328
+        },
+        "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
+        "name": "Reset Count - Success",
+        "debugMode": false,
+        "configuration": {
+          "msgCount": 0,
+          "periodInSeconds": 3600,
+          "originatorId": "56962540-aecd-11e9-8ec4-13e8d6113b21",
+          "originatorType": "DEVICE",
+          "jsScript": "var msg = { reset: true };\nvar metadata = {};\n\nreturn { msg: msg, metadata: metadata, msgType: 'POST_TELEMETRY_REQUEST' };"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 323,
+          "layoutY": 328
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode",
+        "name": "Get Reset Time",
+        "debugMode": false,
+        "configuration": {
+          "attrMapping": {
+            "resetTime": "ss_resetTime"
+          },
+          "relationsQuery": {
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "META",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          },
+          "telemetry": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1151,
+          "layoutY": 326
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Last Reset Date",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (!metadata.lastResetDate) {\n    return true;\n}\n\nvar now = new Date();\nvar lastResetDate = new Date(parseInt(metadata.lastResetDate));\n// Daily\nvar resetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());\n// Hourly\n//var resetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours());\n// Minutely  \n//var resetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());\n\nreturn resetDate > lastResetDate;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 876,
+          "layoutY": 326
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Reset Time",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (!metadata.ss_resetTime) {\n    return false;\n}\n\nvar arrResetTime = metadata.ss_resetTime.split(':');\nvar now = new Date();\nvar resetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(arrResetTime[0]), parseInt(arrResetTime[1]));\n\nreturn now > resetDate;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 601,
+          "layoutY": 324
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Last Reset Date",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "lastResetDate"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 50,
+          "layoutY": 251
+        },
+        "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
+        "name": "Reset Count - In",
+        "debugMode": false,
+        "configuration": {
+          "msgCount": 0,
+          "periodInSeconds": 3600,
+          "originatorId": "f21903b0-aeb5-11e9-8ec4-13e8d6113b21",
+          "originatorType": "DEVICE",
+          "jsScript": "var msg = { reset: true };\nvar metadata = {};\n\nreturn { msg: msg, metadata: metadata, msgType: 'POST_TELEMETRY_REQUEST' };"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 2,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 3,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "0dd46e10-aeb5-11e9-8ec4-13e8d6113b21"
+        },
+        "additionalInfo": {
+          "layoutX": 1426,
+          "layoutY": 325,
+          "ruleChainNodeId": "rule-chain-node-9"
+        },
+        "type": "True"
+      }
+    ]
+  }
+}

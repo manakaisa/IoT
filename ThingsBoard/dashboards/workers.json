@@ -1,0 +1,289 @@
+{
+  "title": "Workers",
+  "configuration": {
+    "widgets": {
+      "ad1afa54-ae17-abbf-7cc7-3d972cab450b": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "timeseries_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 16,
+        "sizeY": 6,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "count_in",
+                  "type": "timeseries",
+                  "label": "Count - In",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.35182116993704193
+                },
+                {
+                  "name": "count_fail",
+                  "type": "timeseries",
+                  "label": "Count - Fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.2654050462585773
+                },
+                {
+                  "name": "count_success",
+                  "type": "timeseries",
+                  "label": "Count - Success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.9885087267221266
+                },
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "Sum Count - In",
+                  "color": "#3f51b5",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.2649732563797935
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "Sum Count - Success",
+                  "color": "#607d8b",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.9240915686948534
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "Sum Count - Fail",
+                  "color": "#9c27b0",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.01654488171354007
+                }
+              ],
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "showTimestamp": true,
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Raw Table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "widgetStyle": {},
+          "actions": {},
+          "displayTimewindow": true
+        },
+        "id": "ad1afa54-ae17-abbf-7cc7-3d972cab450b"
+      },
+      "e60375bb-627b-2fee-4eb5-459680eebb4d": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "entities_table",
+        "type": "latest",
+        "title": "New widget",
+        "sizeX": 16,
+        "sizeY": 6,
+        "config": {
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 86400000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "4px",
+          "settings": {
+            "enableSearch": true,
+            "displayPagination": true,
+            "defaultPageSize": 10,
+            "defaultSortOrder": "entityName",
+            "displayEntityName": true,
+            "displayEntityType": true
+          },
+          "title": "New Entities table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400,
+            "padding": "5px 10px 5px 10px"
+          },
+          "useDashboardTimewindow": false,
+          "showLegend": false,
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "Sum Count - In",
+                  "color": "#2196f3",
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.2933516594407659
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "Sum Count - Success",
+                  "color": "rgb(0, 188, 212)",
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.08627287180134302
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "Sum Count - Fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "columnWidth": "0px",
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.9442814569002291
+                }
+              ],
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
+            }
+          ],
+          "widgetStyle": {},
+          "displayTimewindow": true,
+          "actions": {}
+        },
+        "id": "e60375bb-627b-2fee-4eb5-459680eebb4d"
+      }
+    },
+    "states": {
+      "default": {
+        "name": "Workers",
+        "root": true,
+        "layouts": {
+          "main": {
+            "widgets": {
+              "ad1afa54-ae17-abbf-7cc7-3d972cab450b": {
+                "sizeX": 16,
+                "sizeY": 6,
+                "row": 0,
+                "col": 0
+              },
+              "e60375bb-627b-2fee-4eb5-459680eebb4d": {
+                "sizeX": 16,
+                "sizeY": 6,
+                "row": 6,
+                "col": 0
+              }
+            },
+            "gridSettings": {
+              "backgroundColor": "#eeeeee",
+              "color": "rgba(0,0,0,0.870588)",
+              "columns": 24,
+              "margins": [
+                10,
+                10
+              ],
+              "backgroundSizeMode": "100%",
+              "autoFillHeight": false,
+              "mobileAutoFillHeight": false,
+              "mobileRowHeight": 70
+            }
+          }
+        }
+      }
+    },
+    "entityAliases": {
+      "4bbaf569-2969-e1f4-f944-e448c8fa89cb": {
+        "id": "4bbaf569-2969-e1f4-f944-e448c8fa89cb",
+        "alias": "Workers",
+        "filter": {
+          "type": "entityList",
+          "resolveMultiple": true,
+          "entityType": "ASSET",
+          "entityList": [
+            "9075aab0-aecd-11e9-8ec4-13e8d6113b21",
+            "c37f7670-aecd-11e9-8ec4-13e8d6113b21",
+            "d0f5f720-aecd-11e9-8ec4-13e8d6113b21"
+          ]
+        }
+      }
+    },
+    "timewindow": {
+      "realtime": {
+        "interval": 1000,
+        "timewindowMs": 43200000
+      },
+      "aggregation": {
+        "type": "NONE",
+        "limit": 250
+      }
+    },
+    "settings": {
+      "stateControllerId": "entity",
+      "showTitle": false,
+      "showDashboardsSelect": true,
+      "showEntitiesSelect": true,
+      "showDashboardTimewindow": true,
+      "showDashboardExport": true,
+      "toolbarAlwaysOpen": true,
+      "titleColor": "rgba(0,0,0,0.870588)"
+    }
+  },
+  "name": "Workers"
+}

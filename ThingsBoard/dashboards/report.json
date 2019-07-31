@@ -1,0 +1,233 @@
+{
+  "title": "Report",
+  "configuration": {
+    "widgets": {
+      "ebaf9ac6-f7b0-ab5e-adf1-8061549c42fd": {
+        "isSystemType": true,
+        "bundleAlias": "z_widgets",
+        "typeAlias": "daily_report_tabs_",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 13,
+        "sizeY": 6,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "Sum Count - In",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.6737037933976469
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "Sum Count - Success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.5064745577908341
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "Sum Count - Fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.051635280674229955
+                }
+              ],
+              "entityAliasId": "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 5000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 100
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "displayPagination": true,
+            "defaultPageSize": 10,
+            "entityNameAttribute": "name"
+          },
+          "title": "Daily Report",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "mobileHeight": null,
+          "widgetStyle": {},
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "units": "",
+          "decimals": null,
+          "displayTimewindow": true
+        },
+        "id": "ebaf9ac6-f7b0-ab5e-adf1-8061549c42fd"
+      },
+      "8fcbc1f4-70f4-a6b3-f2e9-eaf5347b1094": {
+        "isSystemType": true,
+        "bundleAlias": "z_widgets",
+        "typeAlias": "bar_side_by_side",
+        "type": "latest",
+        "title": "New widget",
+        "sizeX": 8,
+        "sizeY": 6,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "Sum Count - In",
+                  "color": "#2196f3",
+                  "settings": {},
+                  "_hash": 0.3186797768332197
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "Sum Count - Success",
+                  "color": "#4caf50",
+                  "settings": {},
+                  "_hash": 0.9941339135401652
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "Sum Count - Fail",
+                  "color": "#f44336",
+                  "settings": {},
+                  "_hash": 0.3919654841247271
+                }
+              ],
+              "entityAliasId": "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "timewindowMs": 60000
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "entityNameAttribute": "name"
+          },
+          "title": "Entities Bar",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "widgetStyle": {},
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "displayTimewindow": true
+        },
+        "id": "8fcbc1f4-70f4-a6b3-f2e9-eaf5347b1094"
+      }
+    },
+    "states": {
+      "default": {
+        "name": "Excel",
+        "root": true,
+        "layouts": {
+          "main": {
+            "widgets": {
+              "ebaf9ac6-f7b0-ab5e-adf1-8061549c42fd": {
+                "sizeX": 13,
+                "sizeY": 6,
+                "mobileHeight": null,
+                "row": 0,
+                "col": 0
+              },
+              "8fcbc1f4-70f4-a6b3-f2e9-eaf5347b1094": {
+                "sizeX": 8,
+                "sizeY": 6,
+                "row": 0,
+                "col": 13
+              }
+            },
+            "gridSettings": {
+              "backgroundColor": "#eeeeee",
+              "color": "rgba(0,0,0,0.870588)",
+              "columns": 24,
+              "margins": [
+                10,
+                10
+              ],
+              "backgroundSizeMode": "100%"
+            }
+          }
+        }
+      }
+    },
+    "entityAliases": {
+      "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5": {
+        "id": "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5",
+        "alias": "Workers",
+        "filter": {
+          "type": "entityList",
+          "resolveMultiple": true,
+          "entityType": "ASSET",
+          "entityList": [
+            "9075aab0-aecd-11e9-8ec4-13e8d6113b21",
+            "c37f7670-aecd-11e9-8ec4-13e8d6113b21",
+            "d0f5f720-aecd-11e9-8ec4-13e8d6113b21"
+          ]
+        }
+      }
+    },
+    "timewindow": {
+      "realtime": {
+        "interval": 1000,
+        "timewindowMs": 43200000
+      },
+      "aggregation": {
+        "type": "NONE",
+        "limit": 250
+      }
+    },
+    "settings": {
+      "stateControllerId": "entity",
+      "showTitle": false,
+      "showDashboardsSelect": true,
+      "showEntitiesSelect": true,
+      "showDashboardTimewindow": true,
+      "showDashboardExport": true,
+      "toolbarAlwaysOpen": true
+    }
+  },
+  "name": "Report"
+}

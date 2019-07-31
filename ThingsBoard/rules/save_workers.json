@@ -1,21 +1,41 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: G1-W${work_id}\nInput: work_id, count\nOutput: {in_count|success_count|fail_count}\nSensor Type: IN_COUNT, SUCCESS_COUNT, FAIL_COUNT"
+      "description": "- Save telemetry to Workers: count_in, count_success, count_fail\n- Generate summation data for Workers: sum_count_in, sum_count_success, sum_count_fail\n- Send message to \"Save Workgroup\" rule\n- Send message to \"Reset Workers\" rule if reset=true"
     },
-    "name": "Save G1-Worker",
+    "name": "Save Workers",
     "firstRuleNodeId": null,
     "root": false,
     "debugMode": false,
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 6,
+    "firstNodeIndex": 7,
     "nodes": [
       {
         "additionalInfo": {
+          "layoutX": 1651,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Latest Value",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "sum_count_in",
+            "sum_count_success",
+            "sum_count_fail"
+          ],
+          "tellFailureIfAbsent": false
+        }
+      },
+      {
+        "additionalInfo": {
           "layoutX": 2200,
-          "layoutY": 149
+          "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
         "name": "Save Telemetry",
@@ -26,11 +46,11 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1650,
+          "layoutX": 1374,
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Change Originator",
+        "name": "Change to Worker",
         "debugMode": false,
         "configuration": {
           "direction": "TO",
@@ -46,8 +66,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1376,
-          "layoutY": 151
+          "layoutX": 1100,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Metadata",
@@ -75,14 +95,14 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1925,
-          "layoutY": 151
+          "layoutX": 1926,
+          "layoutY": 149
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Set Message",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var newMsg = {};\n\nif(metadata.sensorType === 'IN_COUNT') {\n    newMsg.in_count = msg.count;\n} else if(metadata.sensorType === 'SUCCESS_COUNT') {\n    newMsg.success_count = msg.count;\n} else if(metadata.sensorType === 'FAIL_COUNT') {\n    newMsg.fail_count = msg.count;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+          "jsScript": "var newMsg = {};\n\nif(metadata.sensorType === 'COUNT-IN') {\n    newMsg.count_in = msg.count;\n    newMsg.sum_count_in = msg.count + parseInt(metadata.sum_count_in||'0');\n} \nelse if(metadata.sensorType === 'COUNT-SUCCESS') {\n    newMsg.count_success = msg.count;\n    newMsg.sum_count_success = msg.count + parseInt(metadata.sum_count_success||'0');\n} \nelse if(metadata.sensorType === 'COUNT-FAIL') {\n    newMsg.count_fail = msg.count\n    newMsg.sum_count_fail = msg.count + parseInt(metadata.sum_count_fail||'0');\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -91,10 +111,10 @@
           "layoutY": 251
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Prepare G1 Message",
+        "name": "Prepare Message for Workgroup",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var newMsg = {\n    worker_id: metadata.worker_id\n};\n\nif(metadata.sensorType === 'IN_COUNT') {\n    newMsg.in_count = msg.in_count;\n} else if(metadata.sensorType === 'SUCCESS_COUNT') {\n    newMsg.success_count = msg.success_count;\n} else if(metadata.sensorType === 'FAIL_COUNT') {\n    newMsg.fail_count = msg.fail_count;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+          "jsScript": "var newMsg = {\n    worker_id: metadata.worker_id\n};\n\nif(metadata.sensorType === 'COUNT-IN') {\n    newMsg.count_in = msg.count_in;\n} else if(metadata.sensorType === 'COUNT-SUCCESS') {\n    newMsg.count_success = msg.count_success;\n} else if(metadata.sensorType === 'COUNT-FAIL') {\n    newMsg.count_fail = msg.count_fail;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
         }
       },
       {
@@ -106,36 +126,16 @@
         "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg.reset || false;"
+          "jsScript": "return msg.reset === true;"
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 824,
-          "layoutY": 152
-        },
-        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Create Metadata Relation",
-        "debugMode": false,
-        "configuration": {
-          "direction": "FROM",
-          "relationType": "META",
-          "entityType": "ASSET",
-          "entityNamePattern": "Metadata",
-          "entityTypePattern": "META",
-          "entityCacheExpiration": 300,
-          "createEntityIfNotExists": false,
-          "changeOriginatorToRelatedEntity": false,
-          "removeCurrentRelations": false
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1099,
-          "layoutY": 151
+          "layoutX": 825,
+          "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode",
-        "name": "Get Metadata Attributes",
+        "name": "Get Configuration",
         "debugMode": false,
         "configuration": {
           "attrMapping": {
@@ -165,63 +165,63 @@
       },
       {
         "fromIndex": 1,
-        "toIndex": 4,
+        "toIndex": 6,
         "type": "Success"
       },
       {
         "fromIndex": 2,
-        "toIndex": 1,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 3,
-        "toIndex": 7,
-        "type": "True"
-      },
-      {
-        "fromIndex": 4,
         "toIndex": 0,
         "type": "Success"
       },
       {
-        "fromIndex": 6,
-        "toIndex": 3,
-        "type": "False"
-      },
-      {
-        "fromIndex": 7,
-        "toIndex": 8,
+        "fromIndex": 3,
+        "toIndex": 2,
         "type": "Success"
       },
       {
+        "fromIndex": 4,
+        "toIndex": 8,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 4,
+        "type": "False"
+      },
+      {
         "fromIndex": 8,
-        "toIndex": 2,
+        "toIndex": 3,
         "type": "Success"
       }
     ],
     "ruleChainConnections": [
       {
-        "fromIndex": 5,
+        "fromIndex": 6,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "4b6cc660-9064-11e9-b38f-0b2a9f963f32"
+          "id": "1ca15c60-b139-11e9-9979-3d9ea7c5489c"
         },
         "additionalInfo": {
-          "layoutX": 2200,
-          "layoutY": 250,
+          "layoutX": 2201,
+          "layoutY": 249,
           "ruleChainNodeId": "rule-chain-node-11"
         },
         "type": "Success"
       },
       {
-        "fromIndex": 6,
+        "fromIndex": 7,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "b04f6770-90f2-11e9-b8c1-3344d403337e"
+          "id": "c96f0180-b1d0-11e9-95f1-513a360cd1cd"
         },
         "additionalInfo": {
           "layoutX": 550,
-          "layoutY": 251,
+          "layoutY": 226,
           "ruleChainNodeId": "rule-chain-node-12"
         },
         "type": "True"

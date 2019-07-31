@@ -1,0 +1,270 @@
+{
+  "title": "Workgroup",
+  "configuration": {
+    "widgets": {
+      "46319d35-0807-9aed-58e9-4b7d922a1f51": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "attributes_card",
+        "type": "latest",
+        "title": "New widget",
+        "sizeX": 17,
+        "sizeY": 3,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "all_count_in",
+                  "type": "timeseries",
+                  "label": "All Count - In",
+                  "color": "#2196f3",
+                  "settings": {},
+                  "_hash": 0.5670728359157238
+                },
+                {
+                  "name": "all_count_success",
+                  "type": "timeseries",
+                  "label": "All Count - Success",
+                  "color": "#4caf50",
+                  "settings": {},
+                  "_hash": 0.4393695225087575
+                },
+                {
+                  "name": "all_count_fail",
+                  "type": "timeseries",
+                  "label": "All Count - Fail",
+                  "color": "#f44336",
+                  "settings": {},
+                  "_hash": 0.9607394737481072
+                }
+              ],
+              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "timewindowMs": 60000
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {},
+          "title": "Attributes Table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "widgetStyle": {},
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "decimals": 0,
+          "displayTimewindow": true
+        },
+        "id": "46319d35-0807-9aed-58e9-4b7d922a1f51"
+      },
+      "cc5b94a2-5b41-3919-2d3a-66505b43b745": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "timeseries_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 17,
+        "sizeY": 5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "worker_id",
+                  "type": "timeseries",
+                  "label": "Worker ID",
+                  "color": "#8bc34a",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.1776572139495276
+                },
+                {
+                  "name": "count_in",
+                  "type": "timeseries",
+                  "label": "Count - In",
+                  "color": "#ffc107",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.24404628300403242
+                },
+                {
+                  "name": "count_success",
+                  "type": "timeseries",
+                  "label": "Count - Success",
+                  "color": "#607d8b",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.8274853123089327
+                },
+                {
+                  "name": "count_fail",
+                  "type": "timeseries",
+                  "label": "Count - Fail",
+                  "color": "#9c27b0",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.27849276871161033
+                },
+                {
+                  "name": "all_count_in",
+                  "type": "timeseries",
+                  "label": "All Count - In",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.13116178725342897
+                },
+                {
+                  "name": "all_count_success",
+                  "type": "timeseries",
+                  "label": "All Count - Success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.18738650943930946
+                },
+                {
+                  "name": "all_count_fail",
+                  "type": "timeseries",
+                  "label": "All Count - Fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.4353924249857759
+                }
+              ],
+              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "showTimestamp": true,
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Raw Table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "widgetStyle": {},
+          "actions": {},
+          "displayTimewindow": true
+        },
+        "id": "cc5b94a2-5b41-3919-2d3a-66505b43b745"
+      }
+    },
+    "states": {
+      "default": {
+        "name": "Workgroup",
+        "root": true,
+        "layouts": {
+          "main": {
+            "widgets": {
+              "46319d35-0807-9aed-58e9-4b7d922a1f51": {
+                "sizeX": 17,
+                "sizeY": 3,
+                "row": 5,
+                "col": 0
+              },
+              "cc5b94a2-5b41-3919-2d3a-66505b43b745": {
+                "sizeX": 17,
+                "sizeY": 5,
+                "row": 0,
+                "col": 0
+              }
+            },
+            "gridSettings": {
+              "backgroundColor": "#eeeeee",
+              "color": "rgba(0,0,0,0.870588)",
+              "columns": 24,
+              "margins": [
+                10,
+                10
+              ],
+              "backgroundSizeMode": "100%"
+            }
+          }
+        }
+      }
+    },
+    "entityAliases": {
+      "55218165-a5da-3ccd-154a-16c9350762b3": {
+        "id": "55218165-a5da-3ccd-154a-16c9350762b3",
+        "alias": "Workgroup",
+        "filter": {
+          "type": "singleEntity",
+          "resolveMultiple": false,
+          "singleEntity": {
+            "entityType": "ASSET",
+            "id": "cfb5a9b0-afa3-11e9-b546-57b55a0f7f3e"
+          }
+        }
+      }
+    },
+    "timewindow": {
+      "realtime": {
+        "interval": 1000,
+        "timewindowMs": 43200000
+      },
+      "aggregation": {
+        "type": "NONE",
+        "limit": 250
+      }
+    },
+    "settings": {
+      "stateControllerId": "entity",
+      "showTitle": false,
+      "showDashboardsSelect": true,
+      "showEntitiesSelect": true,
+      "showDashboardTimewindow": true,
+      "showDashboardExport": true,
+      "toolbarAlwaysOpen": true
+    }
+  },
+  "name": "Workgroup"
+}

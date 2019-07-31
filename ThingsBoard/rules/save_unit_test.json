@@ -1,7 +1,7 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "Type: Save Telemetry\nTarget Entity Type: Asset\nTarget Entity Name: Unit Test\nInput: row_id, *\nOutput: *\nSensor Type: TEST"
+      "description": "- Save telemetry to Unit Test\n- Save lastResetDate to Sensor"
     },
     "name": "Save Unit Test",
     "firstRuleNodeId": null,
@@ -10,8 +10,32 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 5,
+    "firstNodeIndex": 7,
     "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 225
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 226
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Last Reset Date",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "msg = {\n    lastResetDate: Date.now()\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
       {
         "additionalInfo": {
           "layoutX": 550,
@@ -46,7 +70,7 @@
           "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Change Originator",
+        "name": "Change to Unit Test",
         "debugMode": false,
         "configuration": {
           "direction": "TO",
@@ -93,51 +117,44 @@
         "name": "Check Reset",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg.reset || false;"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 550,
-          "layoutY": 250
-        },
-        "type": "org.thingsboard.rule.engine.action.TbLogNode",
-        "name": "Log",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "return 'Incoming message:\\n' + JSON.stringify(msg) + '\\nIncoming metadata:\\n' + JSON.stringify(metadata);"
+          "jsScript": "return msg.reset === true;"
         }
       }
     ],
     "connections": [
       {
-        "fromIndex": 0,
-        "toIndex": 1,
-        "type": "True"
-      },
-      {
         "fromIndex": 1,
-        "toIndex": 2,
+        "toIndex": 0,
         "type": "Success"
       },
       {
         "fromIndex": 2,
+        "toIndex": 3,
+        "type": "True"
+      },
+      {
+        "fromIndex": 3,
         "toIndex": 4,
         "type": "Success"
       },
       {
         "fromIndex": 4,
-        "toIndex": 3,
+        "toIndex": 6,
         "type": "Success"
       },
       {
-        "fromIndex": 5,
-        "toIndex": 0,
+        "fromIndex": 6,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 2,
         "type": "False"
       },
       {
-        "fromIndex": 5,
-        "toIndex": 6,
+        "fromIndex": 7,
+        "toIndex": 1,
         "type": "True"
       }
     ],

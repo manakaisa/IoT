@@ -1,7 +1,7 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "Type: Utility"
+      "description": "- Generate message from metadata.msgs\n- Send back message to metadata.originatorRule"
     },
     "name": "Split Messages",
     "firstRuleNodeId": null,
@@ -66,40 +66,27 @@
         "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "b7ff0970-927e-11e9-b9c7-d1677dc015c6"
-        },
-        "additionalInfo": {
-          "layoutX": 550,
-          "layoutY": 426,
-          "ruleChainNodeId": "rule-chain-node-5"
-        },
-        "type": "Report_G1"
-      },
-      {
-        "fromIndex": 1,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "87ee5030-9380-11e9-8dc9-018048e65a6c"
-        },
-        "additionalInfo": {
-          "layoutX": 550,
-          "layoutY": 501,
-          "ruleChainNodeId": "rule-chain-node-6"
-        },
-        "type": "Report_Unit_Test"
-      },
-      {
-        "fromIndex": 1,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "b04f6770-90f2-11e9-b8c1-3344d403337e"
+          "id": "87dfa120-b1f3-11e9-a73c-478a63558f49"
         },
         "additionalInfo": {
           "layoutX": 549,
-          "layoutY": 351,
-          "ruleChainNodeId": "rule-chain-node-7"
+          "layoutY": 426,
+          "ruleChainNodeId": "rule-chain-node-6"
         },
-        "type": "Reset_G1-Workers"
+        "type": "REPORT-WORKERS"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "c96f0180-b1d0-11e9-95f1-513a360cd1cd"
+        },
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 350,
+          "ruleChainNodeId": "rule-chain-node-5"
+        },
+        "type": "RESET-WORKERS"
       }
     ]
   }

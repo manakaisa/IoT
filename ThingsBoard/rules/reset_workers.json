@@ -1,0 +1,197 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "- Clear summation data for Workers: sum_count_in=0, sum_count_success=0, sum_count_fail=0\n- Send message to \"Reset Workgroup\" rule"
+    },
+    "name": "Reset Workers",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 5,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Reset Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nif(metadata.sensorType === 'COUNT-IN') {\n    newMsg.sum_count_in = 0;\n} \nelse if(metadata.sensorType === 'COUNT-SUCCESS') {\n    newMsg.sum_count_success = 0;\n} \nelse if(metadata.sensorType === 'COUNT-FAIL') {\n    newMsg.sum_count_fail = 0;\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1375,
+          "layoutY": 274
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Worker",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "SENSOR",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "WORKER",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "metadata.targetDeviceName = msg.worker_name;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 824,
+          "layoutY": 199
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Split Messages",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var workers = JSON.parse(metadata.ss_workers||'{}');\nvar msgs = [];\n\nfor (var worker_id in workers) {\n    msgs.push({ \n        worker_name: workers[worker_id].name\n    });\n}\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.originatorRule = 'RESET-WORKERS';\n\nmsg = {};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Check Split",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (metadata.split === \"true\") {\n    var msgs = JSON.parse(metadata.msgs);\n    if (msgs.length === 0) {\n        return ['Split', 'Execute', 'Final'];\n    }\n    \n    return ['Split', 'Execute'];\n}\n\nreturn ['Init'];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 201
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode",
+        "name": "Get Configuration",
+        "debugMode": false,
+        "configuration": {
+          "attrMapping": {
+            "workers": "ss_workers"
+          },
+          "relationsQuery": {
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "META",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          },
+          "telemetry": false
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 3,
+        "type": "Execute"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 6,
+        "type": "Init"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 4,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 4,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "c55a0d20-b1de-11e9-95f1-513a360cd1cd"
+        },
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 150,
+          "ruleChainNodeId": "rule-chain-node-9"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "4fde2c80-b1dd-11e9-95f1-513a360cd1cd"
+        },
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 349,
+          "ruleChainNodeId": "rule-chain-node-10"
+        },
+        "type": "Final"
+      },
+      {
+        "fromIndex": 5,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "c55a0d20-b1de-11e9-95f1-513a360cd1cd"
+        },
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 150,
+          "ruleChainNodeId": "rule-chain-node-9"
+        },
+        "type": "Split"
+      }
+    ]
+  }
+}
