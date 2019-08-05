@@ -932,13 +932,6 @@
                 "pt": "flow",
                 "to": "",
                 "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "clearReadyFlag",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
             }
         ],
         "action": "",
@@ -1048,13 +1041,6 @@
                 "pt": "flow",
                 "to": "row_id",
                 "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "clearReadyFlag",
-                "pt": "flow",
-                "to": "true",
-                "tot": "bool"
             }
         ],
         "action": "",
@@ -1930,13 +1916,6 @@
                 "pt": "flow",
                 "to": "row_id",
                 "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "clearReadyFlag",
-                "pt": "flow",
-                "to": "false",
-                "tot": "bool"
             }
         ],
         "action": "",
@@ -1962,7 +1941,7 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 770,
-        "y": 280,
+        "y": 220,
         "wires": []
     },
     {
@@ -1987,7 +1966,7 @@
         "ioFile": "",
         "useIOForPayload": false,
         "x": 230,
-        "y": 360,
+        "y": 300,
         "wires": [
             [],
             [
@@ -2005,7 +1984,7 @@
         "retain": "",
         "broker": "8a1a083a.a62238",
         "x": 870,
-        "y": 360,
+        "y": 300,
         "wires": []
     },
     {
@@ -2020,7 +1999,7 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 810,
-        "y": 480,
+        "y": 360,
         "wires": []
     },
     {
@@ -2045,7 +2024,7 @@
         "ioFile": "",
         "useIOForPayload": false,
         "x": 210,
-        "y": 560,
+        "y": 440,
         "wires": [
             [],
             [
@@ -2063,7 +2042,7 @@
         "retain": "",
         "broker": "a302f12e.5679d",
         "x": 820,
-        "y": 560,
+        "y": 440,
         "wires": []
     },
     {
@@ -2078,7 +2057,7 @@
         "complete": "payload",
         "targetType": "msg",
         "x": 770,
-        "y": 680,
+        "y": 500,
         "wires": []
     },
     {
@@ -2264,8 +2243,7 @@
         "wires": [
             [
                 "1b2e5f45.95dec1",
-                "a3d244ea.6c61a8",
-                "abdc0013.e4848"
+                "a3d244ea.6c61a8"
             ]
         ]
     },
@@ -2276,12 +2254,11 @@
         "name": "Sub Process",
         "env": [],
         "x": 630,
-        "y": 360,
+        "y": 300,
         "wires": [
             [
                 "18b418c9.5d72c7",
-                "a5e89f7f.a27b",
-                "d62596d4.729068"
+                "a5e89f7f.a27b"
             ]
         ]
     },
@@ -2292,12 +2269,11 @@
         "name": "Sub Process",
         "env": [],
         "x": 590,
-        "y": 560,
+        "y": 440,
         "wires": [
             [
                 "fb086111.7de24",
-                "780323b4.d4caec",
-                "5c957e64.dd454"
+                "780323b4.d4caec"
             ]
         ]
     },
@@ -2568,7 +2544,7 @@
         "to": "",
         "reg": false,
         "x": 450,
-        "y": 360,
+        "y": 300,
         "wires": [
             [
                 "227d9770.db3c68"
@@ -2616,7 +2592,7 @@
         "to": "",
         "reg": false,
         "x": 410,
-        "y": 560,
+        "y": 440,
         "wires": [
             [
                 "e0e41eaf.aa4f"
@@ -2889,7 +2865,7 @@
         "adr": "0",
         "quantity": "1",
         "server": "f6f75f38.3c415",
-        "x": 1020,
+        "x": 1000,
         "y": 260,
         "wires": [
             [],
@@ -2900,11 +2876,11 @@
         "id": "8a5007a1.e56fc8",
         "type": "function",
         "z": "f0df971c.4d54b8",
-        "name": "Clear Ready Flag",
-        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "name": "Set Write-back",
+        "func": "msg.payload = 0;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 810,
+        "x": 800,
         "y": 260,
         "wires": [
             [
@@ -2930,11 +2906,11 @@
         "id": "cced7aee.f7fcb8",
         "type": "function",
         "z": "a9b927b3.834d18",
-        "name": "Clear Ready Flag",
-        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
+        "name": "Set Write-back",
+        "func": "msg.payload = 0;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 790,
+        "x": 780,
         "y": 220,
         "wires": [
             [
@@ -2954,116 +2930,11 @@
         "adr": "0",
         "quantity": "1",
         "server": "6b4c93c8.59a22c",
-        "x": 1000,
-        "y": 220,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "31808f2b.f9472",
-        "type": "modbus-write",
-        "z": "d9b805d9.02c008",
-        "name": "Write to Modbus",
-        "showStatusActivities": false,
-        "showErrors": false,
-        "unitid": "",
-        "dataType": "HoldingRegister",
-        "adr": "1000",
-        "quantity": "1",
-        "server": "f6f75f38.3c415",
-        "x": 1000,
-        "y": 220,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "abdc0013.e4848",
-        "type": "function",
-        "z": "d9b805d9.02c008",
-        "name": "Clear Ready Flag",
-        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 790,
-        "y": 220,
-        "wires": [
-            [
-                "31808f2b.f9472"
-            ]
-        ]
-    },
-    {
-        "id": "ea97a69.fd84958",
-        "type": "modbus-write",
-        "z": "d9b805d9.02c008",
-        "name": "Write to Modbus",
-        "showStatusActivities": false,
-        "showErrors": false,
-        "unitid": "",
-        "dataType": "HoldingRegister",
-        "adr": "2000",
-        "quantity": "1",
-        "server": "f6f75f38.3c415",
-        "x": 1040,
-        "y": 420,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "d62596d4.729068",
-        "type": "function",
-        "z": "d9b805d9.02c008",
-        "name": "Clear Ready Flag",
-        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 830,
-        "y": 420,
-        "wires": [
-            [
-                "ea97a69.fd84958"
-            ]
-        ]
-    },
-    {
-        "id": "d7c3849e.5cba98",
-        "type": "modbus-write",
-        "z": "d9b805d9.02c008",
-        "name": "Write to Modbus",
-        "showStatusActivities": false,
-        "showErrors": false,
-        "unitid": "",
-        "dataType": "HoldingRegister",
-        "adr": "3000",
-        "quantity": "1",
-        "server": "f6f75f38.3c415",
         "x": 980,
-        "y": 620,
+        "y": 220,
         "wires": [
             [],
             []
-        ]
-    },
-    {
-        "id": "5c957e64.dd454",
-        "type": "function",
-        "z": "d9b805d9.02c008",
-        "name": "Clear Ready Flag",
-        "func": "var clearReadyFlag = flow.get('clearReadyFlag');\n\nif (!clearReadyFlag) {\n    return null;\n}\n\nmsg.payload = 0;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 790,
-        "y": 620,
-        "wires": [
-            [
-                "d7c3849e.5cba98"
-            ]
         ]
     }
 ]
