@@ -2,7 +2,7 @@
     {
         "id": "a9b927b3.834d18",
         "type": "tab",
-        "label": "Modbus Gateway",
+        "label": "Modbus Gateway - ${sensor}",
         "disabled": true,
         "info": ""
     },
@@ -209,28 +209,6 @@
         "commandDelay": 1,
         "clientTimeout": 1000,
         "reconnectTimeout": 2000
-    },
-    {
-        "id": "1e998288.5937dd",
-        "type": "mqtt-broker",
-        "z": "",
-        "name": "localhost - gateway",
-        "broker": "localhost",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "compatmode": true,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": ""
     },
     {
         "id": "a7f6088.a9b1bf8",

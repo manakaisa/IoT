@@ -13,9 +13,9 @@ Documentation=https://nodered.org
 [Service]
 #Environment="NODE_RED_OPTIONS=-v"
 ExecStart=/usr/bin/env node-red $NODE_RED_OPTIONS
-WorkingDirectory=/home/<username>
-User=<username>
-Group=<username>
+WorkingDirectory=/home/<user>
+User=<user>
+Group=<user>
 Nice=5
 SyslogIdentifier=Node-RED
 StandardOutput=syslog

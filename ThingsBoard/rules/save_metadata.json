@@ -10,12 +10,141 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 5,
+    "firstNodeIndex": 4,
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 827,
+          "layoutX": 875,
+          "layoutY": 226
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Create Relation",
+        "debugMode": false,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "Metadata",
+          "entityTypePattern": "META",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": false,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 600,
+          "layoutY": 227
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Filter for Workgroup",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'ASSET') {\n    return false;\n}\n\nif (msg.type !== 'WORKGROUP') {\n    return false;\n}\n\nreturn true;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 875,
+          "layoutY": 301
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Create Relation",
+        "debugMode": false,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "Metadata",
+          "entityTypePattern": "META",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": false,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 601,
+          "layoutY": 302
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Filter for Sensor",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'DEVICE') {\n    return false;\n}\n\nif (msg.type !== 'SENSOR') {\n    return false;\n}\n\nreturn true;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 325,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Message Type",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "// Re-generate workers configuration for all workgroup in case user change its type\nif (msgType === 'ENTITY_UPDATED') {\n    return [msg.type, 'WORKER'];\n}\n\nreturn msg.type;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1975,
           "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
+        "name": "Save Configuration",
+        "debugMode": false,
+        "configuration": {
+          "scope": "SERVER_SCOPE"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1701,
+          "layoutY": 152
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set New Configuration",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var workers = JSON.parse(metadata.ss_workers||'{}');\n\nif (msgType === 'ENTITY_CREATED') {\n    workers[msg.id.id] = {\n        name: msg.name\n    };\n} \nelse if (msgType === 'ENTITY_UPDATED') {\n    if (msg.type === 'WORKER') {\n        workers[msg.id.id] = {\n            name: msg.name\n        };\n    } \n    else {\n        delete workers[msg.id.id];\n    }\n} \nelse if (msgType === 'ENTITY_DELETED') {\n    delete workers[msg.id.id];\n} \n\nmsg = { \n    workers: JSON.stringify(workers) \n};\n\nmsgType = 'POST_ATTRIBUTES_REQUEST';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1150,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Current Configuration",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "workers"
+          ],
+          "latestTsKeyNames": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 602,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Filter for Worker",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED' && msgType !== 'ENTITY_DELETED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'ASSET') {\n    return false;\n}\n\nif (msgType === 'ENTITY_CREATED' && msg.type !== 'WORKER') {\n    return false;\n}\n\nif (msgType === 'ENTITY_DELETED' && msg.type !== 'WORKER') {\n    return false;\n}\n\nreturn true;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 877,
+          "layoutY": 151
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
         "name": "Change to Metadata",
@@ -34,178 +163,66 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 552,
-          "layoutY": 150
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Filter for Worker",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED' && msgType !== 'ENTITY_DELETED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'ASSET') {\n    return false;\n}\n\nif (msg.type !== 'WORKER' && msgType !== 'ENTITY_UPDATED') {\n    return false;\n}\n\nreturn true;"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1100,
+          "layoutX": 1425,
           "layoutY": 149
         },
-        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
-        "name": "Get Current Configuration",
-        "debugMode": false,
-        "configuration": {
-          "clientAttributeNames": [],
-          "sharedAttributeNames": [],
-          "serverAttributeNames": [
-            "workers"
-          ],
-          "latestTsKeyNames": []
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1375,
-          "layoutY": 151
-        },
-        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Set New Configuration",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "var workers = JSON.parse(metadata.ss_workers||'{}');\n\nif (msgType === 'ENTITY_CREATED') {\n    workers[msg.id.id] = {\n        name: msg.name\n    };\n} \nelse if (msgType === 'ENTITY_UPDATED') {\n    if (msg.type === 'WORKER') {\n        workers[msg.id.id] = {\n            name: msg.name\n        };\n    } \n    else {\n        delete workers[msg.id.id];\n    }\n} \nelse if (msgType === 'ENTITY_DELETED') {\n    delete workers[msg.id.id];\n} \n\nmsg = { \n    workers: JSON.stringify(workers) \n};\n\nmsgType = 'POST_ATTRIBUTES_REQUEST';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1649,
-          "layoutY": 149
-        },
-        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
-        "name": "Save Configuration",
-        "debugMode": false,
-        "configuration": {
-          "scope": "SERVER_SCOPE"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 275,
-          "layoutY": 150
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
-        "name": "Switch Metadata Type",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "return ['WORKER', 'WORKGROUP', 'SENSOR'];"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 551,
-          "layoutY": 301
-        },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Filter for Sensor",
+        "name": "Check for Entity Updated",
         "debugMode": false,
         "configuration": {
-          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'DEVICE') {\n    return false;\n}\n\nif (msg.type !== 'SENSOR') {\n    return false;\n}\n\nreturn true;"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 825,
-          "layoutY": 300
-        },
-        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Create Relation",
-        "debugMode": false,
-        "configuration": {
-          "direction": "FROM",
-          "relationType": "META",
-          "entityType": "ASSET",
-          "entityNamePattern": "Metadata",
-          "entityTypePattern": "META",
-          "entityCacheExpiration": 300,
-          "createEntityIfNotExists": false,
-          "changeOriginatorToRelatedEntity": false,
-          "removeCurrentRelations": false
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 550,
-          "layoutY": 226
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Filter for Workgroup",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED') {\n    return false;\n}\n\nif (msg.id.entityType !== 'ASSET') {\n    return false;\n}\n\nif (msg.type !== 'WORKGROUP') {\n    return false;\n}\n\nreturn true;"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 825,
-          "layoutY": 225
-        },
-        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Create Relation",
-        "debugMode": false,
-        "configuration": {
-          "direction": "FROM",
-          "relationType": "META",
-          "entityType": "ASSET",
-          "entityNamePattern": "Metadata",
-          "entityTypePattern": "META",
-          "entityCacheExpiration": 300,
-          "createEntityIfNotExists": false,
-          "changeOriginatorToRelatedEntity": false,
-          "removeCurrentRelations": false
+          "jsScript": "if (msgType === 'ENTITY_CREATED' || msgType === 'ENTITY_DELETED') {\n    return true;\n}\n\nif (msgType === 'ENTITY_UPDATED' && msg.type === 'WORKER') {\n    return true;\n}\n\nvar workers = JSON.parse(metadata.ss_workers||'{}');\n\nreturn workers[msg.id.id] !=  null;"
         }
       }
     ],
     "connections": [
-      {
-        "fromIndex": 0,
-        "toIndex": 2,
-        "type": "Success"
-      },
       {
         "fromIndex": 1,
         "toIndex": 0,
         "type": "True"
       },
       {
-        "fromIndex": 2,
-        "toIndex": 3,
-        "type": "Success"
-      },
-      {
         "fromIndex": 3,
-        "toIndex": 4,
-        "type": "Success"
+        "toIndex": 2,
+        "type": "True"
       },
       {
-        "fromIndex": 5,
-        "toIndex": 6,
+        "fromIndex": 4,
+        "toIndex": 3,
         "type": "SENSOR"
       },
       {
-        "fromIndex": 5,
-        "toIndex": 8,
+        "fromIndex": 4,
+        "toIndex": 1,
         "type": "WORKGROUP"
       },
       {
-        "fromIndex": 5,
-        "toIndex": 1,
+        "fromIndex": 4,
+        "toIndex": 8,
         "type": "WORKER"
       },
       {
         "fromIndex": 6,
-        "toIndex": 7,
-        "type": "True"
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Success"
       },
       {
         "fromIndex": 8,
         "toIndex": 9,
+        "type": "True"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 6,
         "type": "True"
       }
     ],

@@ -106,7 +106,7 @@ module.exports = {
     // When httpAdminRoot is used to move the UI to a different root path, the
     // following property can be used to identify a directory of static content
     // that should be served at http://localhost:1880/.
-    httpStatic: '/home/m/.node-red/public',
+    httpStatic: '~/.node-red/public',
 
     // The maximum size of HTTP request that will be accepted by the runtime api.
     // Default: 5mb
@@ -235,7 +235,7 @@ module.exports = {
     //
     contextStorage: {
         default: { module: "memory" },
-	file: { module: "localfilesystem" }
+        file: { module: "localfilesystem" }
     },
 
     // The following property can be used to order the categories in the editor
@@ -260,7 +260,7 @@ module.exports = {
             // Whether or not to include metric events in the log output
             metrics: false,
             // Whether or not to include audit events in the log output
-            audit: false
+            audit: true
         }
     },
 

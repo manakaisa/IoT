@@ -10,50 +10,26 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 3,
+    "firstNodeIndex": 1,
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 825,
-          "layoutY": 150
-        },
-        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
-        "name": "Get Latest Value",
-        "debugMode": false,
-        "configuration": {
-          "clientAttributeNames": [],
-          "sharedAttributeNames": [],
-          "serverAttributeNames": [],
-          "latestTsKeyNames": [
-            "all_count_in",
-            "all_count_success",
-            "all_count_fail"
-          ],
-          "tellFailureIfAbsent": false
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1375,
+          "layoutX": 550,
           "layoutY": 149
         },
-        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
-        "name": "Save Telemetry",
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Workgroup",
         "debugMode": false,
         "configuration": {
-          "defaultTTL": 0
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 1100,
-          "layoutY": 150
-        },
-        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Set Message",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "var newMsg = {\n    worker_id: msg.worker_id\n};\n\nif(metadata.sensorType === 'COUNT-IN') {\n    newMsg.count_in = msg.count_in;\n    newMsg.all_count_in = msg.count_in + parseInt(metadata.all_count_in||'0');\n} \nelse if(metadata.sensorType === 'COUNT-SUCCESS') {\n    newMsg.count_success = msg.count_success;\n    newMsg.all_count_success = msg.count_success + parseInt(metadata.all_count_success||'0');\n} \nelse if(metadata.sensorType === 'COUNT-FAIL') {\n    newMsg.count_fail = msg.count_fail;\n    newMsg.all_count_fail = msg.count_fail + parseInt(metadata.all_count_fail||'0');\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+          "direction": "FROM",
+          "relationType": "WORKGROUP",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "WORKGROUP",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
         }
       },
       {
@@ -85,44 +61,68 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 550,
-          "layoutY": 149
+          "layoutX": 1100,
+          "layoutY": 150
         },
-        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Change to Workgroup",
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
         "debugMode": false,
         "configuration": {
-          "direction": "FROM",
-          "relationType": "WORKER",
-          "entityType": "ASSET",
-          "entityNamePattern": "${targetDeviceName}",
-          "entityTypePattern": "WORKGROUP",
-          "entityCacheExpiration": 300,
-          "createEntityIfNotExists": false,
-          "changeOriginatorToRelatedEntity": true,
-          "removeCurrentRelations": false
+          "jsScript": "var newMsg = {\n    worker_id: msg.worker_id\n};\n\nif(metadata.sensorType === 'COUNT-IN') {\n    newMsg.count_in = msg.count_in;\n    newMsg.all_count_in = msg.count_in + parseInt(metadata.all_count_in||'0');\n} \nelse if(metadata.sensorType === 'COUNT-SUCCESS') {\n    newMsg.count_success = msg.count_success;\n    newMsg.all_count_success = msg.count_success + parseInt(metadata.all_count_success||'0');\n} \nelse if(metadata.sensorType === 'COUNT-FAIL') {\n    newMsg.count_fail = msg.count_fail;\n    newMsg.all_count_fail = msg.count_fail + parseInt(metadata.all_count_fail||'0');\n}\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1375,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Latest Value",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "all_count_in",
+            "all_count_success",
+            "all_count_fail"
+          ],
+          "tellFailureIfAbsent": false
         }
       }
     ],
     "connections": [
       {
         "fromIndex": 0,
-        "toIndex": 2,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 2,
-        "toIndex": 1,
-        "type": "Success"
-      },
-      {
-        "fromIndex": 3,
         "toIndex": 4,
         "type": "Success"
       },
       {
-        "fromIndex": 4,
+        "fromIndex": 1,
         "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 2,
         "type": "Success"
       }
     ],
