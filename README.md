@@ -10,38 +10,38 @@
 ## Thingsboard
 
 ### Installation
-- Update Repository
-`# sudo apt update`
-- Install Java 8 (OpenJDK)
+- Update Repository  
+  `# sudo apt update`
+- Install Java 8 (OpenJDK)  
 `# sudo apt install openjdk-8-jdk`
-- Install ThingsBoard
+- Install ThingsBoard  
 ```
 # wget https://github.com/thingsboard/thingsboard/releases/download/v2.4/thingsboard-2.4.deb
 # sudo dpkg -i thingsboard-2.4.deb
 ```
-- Install PostgreSQL
+- Install PostgreSQL  
 `# sudo apt install postgresql postgresql-contrib`
-- Create User for PostgreSQL
+- Create User for PostgreSQL  
 ```
 # sudo su - postgres
 # psql
 # \password
 # \q
 ```
-- Create Database for ThingsBoard
+- Create Database for ThingsBoard  
 ```
 # psql -U postgres -d postgres -h 127.0.0.1
 # CREATE DATABASE thingsboard;
 # \q
 ```
-- Modify Configuration: /etc/thingsboard/conf/thingsboard.conf
-- Run Init Script
+- Modify Configuration: /etc/thingsboard/conf/thingsboard.conf  
+- Run Init Script  
 `# sudo /usr/share/thingsboard/bin/install/install.sh`
-- Start ThingsBoard Service
+- Start ThingsBoard Service  
 `# sudo systemctrl restart thingsboard`
 
 ### Configurations
-- /etc/thingsboard/conf/thingsboard.conf
+- /etc/thingsboard/conf/thingsboard.conf  
 ```
 export DATABASE_ENTITIES_TYPE=sql
 export DATABASE_TS_TYPE=sql
@@ -109,35 +109,35 @@ export SPRING_DATASOURCE_PASSWORD=<password>
 ## Node-RED
 
 ### Installation
-- Update Repository
+- Update Repository  
 `# sudo apt update`
-- Install Node.js
+- Install Node.js  
 ```
 # curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 # sudo apt install -y nodejs
 ```
-- Install Node-RED
+- Install Node-RED  
 `# sudo npm install -g --unsafe-perm node-red node-red-admin`
-- Install Additional Flows
+- Install Additional Flows  
 ```
 # cd ~/.node-red
 # npm install node-red-contrib-modbus
 ```
-- Modify Configuration: ~/.node-red/settings.js
-- Create Node-RED Service
-  - Modify Configuration: /lib/systemd/system/node-red.service
-  - Enable Node-RED Service
-  ```
-  # sudo systemctl daemon-reload
-  # sudo systemctl enable node-red.service
-  # sudo systemctl start node-red.service
-  ```
+- Modify Configuration: ~/.node-red/settings.js  
+- Create Node-RED Service  
+  - Modify Configuration: /lib/systemd/system/node-red.service  
+  - Enable Node-RED Service  
+    ```
+    # sudo systemctl daemon-reload
+    # sudo systemctl enable node-red.service
+    # sudo systemctl start node-red.service
+    ```
 
 ### Generating Password
 `# node-red-admin hash-pw`
 	
 ### Configurations
-- /lib/systemd/system/node-red.service
+- /lib/systemd/system/node-red.service  
 ```
 [Unit]
 Description=Node-RED
@@ -159,7 +159,7 @@ KillSignal=SIGINT
 [Install]
 WantedBy=multi-user.target
 ```
-- ~/.node-red/settings.js
+- ~/.node-red/settings.js  
 ```
 module.exports = {
   ...
@@ -198,7 +198,7 @@ module.exports = {
     - sort_desc.png
     - sort_desc_disabled.png
     - sort_both.png
-  - js
+  - js/
 	- jquery.datatables-1.10.18.min.js
     - buttons-1.5.6.min.js
     - buttons.html5-1.5.6.min.js
