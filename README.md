@@ -133,7 +133,7 @@
     # sudo systemctl start node-red.service
     ```
 
-### Generating Password
+### Generating Password  
   `# node-red-admin hash-pw`
 	
 ### Configurations
@@ -188,19 +188,20 @@
   ```
 
 ### Assets
-- datatables/
-  - css/
-	- jquery.datatables-1.10.18.min.css
-    - buttons-1.5.6.min.css
-  - images/
-    - sort_asc.png
-    - sort_asc_disabled.png
-    - sort_desc.png
-    - sort_desc_disabled.png
-    - sort_both.png
-  - js/
-	- jquery.datatables-1.10.18.min.js
-    - buttons-1.5.6.min.js
-    - buttons.html5-1.5.6.min.js
-- chartjs-2.8.0.min.js
-- jszip-2.5.0.min.js
+- ~/.node-red/public/
+  - datatables/
+    - css/
+	    - jquery.datatables-1.10.18.min.css
+      - buttons-1.5.6.min.css
+    - images/
+      - sort_asc.png
+      - sort_asc_disabled.png
+      - sort_desc.png
+      - sort_desc_disabled.png
+      - sort_both.png
+    - js/
+	    - jquery.datatables-1.10.18.min.js
+      - buttons-1.5.6.min.js
+      - buttons.html5-1.5.6.min.js
+  - chartjs-2.8.0.min.js
+  - jszip-2.5.0.min.js
