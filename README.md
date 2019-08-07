@@ -27,6 +27,7 @@
   # psql
   # \password
   # \q
+  # exit
   ```
 - Create Database for ThingsBoard  
   ```
@@ -38,7 +39,7 @@
 - Run Init Script  
   `# sudo /usr/share/thingsboard/bin/install/install.sh`
 - Start ThingsBoard Service  
-  `# sudo systemctrl restart thingsboard`
+  `# sudo systemctl start thingsboard`
 
 ### Configurations
 - /etc/thingsboard/conf/thingsboard.conf  
@@ -116,13 +117,14 @@
   # curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
   # sudo apt install -y nodejs
   ```
+- (workaround) Fix NPM  
+  `# sudo chown -R <user>:<user> ~/.npm`
 - Install Node-RED  
   `# sudo npm install -g --unsafe-perm node-red node-red-admin`
-- Install Additional Flows  
-  ```
-  # cd ~/.node-red
-  # npm install node-red-contrib-modbus
-  ```
+- Init Node-RED
+  `# node-red`
+- Install Modbus Flows  
+  `# (cd ~/.node-red && npm install node-red-contrib-modbus)`
 - Modify Configuration: ~/.node-red/settings.js  
 - Create Node-RED Service  
   - Modify Configuration: /lib/systemd/system/node-red.service  
@@ -164,7 +166,7 @@
   module.exports = {
     ...
     httpAdminRoot: '/admin',
-    httpStatic: '~/.node-red/public',
+    httpStatic: '/home/<user>/.node-red/public',
     adminAuth: {
       type: "credentials",
       users: [{
@@ -172,10 +174,6 @@
         password: "<password>",
         permissions: "*"
       }]
-    },
-    contextStorage: {
-      default: { module: "memory" },
-      file: { module: "localfilesystem" }
     },
     logging: {
       console: {
