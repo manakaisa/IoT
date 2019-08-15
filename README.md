@@ -121,8 +121,11 @@
   `# sudo chown -R <user>:<user> ~/.npm`
 - Install Node-RED  
   `# sudo npm install -g --unsafe-perm node-red node-red-admin`
-- Init Node-RED
-  `# node-red`
+- (workaround) Init Node-RED  
+  ```
+  # node-red
+  # (Ctrl + C)
+  ```
 - Install Modbus Flows  
   `# (cd ~/.node-red && npm install node-red-contrib-modbus)`
 - Modify Configuration: ~/.node-red/settings.js  
