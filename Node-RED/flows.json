@@ -14,6 +14,13 @@
         "info": ""
     },
     {
+        "id": "6ed1287.3a4f5d8",
+        "type": "tab",
+        "label": "MQTT Gateway",
+        "disabled": true,
+        "info": ""
+    },
+    {
         "id": "f0df971c.4d54b8",
         "type": "tab",
         "label": "Modbus Gateway - Unit Test",
@@ -38,6 +45,13 @@
         "id": "b33d8180.c531b",
         "type": "tab",
         "label": "Test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "73764732.0148a8",
+        "type": "tab",
+        "label": "Test MQTT Broker",
         "disabled": false,
         "info": ""
     },
@@ -214,7 +228,7 @@
         "id": "a7f6088.a9b1bf8",
         "type": "mqtt-broker",
         "z": "",
-        "name": "localhost",
+        "name": "",
         "broker": "localhost",
         "port": "1883",
         "clientid": "",
@@ -305,6 +319,28 @@
         "z": "d9b805d9.02c008",
         "name": "localhost - Count-Fail",
         "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "b73ce40f.170be8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "192.168.194.1",
         "port": "1883",
         "clientid": "",
         "usetls": false,
@@ -2843,7 +2879,7 @@
         "adr": "0",
         "quantity": "1",
         "server": "f6f75f38.3c415",
-        "x": 1000,
+        "x": 1040,
         "y": 260,
         "wires": [
             [],
@@ -2854,11 +2890,11 @@
         "id": "8a5007a1.e56fc8",
         "type": "function",
         "z": "f0df971c.4d54b8",
-        "name": "Set Write-back",
+        "name": "Set write-back value",
         "func": "msg.payload = 0;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 800,
+        "x": 820,
         "y": 260,
         "wires": [
             [
@@ -2884,11 +2920,11 @@
         "id": "cced7aee.f7fcb8",
         "type": "function",
         "z": "a9b927b3.834d18",
-        "name": "Set Write-back",
+        "name": "Set write-back value",
         "func": "msg.payload = 0;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 780,
+        "x": 800,
         "y": 220,
         "wires": [
             [
@@ -2908,11 +2944,400 @@
         "adr": "0",
         "quantity": "1",
         "server": "6b4c93c8.59a22c",
-        "x": 980,
+        "x": 1020,
         "y": 220,
         "wires": [
             [],
             []
         ]
+    },
+    {
+        "id": "9a2e9479.251928",
+        "type": "mqtt out",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "test",
+        "qos": "",
+        "retain": "",
+        "broker": "b73ce40f.170be8",
+        "x": 410,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "c63b99e1.4a6138",
+        "type": "inject",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "9a2e9479.251928"
+            ]
+        ]
+    },
+    {
+        "id": "b4ae2f45.62dcb",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "test",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "7973a480.83257c"
+            ]
+        ]
+    },
+    {
+        "id": "7973a480.83257c",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a48b18cf.5e5858",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di1",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 320,
+        "wires": [
+            [
+                "a0c0e997.99c078"
+            ]
+        ]
+    },
+    {
+        "id": "a0c0e997.99c078",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "131ac85d.ef8818",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di2",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "9492a22c.136d1"
+            ]
+        ]
+    },
+    {
+        "id": "9492a22c.136d1",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "cb13f699.6caa18",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di3",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 440,
+        "wires": [
+            [
+                "e155b57d.c846b8"
+            ]
+        ]
+    },
+    {
+        "id": "e155b57d.c846b8",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "128e3129.6d852f",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di4",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 500,
+        "wires": [
+            [
+                "bc7f5d93.18b1f"
+            ]
+        ]
+    },
+    {
+        "id": "bc7f5d93.18b1f",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "b4343a35.d5cf78",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di5",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 560,
+        "wires": [
+            [
+                "3b665667.1f053a"
+            ]
+        ]
+    },
+    {
+        "id": "3b665667.1f053a",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "984b282e.99bc88",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di6",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 620,
+        "wires": [
+            [
+                "c9d802d6.20825"
+            ]
+        ]
+    },
+    {
+        "id": "c9d802d6.20825",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "44798577.009d3c",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di7",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 680,
+        "wires": [
+            [
+                "329d6616.68c71a"
+            ]
+        ]
+    },
+    {
+        "id": "329d6616.68c71a",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "2b6e0abb.ea3736",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/ctl/di8",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 740,
+        "wires": [
+            [
+                "52965697.77d738"
+            ]
+        ]
+    },
+    {
+        "id": "52965697.77d738",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "64208008.a2c49",
+        "type": "mqtt in",
+        "z": "73764732.0148a8",
+        "name": "",
+        "topic": "Advantech/00D0C9E45451/data",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "f67ae731.7904d8"
+            ]
+        ]
+    },
+    {
+        "id": "f67ae731.7904d8",
+        "type": "debug",
+        "z": "73764732.0148a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c51e8bfc.256078",
+        "type": "mqtt in",
+        "z": "6ed1287.3a4f5d8",
+        "name": "MQTT Broker",
+        "topic": "/",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "b73ce40f.170be8",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "683c6b8d.c6e434"
+            ]
+        ]
+    },
+    {
+        "id": "683c6b8d.c6e434",
+        "type": "function",
+        "z": "6ed1287.3a4f5d8",
+        "name": "Mapping",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "dff8890f.c275d8"
+            ]
+        ]
+    },
+    {
+        "id": "dff8890f.c275d8",
+        "type": "mqtt out",
+        "z": "6ed1287.3a4f5d8",
+        "name": "Write to MQTT - ${device}",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "a7f6088.a9b1bf8",
+        "x": 510,
+        "y": 80,
+        "wires": []
     }
 ]
