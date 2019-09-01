@@ -189,10 +189,10 @@
   ```
 
 ### Assets
-- ~/.node-red/public/
+- ~/.node-red/public/assets
   - datatables/
     - css/
-	    - jquery.datatables-1.10.18.min.css
+      - jquery.datatables-1.10.18.min.css
       - buttons-1.5.6.min.css
     - images/
       - sort_asc.png
@@ -201,7 +201,7 @@
       - sort_desc_disabled.png
       - sort_both.png
     - js/
-	    - jquery.datatables-1.10.18.min.js
+      - jquery.datatables-1.10.18.min.js
       - buttons-1.5.6.min.js
       - buttons.html5-1.5.6.min.js
   - chartjs-2.8.0.min.js
