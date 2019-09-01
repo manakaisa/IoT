@@ -66,7 +66,15 @@
 - Scedule Reset 
 - Scedule Report 
 - Split Messages
+- Call API
 
+### Tenant Specification
+- Entity Type: Tenant
+- Name: *
+- Server Attributes: 
+  - admin_user: *
+  - admin_pass: *
+  
 ### Metadata Specification
 - Entity Type: Asset
 - Name: $WORKGROUP_PREFIX + META
@@ -74,7 +82,6 @@
 - Server Attributes: 
   - reportTime: HH:mm
   - resetTime: HH:mm
-  - workers: ***auto generated
   - worker_prefix: *
   - workgroup: *
 
