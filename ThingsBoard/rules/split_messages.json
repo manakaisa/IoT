@@ -1,7 +1,7 @@
 {
   "ruleChain": {
     "additionalInfo": {
-      "description": "- Generate message from metadata.msgs\n- Send back message to metadata.originatorRule"
+      "description": "- Generate message from metadata.msgs\n- Send back message by metadata.originatorRule"
     },
     "name": "Split Messages",
     "firstRuleNodeId": null,
@@ -10,18 +10,18 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 0,
+    "firstNodeIndex": 2,
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 275,
+          "layoutX": 551,
           "layoutY": 151
         },
-        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
-        "name": "Split Messages",
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Not Empty",
         "debugMode": false,
         "configuration": {
-          "jsScript": "var msgs = JSON.parse(metadata.msgs);\n\nmsg = msgs.shift() || null;\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.split = \"true\";\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+          "jsScript": "return msg !== null;"
         }
       },
       {
@@ -38,27 +38,27 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 551,
+          "layoutX": 275,
           "layoutY": 151
         },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Check Not Empty",
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Split Messages",
         "debugMode": false,
         "configuration": {
-          "jsScript": "return msg !== null;"
+          "jsScript": "var msgs = JSON.parse(metadata.msgs);\n\nmsg = msgs.shift() || null;\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.split = \"true\";\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
         }
       }
     ],
     "connections": [
       {
         "fromIndex": 0,
-        "toIndex": 2,
-        "type": "Success"
+        "toIndex": 1,
+        "type": "True"
       },
       {
         "fromIndex": 2,
-        "toIndex": 1,
-        "type": "True"
+        "toIndex": 0,
+        "type": "Success"
       }
     ],
     "ruleChainConnections": [
@@ -66,7 +66,20 @@
         "fromIndex": 1,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "87dfa120-b1f3-11e9-a73c-478a63558f49"
+          "id": "4d1514b0-cca8-11e9-8a35-d185e8e3d055"
+        },
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 350,
+          "ruleChainNodeId": "rule-chain-node-7"
+        },
+        "type": "RESET-WORKERS"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "7c70e940-cccc-11e9-8a35-d185e8e3d055"
         },
         "additionalInfo": {
           "layoutX": 549,
@@ -74,19 +87,6 @@
           "ruleChainNodeId": "rule-chain-node-6"
         },
         "type": "REPORT-WORKERS"
-      },
-      {
-        "fromIndex": 1,
-        "targetRuleChainId": {
-          "entityType": "RULE_CHAIN",
-          "id": "c96f0180-b1d0-11e9-95f1-513a360cd1cd"
-        },
-        "additionalInfo": {
-          "layoutX": 550,
-          "layoutY": 350,
-          "ruleChainNodeId": "rule-chain-node-5"
-        },
-        "type": "RESET-WORKERS"
       }
     ]
   }

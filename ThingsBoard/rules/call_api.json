@@ -1,0 +1,217 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": "- Call API by: metadata.api_url, metadata.api_method, metadata.api_body\n- Send back message by metadata.originatorRule"
+    },
+    "name": "Call API",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 3,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 555,
+          "layoutY": 274
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch API Method",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "return metadata.api_method;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1101,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Get Response",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "metadata.api_token = msg.token;\n\nif(metadata.api_method === 'POST') {\n    msg = JSON.parse(metadata.api_body||'{}')\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 249
+        },
+        "type": "org.thingsboard.rule.engine.rest.TbRestApiCallNode",
+        "name": "GET",
+        "debugMode": true,
+        "configuration": {
+          "restEndpointUrlPattern": "http://localhost:8080${api_url}",
+          "requestMethod": "GET",
+          "headers": {
+            "X-Authorization": "Bearer ${api_token}"
+          },
+          "useSimpleClientHttpFactory": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 274,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetTenantAttributeNode",
+        "name": "Get API Configuration",
+        "debugMode": true,
+        "configuration": {
+          "attrMapping": {
+            "admin_user": "admin_user",
+            "admin_pass": "admin_pass"
+          },
+          "telemetry": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Request",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "metadata.api_ori_msg = JSON.stringify(msg);\n\nmsg = {\n    \"username\": metadata.admin_user,\n    \"password\": metadata.admin_pass\n}\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.rest.TbRestApiCallNode",
+        "name": "Login",
+        "debugMode": true,
+        "configuration": {
+          "restEndpointUrlPattern": "http://localhost:8080/api/auth/login",
+          "requestMethod": "POST",
+          "headers": {},
+          "useSimpleClientHttpFactory": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1101,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Get Response",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "metadata.api_response = JSON.stringify(msg);\n\nmsg = JSON.parse(metadata.api_ori_msg);\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 325
+        },
+        "type": "org.thingsboard.rule.engine.rest.TbRestApiCallNode",
+        "name": "POST",
+        "debugMode": true,
+        "configuration": {
+          "restEndpointUrlPattern": "http://localhost:8080${api_url}",
+          "requestMethod": "POST",
+          "headers": {
+            "X-Authorization": "${api_token}"
+          },
+          "useSimpleClientHttpFactory": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 551,
+          "layoutY": 426
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Return to Originator",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "return [metadata.originatorRule];"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 2,
+        "type": "GET"
+      },
+      {
+        "fromIndex": 0,
+        "toIndex": 7,
+        "type": "POST"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 6,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 8,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "7c70e940-cccc-11e9-8a35-d185e8e3d055"
+        },
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 500,
+          "ruleChainNodeId": "rule-chain-node-12"
+        },
+        "type": "REPORT-WORKERS"
+      },
+      {
+        "fromIndex": 8,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "4d1514b0-cca8-11e9-8a35-d185e8e3d055"
+        },
+        "additionalInfo": {
+          "layoutX": 1101,
+          "layoutY": 425,
+          "ruleChainNodeId": "rule-chain-node-11"
+        },
+        "type": "RESET-WORKERS"
+      }
+    ]
+  }
+}

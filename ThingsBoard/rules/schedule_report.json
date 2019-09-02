@@ -14,26 +14,18 @@
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 876,
-          "layoutY": 350
+          "layoutX": 50,
+          "layoutY": 352
         },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Check Last Report Date",
+        "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
+        "name": "Schedule Report",
         "debugMode": true,
         "configuration": {
-          "jsScript": "if (!metadata.lastReportDate) {\n    return true;\n}\n\nvar now = new Date();\nvar lastReportDate = new Date(parseInt(metadata.lastReportDate));\n// Daily\n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());\n// Hourly\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours());\n// Minutely  \n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());\n\nreturn reportDate > lastReportDate;"
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 601,
-          "layoutY": 350
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Check Report Time",
-        "debugMode": true,
-        "configuration": {
-          "jsScript": "if (!metadata.ss_reportTime) {\n    return false;\n}\n\nvar arrReportTime = metadata.ss_reportTime.split(':');\nvar now = new Date();\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(arrReportTime[0]), parseInt(arrReportTime[1]));\n\nreturn now > reportDate;"
+          "msgCount": 0,
+          "periodInSeconds": 3600,
+          "originatorId": "eba1af10-afa4-11e9-b546-57b55a0f7f3e",
+          "originatorType": "ASSET",
+          "jsScript": "var msg = {\n    report: true\n};\nvar metadata = {};\n\nreturn { msg: msg, metadata: metadata, msgType: 'POST_TELEMETRY_REQUEST' };"
         }
       },
       {
@@ -57,44 +49,52 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 50,
-          "layoutY": 352
+          "layoutX": 601,
+          "layoutY": 350
         },
-        "type": "org.thingsboard.rule.engine.debug.TbMsgGeneratorNode",
-        "name": "Schedule Report",
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Report Time",
         "debugMode": true,
         "configuration": {
-          "msgCount": 0,
-          "periodInSeconds": 3600,
-          "originatorId": "eba1af10-afa4-11e9-b546-57b55a0f7f3e",
-          "originatorType": "ASSET",
-          "jsScript": "var msg = {\n    report: true\n};\nvar metadata = {};\n\nreturn { msg: msg, metadata: metadata, msgType: 'POST_TELEMETRY_REQUEST' };"
+          "jsScript": "if (!metadata.ss_reportTime) {\n    return false;\n}\n\nvar arrReportTime = metadata.ss_reportTime.split(':');\nvar now = new Date();\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(arrReportTime[0]), parseInt(arrReportTime[1]));\n\nreturn now > reportDate;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 876,
+          "layoutY": 350
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Last Report Date",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "if (!metadata.lastReportDate) {\n    return true;\n}\n\nvar now = new Date();\nvar lastReportDate = new Date(parseInt(metadata.lastReportDate));\n// Daily\n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());\n// Hourly\nvar reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours());\n// Minutely  \n//var reportDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes());\n\nreturn reportDate > lastReportDate;"
         }
       }
     ],
     "connections": [
       {
-        "fromIndex": 1,
-        "toIndex": 0,
-        "type": "True"
-      },
-      {
-        "fromIndex": 2,
+        "fromIndex": 0,
         "toIndex": 1,
         "type": "Success"
       },
       {
-        "fromIndex": 3,
+        "fromIndex": 1,
         "toIndex": 2,
         "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "True"
       }
     ],
     "ruleChainConnections": [
       {
-        "fromIndex": 0,
+        "fromIndex": 3,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "87dfa120-b1f3-11e9-a73c-478a63558f49"
+          "id": "7c70e940-cccc-11e9-8a35-d185e8e3d055"
         },
         "additionalInfo": {
           "layoutX": 1151,
