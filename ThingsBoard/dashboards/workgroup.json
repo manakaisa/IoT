@@ -8,7 +8,7 @@
         "typeAlias": "attributes_card",
         "type": "latest",
         "title": "New widget",
-        "sizeX": 17,
+        "sizeX": 13,
         "sizeY": 3,
         "config": {
           "datasources": [
@@ -75,57 +75,13 @@
         "typeAlias": "timeseries_table",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 17,
+        "sizeX": 13,
         "sizeY": 5,
         "config": {
           "datasources": [
             {
               "type": "entity",
               "dataKeys": [
-                {
-                  "name": "worker_id",
-                  "type": "timeseries",
-                  "label": "Worker ID",
-                  "color": "#8bc34a",
-                  "settings": {
-                    "useCellStyleFunction": false,
-                    "useCellContentFunction": false
-                  },
-                  "_hash": 0.1776572139495276
-                },
-                {
-                  "name": "count_in",
-                  "type": "timeseries",
-                  "label": "Count - In",
-                  "color": "#ffc107",
-                  "settings": {
-                    "useCellStyleFunction": false,
-                    "useCellContentFunction": false
-                  },
-                  "_hash": 0.24404628300403242
-                },
-                {
-                  "name": "count_success",
-                  "type": "timeseries",
-                  "label": "Count - Success",
-                  "color": "#607d8b",
-                  "settings": {
-                    "useCellStyleFunction": false,
-                    "useCellContentFunction": false
-                  },
-                  "_hash": 0.8274853123089327
-                },
-                {
-                  "name": "count_fail",
-                  "type": "timeseries",
-                  "label": "Count - Fail",
-                  "color": "#9c27b0",
-                  "settings": {
-                    "useCellStyleFunction": false,
-                    "useCellContentFunction": false
-                  },
-                  "_hash": 0.27849276871161033
-                },
                 {
                   "name": "all_count_in",
                   "type": "timeseries",
@@ -196,6 +152,109 @@
           "displayTimewindow": true
         },
         "id": "cc5b94a2-5b41-3919-2d3a-66505b43b745"
+      },
+      "e196e6d6-a541-d49f-31a4-432597106d74": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "timeseries_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 13,
+        "sizeY": 5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "hourly_all_count_in",
+                  "type": "timeseries",
+                  "label": "hourly_all_count_in",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.4480093163009091
+                },
+                {
+                  "name": "hourly_all_count_success",
+                  "type": "timeseries",
+                  "label": "hourly_all_count_success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.6646043070147243
+                },
+                {
+                  "name": "hourly_all_count_fail",
+                  "type": "timeseries",
+                  "label": "hourly_all_count_fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.42007919545196204
+                },
+                {
+                  "name": "lastReportDate",
+                  "type": "timeseries",
+                  "label": "lastReportDate",
+                  "color": "#ffc107",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.29483479765604215
+                }
+              ],
+              "entityAliasId": "55218165-a5da-3ccd-154a-16c9350762b3"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "showTimestamp": true,
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Report",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "widgetStyle": {},
+          "actions": {},
+          "displayTimewindow": true
+        },
+        "id": "e196e6d6-a541-d49f-31a4-432597106d74"
       }
     },
     "states": {
@@ -206,15 +265,21 @@
           "main": {
             "widgets": {
               "46319d35-0807-9aed-58e9-4b7d922a1f51": {
-                "sizeX": 17,
+                "sizeX": 13,
                 "sizeY": 3,
                 "row": 5,
                 "col": 0
               },
               "cc5b94a2-5b41-3919-2d3a-66505b43b745": {
-                "sizeX": 17,
+                "sizeX": 13,
                 "sizeY": 5,
                 "row": 0,
+                "col": 0
+              },
+              "e196e6d6-a541-d49f-31a4-432597106d74": {
+                "sizeX": 13,
+                "sizeY": 5,
+                "row": 8,
                 "col": 0
               }
             },

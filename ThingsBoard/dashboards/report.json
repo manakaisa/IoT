@@ -9,7 +9,7 @@
         "type": "timeseries",
         "title": "New widget",
         "sizeX": 13,
-        "sizeY": 6,
+        "sizeY": 5,
         "config": {
           "datasources": [
             {
@@ -96,7 +96,7 @@
         "type": "latest",
         "title": "New widget",
         "sizeX": 8,
-        "sizeY": 6,
+        "sizeY": 5,
         "config": {
           "datasources": [
             {
@@ -156,27 +156,332 @@
           "displayTimewindow": true
         },
         "id": "8fcbc1f4-70f4-a6b3-f2e9-eaf5347b1094"
+      },
+      "0f14a149-ab16-4aa8-b9d4-4bc4b661248c": {
+        "isSystemType": true,
+        "bundleAlias": "z_widgets",
+        "typeAlias": "daily_report",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 13,
+        "sizeY": 5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "sum_count_in",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.3661153635124119
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "sum_count_success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.81343328258235
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "sum_count_fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.9505290383550387
+                }
+              ],
+              "entityAliasId": "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 5000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 100
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "enableSearch": true,
+            "displayPagination": true,
+            "defaultEntityPageSize": 5
+          },
+          "title": "Daily Report (pivot)",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "mobileHeight": null,
+          "widgetStyle": {},
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "units": "",
+          "decimals": null,
+          "displayTimewindow": true
+        },
+        "id": "0f14a149-ab16-4aa8-b9d4-4bc4b661248c"
+      },
+      "f12b4842-e7c1-4a7e-cba9-daeec222fc0d": {
+        "isSystemType": true,
+        "bundleAlias": "z_widgets",
+        "typeAlias": "entities_table_timeseries_",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 13,
+        "sizeY": 5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "sum_count_in",
+                  "color": "#2196f3",
+                  "settings": {
+                    "columnWidth": "",
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.3486777879483518
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "sum_count_success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "columnWidth": "",
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.4058133909260979
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "sum_count_fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "columnWidth": "",
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.30776410568830537
+                }
+              ],
+              "entityAliasId": "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 5000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 100
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "enableSearch": true,
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Entities Table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "mobileHeight": null,
+          "widgetStyle": {},
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "units": "",
+          "decimals": null,
+          "displayTimewindow": true
+        },
+        "id": "f12b4842-e7c1-4a7e-cba9-daeec222fc0d"
+      },
+      "a0fff9cf-d5f2-aa10-5bbd-c3ef27836fd3": {
+        "isSystemType": true,
+        "bundleAlias": "z_widgets",
+        "typeAlias": "raw_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 13,
+        "sizeY": 5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "sum_count_in",
+                  "type": "timeseries",
+                  "label": "sum_count_in",
+                  "color": "#2196f3",
+                  "settings": {
+                    "columnWidth": "",
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.34938469398124283
+                },
+                {
+                  "name": "sum_count_success",
+                  "type": "timeseries",
+                  "label": "sum_count_success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "columnWidth": "",
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.6977678672971828
+                },
+                {
+                  "name": "sum_count_fail",
+                  "type": "timeseries",
+                  "label": "sum_count_fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "columnWidth": "",
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.1526387691311306
+                }
+              ],
+              "entityAliasId": "4658a6ab-10b3-510e-d30a-7d2f5fa01ca5"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 5000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 100
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Raw Table",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "mobileHeight": null,
+          "widgetStyle": {},
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "units": "",
+          "decimals": null,
+          "displayTimewindow": true
+        },
+        "id": "a0fff9cf-d5f2-aa10-5bbd-c3ef27836fd3"
       }
     },
     "states": {
       "default": {
-        "name": "Excel",
+        "name": "Report",
         "root": true,
         "layouts": {
           "main": {
             "widgets": {
               "ebaf9ac6-f7b0-ab5e-adf1-8061549c42fd": {
                 "sizeX": 13,
-                "sizeY": 6,
+                "sizeY": 5,
                 "mobileHeight": null,
                 "row": 0,
                 "col": 0
               },
               "8fcbc1f4-70f4-a6b3-f2e9-eaf5347b1094": {
                 "sizeX": 8,
-                "sizeY": 6,
+                "sizeY": 5,
                 "row": 0,
                 "col": 13
+              },
+              "0f14a149-ab16-4aa8-b9d4-4bc4b661248c": {
+                "sizeX": 13,
+                "sizeY": 5,
+                "mobileHeight": null,
+                "row": 5,
+                "col": 0
+              },
+              "f12b4842-e7c1-4a7e-cba9-daeec222fc0d": {
+                "sizeX": 13,
+                "sizeY": 5,
+                "mobileHeight": null,
+                "row": 10,
+                "col": 0
+              },
+              "a0fff9cf-d5f2-aa10-5bbd-c3ef27836fd3": {
+                "sizeX": 13,
+                "sizeY": 5,
+                "mobileHeight": null,
+                "row": 15,
+                "col": 0
               }
             },
             "gridSettings": {

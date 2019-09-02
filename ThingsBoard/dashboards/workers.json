@@ -209,6 +209,109 @@
           "actions": {}
         },
         "id": "e60375bb-627b-2fee-4eb5-459680eebb4d"
+      },
+      "30dfffbf-1a3a-e111-bcbb-b0224831816f": {
+        "isSystemType": true,
+        "bundleAlias": "cards",
+        "typeAlias": "timeseries_table",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 16,
+        "sizeY": 5,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "hourly_sum_count_in",
+                  "type": "timeseries",
+                  "label": "hourly_sum_count_in",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.13604279704789168
+                },
+                {
+                  "name": "hourly_sum_count_success",
+                  "type": "timeseries",
+                  "label": "hourly_sum_count_success",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.48499671318745396
+                },
+                {
+                  "name": "hourly_sum_count_fail",
+                  "type": "timeseries",
+                  "label": "hourly_sum_count_fail",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.7121070514977481
+                },
+                {
+                  "name": "lastReportDate",
+                  "type": "timeseries",
+                  "label": "lastReportDate",
+                  "color": "#ffc107",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "cellStyleFunction": "",
+                    "useCellContentFunction": false,
+                    "cellContentFunction": ""
+                  },
+                  "_hash": 0.6740097286812599
+                }
+              ],
+              "entityAliasId": "4bbaf569-2969-e1f4-f944-e448c8fa89cb"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 1000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 200
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "rgb(255, 255, 255)",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "showTimestamp": true,
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Report",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "widgetStyle": {},
+          "actions": {},
+          "displayTimewindow": true
+        },
+        "id": "30dfffbf-1a3a-e111-bcbb-b0224831816f"
       }
     },
     "states": {
@@ -228,6 +331,12 @@
                 "sizeX": 16,
                 "sizeY": 6,
                 "row": 6,
+                "col": 0
+              },
+              "30dfffbf-1a3a-e111-bcbb-b0224831816f": {
+                "sizeX": 16,
+                "sizeY": 5,
+                "row": 12,
                 "col": 0
               }
             },
