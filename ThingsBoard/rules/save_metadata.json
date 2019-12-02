@@ -10,15 +10,15 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 2,
+    "firstNodeIndex": 1,
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 1025,
-          "layoutY": 151
+          "layoutX": 750,
+          "layoutY": 150
         },
         "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
-        "name": "Change to Metadata",
+        "name": "Create Relation",
         "debugMode": false,
         "configuration": {
           "direction": "FROM",
@@ -30,18 +30,6 @@
           "createEntityIfNotExists": false,
           "changeOriginatorToRelatedEntity": false,
           "removeCurrentRelations": false
-        }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 750,
-          "layoutY": 151
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
-        "name": "Filter for Worker",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "if (msgType !== 'ENTITY_CREATED' && msgType !== 'ENTITY_UPDATED') {\n    return false;\n}\n\nreturn true;"
         }
       },
       {
@@ -61,21 +49,16 @@
       {
         "fromIndex": 1,
         "toIndex": 0,
-        "type": "True"
-      },
-      {
-        "fromIndex": 2,
-        "toIndex": 1,
         "type": "SENSOR"
       },
       {
-        "fromIndex": 2,
-        "toIndex": 1,
+        "fromIndex": 1,
+        "toIndex": 0,
         "type": "WORKGROUP"
       },
       {
-        "fromIndex": 2,
-        "toIndex": 1,
+        "fromIndex": 1,
+        "toIndex": 0,
         "type": "WORKER"
       }
     ],
