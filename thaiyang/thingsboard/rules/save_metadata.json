@@ -1,0 +1,62 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Save Metadata",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 1,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 675,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Create Relation",
+        "debugMode": false,
+        "configuration": {
+          "direction": "FROM",
+          "relationType": "META",
+          "entityType": "ASSET",
+          "entityNamePattern": "Metadata",
+          "entityTypePattern": "META",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": false,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Entity Type",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return [msg.type];"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "SENSOR"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "PRODUCT"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

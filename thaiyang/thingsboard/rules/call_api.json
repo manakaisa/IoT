@@ -127,8 +127,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 555,
-          "layoutY": 274
+          "layoutX": 551,
+          "layoutY": 275
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
         "name": "Switch API Method",
@@ -190,27 +190,27 @@
         "fromIndex": 0,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "4d1514b0-cca8-11e9-8a35-d185e8e3d055"
+          "id": "3c221610-15a7-11ea-b139-1f5d93fc95b6"
         },
         "additionalInfo": {
-          "layoutX": 1101,
-          "layoutY": 425,
+          "layoutX": 1100,
+          "layoutY": 399,
           "ruleChainNodeId": "rule-chain-node-12"
         },
-        "type": "RESET-WORKERS"
+        "type": "RESET-PRODUCTS"
       },
       {
         "fromIndex": 0,
         "targetRuleChainId": {
           "entityType": "RULE_CHAIN",
-          "id": "7c70e940-cccc-11e9-8a35-d185e8e3d055"
+          "id": "82353390-15b5-11ea-b139-1f5d93fc95b6"
         },
         "additionalInfo": {
-          "layoutX": 1100,
-          "layoutY": 500,
+          "layoutX": 1101,
+          "layoutY": 475,
           "ruleChainNodeId": "rule-chain-node-11"
         },
-        "type": "REPORT-WORKERS"
+        "type": "REPORT-PRODUCTS"
       }
     ]
   }

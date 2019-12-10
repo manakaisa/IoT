@@ -1,0 +1,471 @@
+[
+    {
+        "id": "2c05b5.329e6a4c",
+        "type": "tab",
+        "label": "Thai Yang Simulator",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "60f27464.b1649c",
+        "type": "inject",
+        "z": "2c05b5.329e6a4c",
+        "name": "Interval 1min 00:00-23:00",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "*/1 0-22 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "5b36784a.f9d5c8"
+            ]
+        ]
+    },
+    {
+        "id": "34544758.5c07a8",
+        "type": "delay",
+        "z": "2c05b5.329e6a4c",
+        "name": "Delay 55s-65s",
+        "pauseType": "random",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "55",
+        "randomLast": "65",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 620,
+        "y": 200,
+        "wires": [
+            [
+                "f8292d.5a9316d"
+            ]
+        ]
+    },
+    {
+        "id": "626f9ed.d3c116",
+        "type": "debug",
+        "z": "2c05b5.329e6a4c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1030,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f8292d.5a9316d",
+        "type": "function",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set counter for P1",
+        "func": "var countP1 = flow.get('countP1');\n\ncountP1++;\n\nmsg.payload = {\n    product_id: '1',\n    count: countP1\n};\n\nflow.set('countP1', countP1)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 200,
+        "wires": [
+            [
+                "626f9ed.d3c116",
+                "4c254e3b.9bc6e"
+            ]
+        ]
+    },
+    {
+        "id": "410846cf.24a708",
+        "type": "inject",
+        "z": "2c05b5.329e6a4c",
+        "name": "Reset at 08:00",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "00 08 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "aa293c64.6a256"
+            ]
+        ]
+    },
+    {
+        "id": "aa293c64.6a256",
+        "type": "change",
+        "z": "2c05b5.329e6a4c",
+        "name": "Reset counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "countP1",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "countP2",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "countP3",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 400,
+        "wires": [
+            [
+                "519adf74.3054c"
+            ]
+        ]
+    },
+    {
+        "id": "21885561.6058ba",
+        "type": "delay",
+        "z": "2c05b5.329e6a4c",
+        "name": "Delay 55s-65s",
+        "pauseType": "random",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "55",
+        "randomLast": "65",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 620,
+        "y": 260,
+        "wires": [
+            [
+                "66e35a1.91d4ba4"
+            ]
+        ]
+    },
+    {
+        "id": "66e35a1.91d4ba4",
+        "type": "function",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set counter for P2",
+        "func": "var countP2 = flow.get('countP2');\n\ncountP2++;\n\nmsg.payload = {\n    product_id: '2',\n    count: countP2\n};\n\nflow.set('countP2', countP2)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 260,
+        "wires": [
+            [
+                "4c254e3b.9bc6e",
+                "626f9ed.d3c116"
+            ]
+        ]
+    },
+    {
+        "id": "fbfc691a.3e9ca8",
+        "type": "delay",
+        "z": "2c05b5.329e6a4c",
+        "name": "Delay 55s-65s",
+        "pauseType": "random",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "55",
+        "randomLast": "65",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 620,
+        "y": 320,
+        "wires": [
+            [
+                "e0638dd4.b761c"
+            ]
+        ]
+    },
+    {
+        "id": "e0638dd4.b761c",
+        "type": "function",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set counter for P3",
+        "func": "var countP3 = flow.get('countP3');\n\ncountP3++;\n\nmsg.payload = {\n    product_id: '3',\n    count: countP3\n};\n\nflow.set('countP3', countP3)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 320,
+        "wires": [
+            [
+                "4c254e3b.9bc6e",
+                "626f9ed.d3c116"
+            ]
+        ]
+    },
+    {
+        "id": "4c254e3b.9bc6e",
+        "type": "mqtt out",
+        "z": "2c05b5.329e6a4c",
+        "name": "Write to Counter",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "d2558f9e.c525f",
+        "x": 1040,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e754a151.8a838",
+        "type": "mqtt out",
+        "z": "2c05b5.329e6a4c",
+        "name": "Reset counter",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "6efb47d2.561808",
+        "x": 780,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "5b36784a.f9d5c8",
+        "type": "switch",
+        "z": "2c05b5.329e6a4c",
+        "name": "Check enable",
+        "property": "enable",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "34544758.5c07a8",
+                "21885561.6058ba",
+                "fbfc691a.3e9ca8"
+            ]
+        ]
+    },
+    {
+        "id": "d39a5c17.59684",
+        "type": "inject",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set enable",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "eeeb27f3.8d38b8"
+            ]
+        ]
+    },
+    {
+        "id": "eeeb27f3.8d38b8",
+        "type": "change",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set flow enable",
+        "rules": [
+            {
+                "t": "set",
+                "p": "enable",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "85d0c8aa.f21568",
+        "type": "inject",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set disable",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "eeeb27f3.8d38b8"
+            ]
+        ]
+    },
+    {
+        "id": "519adf74.3054c",
+        "type": "function",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set reset counter",
+        "func": "msg.payload = {\n    reset: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 400,
+        "wires": [
+            [
+                "e754a151.8a838"
+            ]
+        ]
+    },
+    {
+        "id": "7f1dc45.2217c3c",
+        "type": "inject",
+        "z": "2c05b5.329e6a4c",
+        "name": "Report at 08:00",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "00 08 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 480,
+        "wires": [
+            [
+                "2b751b6e.20e274"
+            ]
+        ]
+    },
+    {
+        "id": "29595735.1c9dc8",
+        "type": "mqtt out",
+        "z": "2c05b5.329e6a4c",
+        "name": "Report counter",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "ea43c727.dc8af8",
+        "x": 580,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2b751b6e.20e274",
+        "type": "function",
+        "z": "2c05b5.329e6a4c",
+        "name": "Set report counter",
+        "func": "msg.payload = {\n    report: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 480,
+        "wires": [
+            [
+                "29595735.1c9dc8"
+            ]
+        ]
+    },
+    {
+        "id": "d2558f9e.c525f",
+        "type": "mqtt-broker",
+        "z": "2c05b5.329e6a4c",
+        "name": "localhost - Counter",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "6efb47d2.561808",
+        "type": "mqtt-broker",
+        "z": "2c05b5.329e6a4c",
+        "name": "localhost - Reset",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "ea43c727.dc8af8",
+        "type": "mqtt-broker",
+        "z": "2c05b5.329e6a4c",
+        "name": "localhost - Report",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

@@ -1,0 +1,291 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Save Products",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 8,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 2199,
+          "layoutY": 225
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nvar now = Date.now();\n\nnewMsg.lastUpdatedDate = now;\n\nnewMsg.planCount = parseInt(metadata.ss_defaultPlanCount||'0');\nnewMsg.planSumProcessingTime = parseInt(metadata.ss_defaultPlanSumProcessingTime||'0');\nnewMsg.planProduceRate = newMsg.planCount / newMsg.planSumProcessingTime;\nnewMsg.breakTime = parseInt(metadata.ss_defaultBreakTime||'0');\n\nnewMsg.count = parseInt(metadata.count||'0');\nnewMsg.countFail = parseInt(metadata.countFail||'0');\nnewMsg.sumProcessingTime = parseInt(metadata.sumProcessingTime||'0');\nnewMsg.produceRate = newMsg.count / newMsg.sumProcessingTime;\n\nnewMsg.A = newMsg.sumProcessingTime / (newMsg.planSumProcessingTime - newMsg.breakTime);\nnewMsg.P = newMsg.produceRate / newMsg.planProduceRate;\nnewMsg.Q = (newMsg.count - newMsg.countFail) / newMsg.count;\nnewMsg.OEE = newMsg.A * newMsg.P * newMsg.Q;\nnewMsg.productivity = newMsg.count / (parseInt(metadata.ss_workers||'0') * (newMsg.sumProcessingTime/1000/60/60));\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetRelatedAttributeNode",
+        "name": "Get Configuration",
+        "debugMode": false,
+        "configuration": {
+          "attrMapping": {
+            "prefix": "ss_prefix"
+          },
+          "relationsQuery": {
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "META",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          },
+          "telemetry": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2200,
+          "layoutY": 75
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nvar now = Date.now();\n\nvar processingTime = now - parseInt(metadata.lastUpdatedDate||'0');\nvar defaultProcessingTime = parseInt(metadata.ss_defaultProcessingTime||'0');\nprocessingTime = (processingTime > defaultProcessingTime) ? defaultProcessingTime : processingTime;\n\nnewMsg.lastUpdatedDate = now;\n\nnewMsg.planCount = parseInt(metadata.ss_defaultPlanCount||'0');\nnewMsg.planSumProcessingTime = parseInt(metadata.ss_defaultPlanSumProcessingTime||'0');\nnewMsg.planProduceRate = newMsg.planCount / newMsg.planSumProcessingTime;\nnewMsg.breakTime = parseInt(metadata.ss_defaultBreakTime||'0');\n\nnewMsg.count = msg.count;\nnewMsg.countFail = parseInt(metadata.countFail||'0');\nnewMsg.sumProcessingTime = parseInt(metadata.sumProcessingTime||'0') + processingTime;\nnewMsg.produceRate = newMsg.count / newMsg.sumProcessingTime;\n\nnewMsg.A = newMsg.sumProcessingTime / (newMsg.planSumProcessingTime - newMsg.breakTime);\nnewMsg.P = newMsg.produceRate / newMsg.planProduceRate;\nnewMsg.Q = (newMsg.count - newMsg.countFail) / newMsg.count;\nnewMsg.OEE = newMsg.A * newMsg.P * newMsg.Q;\nnewMsg.productivity = newMsg.count / (parseInt(metadata.ss_workers||'0') * (newMsg.sumProcessingTime/1000/60/60));\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbCheckMessageNode",
+        "name": "Check Product ID",
+        "debugMode": false,
+        "configuration": {
+          "messageNames": [
+            "product_id"
+          ],
+          "metadataNames": [],
+          "checkAllKeys": true
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "metadata.targetDeviceName = (metadata.ss_prefix||'') + msg.product_id;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1374,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Product",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "SENSOR",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "PRODUCT",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2475,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1651,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Latest Value",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "defaultPlanCount",
+            "defaultProcessingTime",
+            "defaultPlanSumProcessingTime",
+            "defaultBreakTime",
+            "workers"
+          ],
+          "latestTsKeyNames": [
+            "lastUpdatedDate",
+            "count",
+            "countFail",
+            "sumProcessingTime"
+          ],
+          "tellFailureIfAbsent": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Sensor Type",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return [metadata.sensorType];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 2200,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nvar now = Date.now();\n\nnewMsg.lastUpdatedDate = now;\n\nnewMsg.planCount = parseInt(metadata.ss_defaultPlanCount||'0');\nnewMsg.planSumProcessingTime = parseInt(metadata.ss_defaultPlanSumProcessingTime||'0');\nnewMsg.planProduceRate = newMsg.planCount / newMsg.planSumProcessingTime;\nnewMsg.breakTime = parseInt(metadata.ss_defaultBreakTime||'0');\n\nnewMsg.count = parseInt(metadata.count||'0');\nnewMsg.countFail = msg.countFail;\nnewMsg.sumProcessingTime = parseInt(metadata.sumProcessingTime||'0');\nnewMsg.produceRate = newMsg.count / newMsg.sumProcessingTime;\n\nnewMsg.A = newMsg.sumProcessingTime / (newMsg.planSumProcessingTime - newMsg.breakTime);\nnewMsg.P = newMsg.produceRate / newMsg.planProduceRate;\nnewMsg.Q = (newMsg.count - newMsg.countFail) / newMsg.count;\nnewMsg.OEE = newMsg.A * newMsg.P * newMsg.Q;\nnewMsg.productivity = newMsg.count / (parseInt(metadata.ss_workers||'0') * (newMsg.sumProcessingTime/1000/60/60));\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1926,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Sensor Type",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return [metadata.sensorType];"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 3,
+        "type": "COUNTER"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 3,
+        "type": "COUNTERFAIL"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 3,
+        "type": "COUNTERREFRESH"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 0,
+        "type": "COUNTERREFRESH"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 2,
+        "type": "COUNTER"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 9,
+        "type": "COUNTERFAIL"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 8,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "82353390-15b5-11ea-b139-1f5d93fc95b6"
+        },
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 301,
+          "ruleChainNodeId": "rule-chain-node-14"
+        },
+        "type": "COUNTERREPORT"
+      },
+      {
+        "fromIndex": 8,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "3c221610-15a7-11ea-b139-1f5d93fc95b6"
+        },
+        "additionalInfo": {
+          "layoutX": 551,
+          "layoutY": 226,
+          "ruleChainNodeId": "rule-chain-node-13"
+        },
+        "type": "COUNTERRESET"
+      }
+    ]
+  }
+}
