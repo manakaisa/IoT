@@ -21,7 +21,8 @@
                   "label": "A",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.19941100652445987
+                  "_hash": 0.19941100652445987,
+                  "postFuncBody": "return value*100;"
                 }
               ],
               "entityAliasId": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0"
@@ -75,7 +76,8 @@
                   "label": "P",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.38383344649093054
+                  "_hash": 0.38383344649093054,
+                  "postFuncBody": "return value*100;"
                 }
               ],
               "entityAliasId": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0"
@@ -129,7 +131,8 @@
                   "label": "Q",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.657257748032519
+                  "_hash": 0.657257748032519,
+                  "postFuncBody": "return value*100;"
                 }
               ],
               "entityAliasId": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0"
@@ -183,7 +186,8 @@
                   "label": "OEE",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.17555524039565307
+                  "_hash": 0.17555524039565307,
+                  "postFuncBody": "return value*100;"
                 }
               ],
               "entityAliasId": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0"
@@ -237,7 +241,8 @@
                   "label": "Productivity",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.5976960776184788
+                  "_hash": 0.5976960776184788,
+                  "postFuncBody": "return value*100;"
                 }
               ],
               "entityAliasId": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0"

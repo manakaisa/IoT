@@ -77,7 +77,7 @@
                 "t": "set",
                 "p": "inputFail",
                 "pt": "flow",
-                "to": "di1",
+                "to": "di6",
                 "tot": "str"
             },
             {
@@ -104,7 +104,7 @@
         "type": "function",
         "z": "b83311c4.0646e",
         "name": "Drop unchanged",
-        "func": "var inputName = flow.get('inputCounter');\nvar previous_value = flow.get('previous_counter');\n\nif(msg.payload[inputName] === previous_value) {\n    return null;\n}\n    \nflow.set('previous_counter', msg.payload[inputName]);\n\nreturn msg;",
+        "func": "var previous_value = flow.get('previous_counter');\n\nif(msg.payload.count === previous_value) {\n    return null;\n}\n    \nflow.set('previous_counter', msg.payload.count);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 510,
@@ -325,7 +325,7 @@
         "type": "function",
         "z": "b83311c4.0646e",
         "name": "Drop unchanged",
-        "func": "var inputName = flow.get('inputFail');\nvar previous_value = flow.get('previous_fail');\n\nif(msg.payload[inputName] === previous_value) {\n    return null;\n}\n\nflow.set('previous_fail', msg.payload[inputName]);\n\nreturn msg;",
+        "func": "var previous_value = flow.get('previous_fail');\n\nif(msg.payload.countFail === previous_value) {\n    return null;\n}\n\nflow.set('previous_fail', msg.payload.countFail);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 510,
