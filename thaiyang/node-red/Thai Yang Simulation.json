@@ -27,29 +27,6 @@
         ]
     },
     {
-        "id": "34544758.5c07a8",
-        "type": "delay",
-        "z": "2c05b5.329e6a4c",
-        "name": "Delay 55s-65s",
-        "pauseType": "random",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "55",
-        "randomLast": "65",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 620,
-        "y": 200,
-        "wires": [
-            [
-                "f8292d.5a9316d"
-            ]
-        ]
-    },
-    {
         "id": "626f9ed.d3c116",
         "type": "debug",
         "z": "2c05b5.329e6a4c",
@@ -59,7 +36,7 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 1030,
+        "x": 830,
         "y": 320,
         "wires": []
     },
@@ -68,15 +45,15 @@
         "type": "function",
         "z": "2c05b5.329e6a4c",
         "name": "Set counter for P1",
-        "func": "var countP1 = flow.get('countP1');\n\ncountP1++;\n\nmsg.payload = {\n    product_id: '1',\n    count: countP1\n};\n\nflow.set('countP1', countP1)\n\nreturn msg;",
+        "func": "var countP1 = flow.get('countP1')||0;\n\nvar count = 10;\nvar breakCount = 0;\nvar breakRatio = 0.2;\nif (breakRatio > Math.random()) {\n    breakCount = Math.floor(Math.random() * 6);\n}\n\ncountP1 = countP1 + (count - breakCount);\n\nmsg.payload = {\n    product_id: '1',\n    count: countP1\n};\n\nflow.set('countP1', countP1)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 830,
+        "x": 630,
         "y": 200,
         "wires": [
             [
                 "626f9ed.d3c116",
-                "4c254e3b.9bc6e"
+                "ff98c279.00732"
             ]
         ]
     },
@@ -142,65 +119,19 @@
         ]
     },
     {
-        "id": "21885561.6058ba",
-        "type": "delay",
-        "z": "2c05b5.329e6a4c",
-        "name": "Delay 55s-65s",
-        "pauseType": "random",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "55",
-        "randomLast": "65",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 620,
-        "y": 260,
-        "wires": [
-            [
-                "66e35a1.91d4ba4"
-            ]
-        ]
-    },
-    {
         "id": "66e35a1.91d4ba4",
         "type": "function",
         "z": "2c05b5.329e6a4c",
         "name": "Set counter for P2",
-        "func": "var countP2 = flow.get('countP2');\n\ncountP2++;\n\nmsg.payload = {\n    product_id: '2',\n    count: countP2\n};\n\nflow.set('countP2', countP2)\n\nreturn msg;",
+        "func": "var countP2 = flow.get('countP2')||0;\n\nvar count = 10;\nvar breakCount = 0;\nvar breakRatio = 0.2;\nif (breakRatio > Math.random()) {\n    breakCount = Math.floor(Math.random() * 6);\n}\n\ncountP2 = countP2 + (count - breakCount);\n\nmsg.payload = {\n    product_id: '2',\n    count: countP2\n};\n\nflow.set('countP2', countP2)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 830,
+        "x": 630,
         "y": 260,
         "wires": [
             [
-                "4c254e3b.9bc6e",
-                "626f9ed.d3c116"
-            ]
-        ]
-    },
-    {
-        "id": "fbfc691a.3e9ca8",
-        "type": "delay",
-        "z": "2c05b5.329e6a4c",
-        "name": "Delay 55s-65s",
-        "pauseType": "random",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "55",
-        "randomLast": "65",
-        "randomUnits": "seconds",
-        "drop": false,
-        "x": 620,
-        "y": 320,
-        "wires": [
-            [
-                "e0638dd4.b761c"
+                "626f9ed.d3c116",
+                "ff98c279.00732"
             ]
         ]
     },
@@ -209,30 +140,17 @@
         "type": "function",
         "z": "2c05b5.329e6a4c",
         "name": "Set counter for P3",
-        "func": "var countP3 = flow.get('countP3');\n\ncountP3++;\n\nmsg.payload = {\n    product_id: '3',\n    count: countP3\n};\n\nflow.set('countP3', countP3)\n\nreturn msg;",
+        "func": "var countP3 = flow.get('countP3')||0;\n\nvar count = 10;\nvar breakCount = 0;\nvar breakRatio = 0.2;\nif (breakRatio > Math.random()) {\n    breakCount = Math.floor(Math.random() * 6);\n}\n\ncountP3 = countP3 + (count - breakCount);\n\nmsg.payload = {\n    product_id: '3',\n    count: countP3\n};\n\nflow.set('countP3', countP3)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 830,
+        "x": 630,
         "y": 320,
         "wires": [
             [
-                "4c254e3b.9bc6e",
-                "626f9ed.d3c116"
+                "626f9ed.d3c116",
+                "ff98c279.00732"
             ]
         ]
-    },
-    {
-        "id": "4c254e3b.9bc6e",
-        "type": "mqtt out",
-        "z": "2c05b5.329e6a4c",
-        "name": "Write to Counter",
-        "topic": "v1/devices/me/telemetry",
-        "qos": "",
-        "retain": "",
-        "broker": "d2558f9e.c525f",
-        "x": 1040,
-        "y": 200,
-        "wires": []
     },
     {
         "id": "e754a151.8a838",
@@ -266,9 +184,9 @@
         "y": 200,
         "wires": [
             [
-                "34544758.5c07a8",
-                "21885561.6058ba",
-                "fbfc691a.3e9ca8"
+                "f8292d.5a9316d",
+                "66e35a1.91d4ba4",
+                "e0638dd4.b761c"
             ]
         ]
     },
@@ -403,26 +321,17 @@
         ]
     },
     {
-        "id": "d2558f9e.c525f",
-        "type": "mqtt-broker",
+        "id": "ff98c279.00732",
+        "type": "mqtt out",
         "z": "2c05b5.329e6a4c",
-        "name": "localhost - Counter",
-        "broker": "localhost",
-        "port": "1883",
-        "clientid": "",
-        "usetls": false,
-        "compatmode": true,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": ""
+        "name": "Save Counter",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "b73ce40f.170be8",
+        "x": 840,
+        "y": 200,
+        "wires": []
     },
     {
         "id": "6efb47d2.561808",
@@ -453,6 +362,28 @@
         "name": "localhost - Report",
         "broker": "localhost",
         "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "b73ce40f.170be8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "192.168.1.100",
+        "port": "1888",
         "clientid": "",
         "usetls": false,
         "compatmode": true,

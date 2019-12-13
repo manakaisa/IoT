@@ -442,7 +442,7 @@
     },
     "states": {
       "default": {
-        "name": "APQ",
+        "name": "APQ P1",
         "root": true,
         "layouts": {
           "main": {
