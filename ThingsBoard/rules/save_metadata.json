@@ -10,8 +10,20 @@
     "configuration": null
   },
   "metadata": {
-    "firstNodeIndex": 1,
+    "firstNodeIndex": 0,
     "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 149
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Entity Type",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return [msg.type];"
+        }
+      },
       {
         "additionalInfo": {
           "layoutX": 750,
@@ -31,35 +43,23 @@
           "changeOriginatorToRelatedEntity": false,
           "removeCurrentRelations": false
         }
-      },
-      {
-        "additionalInfo": {
-          "layoutX": 275,
-          "layoutY": 149
-        },
-        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
-        "name": "Switch Entity Type",
-        "debugMode": false,
-        "configuration": {
-          "jsScript": "return msg.type;"
-        }
       }
     ],
     "connections": [
       {
-        "fromIndex": 1,
-        "toIndex": 0,
-        "type": "SENSOR"
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "WORKER"
       },
       {
-        "fromIndex": 1,
-        "toIndex": 0,
+        "fromIndex": 0,
+        "toIndex": 1,
         "type": "WORKGROUP"
       },
       {
-        "fromIndex": 1,
-        "toIndex": 0,
-        "type": "WORKER"
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "SENSOR"
       }
     ],
     "ruleChainConnections": null
