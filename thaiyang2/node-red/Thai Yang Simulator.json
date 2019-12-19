@@ -36,7 +36,7 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 830,
+        "x": 1050,
         "y": 380,
         "wires": []
     },
@@ -48,7 +48,7 @@
         "func": "var countP1 = flow.get('countP1')||0;\nvar failP1 = flow.get('failP1')||0;\n\nvar count = 60;\nvar failCount = 0;\nvar failMax = 5;\nvar failRatio = 0.2;\nif (failRatio > Math.random()) {\n    failCount = Math.floor(Math.random() * failMax) + 1;\n}\n\ncountP1 = countP1 + (count - failCount);\nfailP1 = failP1 + failCount;\n\nmsg.payload = {\n    di5: countP1,\n    di6: failP1\n};\n\nflow.set('countP1', countP1)\nflow.set('failP1', failP1)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 630,
+        "x": 850,
         "y": 200,
         "wires": [
             [
@@ -90,7 +90,7 @@
         "func": "var countP2 = flow.get('countP2')||0;\nvar failP2 = flow.get('failP2')||0;\n\nvar count = 1;\nvar failCount = 0;\nvar failMax = 1;\nvar failRatio = 0.2;\nif (failRatio > Math.random()) {\n    failCount = failMax;\n}\n\ncountP2 = countP2 + (count - failCount);\nfailP2 = failP2 + failCount;\n\nmsg.payload = {\n    di5: countP2,\n    di6: failP2\n};\n\nflow.set('countP2', countP2)\nflow.set('failP2', failP2)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 630,
+        "x": 850,
         "y": 260,
         "wires": [
             [
@@ -107,7 +107,7 @@
         "func": "var countP3 = flow.get('countP3')||0;\nvar failP3 = flow.get('failP3')||0;\n\nvar count = 12;\nvar failCount = 0;\nvar failMax = 2;\nvar failRatio = 0.2;\nif (failRatio > Math.random()) {\n    failCount = Math.floor(Math.random() * failMax) + 1;\n}\n\ncountP3 = countP3 + (count - failCount);\nfailP3 = failP3 + failCount;\n\nmsg.payload = {\n    di5: countP3,\n    di6: failP3\n};\n\nflow.set('countP3', countP3)\nflow.set('failP3', failP3)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 630,
+        "x": 850,
         "y": 320,
         "wires": [
             [
@@ -135,9 +135,7 @@
         "y": 200,
         "wires": [
             [
-                "b20fbe4b.2b5d3",
-                "54696eba.14536",
-                "b0bc00b9.f74aa"
+                "f0dcbb90.142ab8"
             ]
         ]
     },
@@ -240,7 +238,7 @@
         "qos": "",
         "retain": "",
         "broker": "123b38e2.2feab7",
-        "x": 860,
+        "x": 1080,
         "y": 200,
         "wires": []
     },
@@ -270,7 +268,7 @@
         "qos": "",
         "retain": "",
         "broker": "123b38e2.2feab7",
-        "x": 860,
+        "x": 1080,
         "y": 260,
         "wires": []
     },
@@ -283,7 +281,7 @@
         "qos": "",
         "retain": "",
         "broker": "123b38e2.2feab7",
-        "x": 860,
+        "x": 1080,
         "y": 320,
         "wires": []
     },
@@ -469,6 +467,24 @@
         "wires": [
             [
                 "dc2df645.b54ef8"
+            ]
+        ]
+    },
+    {
+        "id": "f0dcbb90.142ab8",
+        "type": "function",
+        "z": "800abcfc.45235",
+        "name": "Break 12:00 - 13:00",
+        "func": "var now = new Date();\n\nif (now.getHours() === 12) {\n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 200,
+        "wires": [
+            [
+                "b20fbe4b.2b5d3",
+                "54696eba.14536",
+                "b0bc00b9.f74aa"
             ]
         ]
     },
