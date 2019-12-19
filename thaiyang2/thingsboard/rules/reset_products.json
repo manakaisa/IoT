@@ -1,0 +1,199 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Reset Products",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 2,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 77
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Reset",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return msg.reset === true;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 826,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare API Call",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var assetType = 'PRODUCT';\n\nmetadata.api_url = '/api/tenant/assets?type=' + assetType + '&limit=1000';\nmetadata.api_method = 'GET';\nmetadata.originatorRule = 'RESET-PRODUCTS';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 274,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Check Split",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (metadata.split === 'true') {\n    return ['Split', 'Execute'];\n}\n\nif (metadata.api_response) {\n    return ['Prepare Split'];\n}\n\nreturn ['Init'];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 202
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Split",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var response = JSON.parse(metadata.api_response||'{}');\nvar products = response.data || [];\nvar msgs = [];\n\nproducts.forEach(function(product) {\n    msgs.push({ \n        productName: product.name\n    });\n});\n\nmsg = {};\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.originatorRule = 'RESET-PRODUCTS';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 551,
+          "layoutY": 278
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "metadata.targetDeviceName = msg.productName;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 827,
+          "layoutY": 278
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Product",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "SENSOR",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "PRODUCT",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1378,
+          "layoutY": 278
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1101,
+          "layoutY": 278
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Reset Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nvar now = Date.now();\n\nnewMsg.lastUpdatedDate = now;\nnewMsg.startTime = 0;\nnewMsg.planCount = 0;\nnewMsg.planSumProcessingTime = 0;\nnewMsg.planProduceRate = 0.0;\nnewMsg.breakTime = 0;\nnewMsg.count = 0;\nnewMsg.countFail = 0;\nnewMsg.sumProcessingTime = 0;\nnewMsg.produceRate = 0.0;\nnewMsg.A = 0.0;\nnewMsg.P = 0.0;\nnewMsg.Q = 0.0;\nnewMsg.OEE = 0.0;\nnewMsg.productivity = 0.0;\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "Init"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 4,
+        "type": "Execute"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Prepare Split"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 6,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "252a86c0-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 1102,
+          "layoutY": 73,
+          "ruleChainNodeId": "rule-chain-node-10"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "33ad4750-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 151,
+          "ruleChainNodeId": "rule-chain-node-11"
+        },
+        "type": "Split"
+      },
+      {
+        "fromIndex": 3,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "33ad4750-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 151,
+          "ruleChainNodeId": "rule-chain-node-11"
+        },
+        "type": "Success"
+      }
+    ]
+  }
+}

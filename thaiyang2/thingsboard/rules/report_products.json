@@ -1,0 +1,257 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Report Products",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 7,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 1099,
+          "layoutY": 79
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare API Call",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var assetType = 'PRODUCT';\n\nmetadata.api_url = '/api/tenant/assets?type=' + assetType + '&limit=1000';\nmetadata.api_method = 'GET';\nmetadata.originatorRule = 'REPORT-PRODUCTS';\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 826,
+          "layoutY": 77
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Report Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var now = new Date();\n\nmetadata.reportDate = now.getTime();\nmetadata.reportStart = (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime();\nmetadata.reportEnd = metadata.reportDate;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 548,
+          "layoutY": 200
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Prepare Split Messages",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var response = JSON.parse(metadata.api_response||'{}');\nvar products = response.data || [];\nvar msgs = [];\n\nproducts.forEach(function(product) {\n    msgs.push({ \n        productName: product.name\n    });\n});\n\nmetadata.msgs = JSON.stringify(msgs);\nmetadata.originatorRule = 'REPORT-PRODUCTS';\n\nmsg = {};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1650,
+          "layoutY": 276
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1375,
+          "layoutY": 276
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Report Message",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "var newMsg = {};\n\nnewMsg.daily_startTime = parseInt(JSON.parse(metadata.startTime||'0'));\nnewMsg.daily_planCount = parseInt(JSON.parse(metadata.planCount||'0'));\nnewMsg.daily_planSumProcessingTime = parseInt(JSON.parse(metadata.planSumProcessingTime||'0'));\nnewMsg.daily_planProduceRate = parseFloat(JSON.parse(metadata.planProduceRate||'0.0'));\nnewMsg.daily_breakTime = parseInt(JSON.parse(metadata.breakTime||'0'));\nnewMsg.daily_count = parseInt(JSON.parse(metadata.count||'0'));\nnewMsg.daily_countFail = parseInt(JSON.parse(metadata.countFail||'0'));\nnewMsg.daily_sumProcessingTime = parseInt(JSON.parse(metadata.sumProcessingTime||'0'));\nnewMsg.daily_produceRate = parseFloat(JSON.parse(metadata.produceRate||'0.0'));\nnewMsg.daily_A = parseFloat(JSON.parse(metadata.A||'0.0'));\nnewMsg.daily_P = parseFloat(JSON.parse(metadata.P||'0.0'));\nnewMsg.daily_Q = parseFloat(JSON.parse(metadata.Q||'0.0'));\nnewMsg.daily_OEE = parseFloat(JSON.parse(metadata.OEE||'0.0'));\nnewMsg.daily_productivity = parseFloat(JSON.parse(metadata.productivity||'0.0'));\n\nnewMsg.lastReportDate = Date.now();\n\nreturn {msg: newMsg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 1100,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetTelemetryNode",
+        "name": "Get Latest Value by Period",
+        "debugMode": false,
+        "configuration": {
+          "startInterval": 2,
+          "endInterval": 1,
+          "startIntervalPattern": "${reportStart}",
+          "endIntervalPattern": "${reportEnd}",
+          "useMetadataIntervalPatterns": true,
+          "startIntervalTimeUnit": "MINUTES",
+          "endIntervalTimeUnit": "MINUTES",
+          "fetchMode": "LAST",
+          "orderBy": "ASC",
+          "latestTsKeyNames": [
+            "count",
+            "produceRate",
+            "planCount",
+            "planProduceRate",
+            "A",
+            "P",
+            "Q",
+            "OEE",
+            "countFail",
+            "breakTime",
+            "planSumProcessingTime",
+            "sumProcessingTime",
+            "productivity",
+            "startTime"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 547,
+          "layoutY": 277
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "metadata.targetDeviceName = msg.productName;\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 273,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Check Split",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "if (metadata.split === \"true\") {\n    return ['Split', 'Execute'];\n}\n\nif (metadata.api_response) {\n    return ['Prepare Split'];\n}\n\nreturn ['Init'];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 547,
+          "layoutY": 76
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check Report Flag",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return msg.report === true;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 275
+        },
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Change to Product",
+        "debugMode": false,
+        "configuration": {
+          "direction": "TO",
+          "relationType": "SENSOR",
+          "entityType": "ASSET",
+          "entityNamePattern": "${targetDeviceName}",
+          "entityTypePattern": "PRODUCT",
+          "entityCacheExpiration": 300,
+          "createEntityIfNotExists": false,
+          "changeOriginatorToRelatedEntity": true,
+          "removeCurrentRelations": false
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 6,
+        "type": "Execute"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 2,
+        "type": "Prepare Split"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 8,
+        "type": "Init"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 5,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 0,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "252a86c0-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 1379,
+          "layoutY": 77,
+          "ruleChainNodeId": "rule-chain-node-12"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "33ad4750-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 824,
+          "layoutY": 150,
+          "ruleChainNodeId": "rule-chain-node-13"
+        },
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "33ad4750-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 824,
+          "layoutY": 150,
+          "ruleChainNodeId": "rule-chain-node-13"
+        },
+        "type": "Split"
+      }
+    ]
+  }
+}

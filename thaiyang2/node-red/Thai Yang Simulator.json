@@ -1,0 +1,497 @@
+[
+    {
+        "id": "800abcfc.45235",
+        "type": "tab",
+        "label": "Thai Yang Simulator",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e0adc9fa.beebd8",
+        "type": "inject",
+        "z": "800abcfc.45235",
+        "name": "Interval 1 min 08:00 - 17:00",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "*/1 8-16 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "aa2c64d.16de298"
+            ]
+        ]
+    },
+    {
+        "id": "f284323f.dc068",
+        "type": "debug",
+        "z": "800abcfc.45235",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 830,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b20fbe4b.2b5d3",
+        "type": "function",
+        "z": "800abcfc.45235",
+        "name": "Set counter for P1",
+        "func": "var countP1 = flow.get('countP1')||0;\nvar failP1 = flow.get('failP1')||0;\n\nvar count = 60;\nvar failCount = 0;\nvar failMax = 5;\nvar failRatio = 0.2;\nif (failRatio > Math.random()) {\n    failCount = Math.floor(Math.random() * failMax) + 1;\n}\n\ncountP1 = countP1 + (count - failCount);\nfailP1 = failP1 + failCount;\n\nmsg.payload = {\n    di5: countP1,\n    di6: failP1\n};\n\nflow.set('countP1', countP1)\nflow.set('failP1', failP1)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 200,
+        "wires": [
+            [
+                "f284323f.dc068",
+                "b1fb7888.ac3fc8"
+            ]
+        ]
+    },
+    {
+        "id": "b8011b75.ed1618",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Reset P1 counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "countP1",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "54696eba.14536",
+        "type": "function",
+        "z": "800abcfc.45235",
+        "name": "Set counter for P2",
+        "func": "var countP2 = flow.get('countP2')||0;\nvar failP2 = flow.get('failP2')||0;\n\nvar count = 1;\nvar failCount = 0;\nvar failMax = 1;\nvar failRatio = 0.2;\nif (failRatio > Math.random()) {\n    failCount = failMax;\n}\n\ncountP2 = countP2 + (count - failCount);\nfailP2 = failP2 + failCount;\n\nmsg.payload = {\n    di5: countP2,\n    di6: failP2\n};\n\nflow.set('countP2', countP2)\nflow.set('failP2', failP2)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 260,
+        "wires": [
+            [
+                "f284323f.dc068",
+                "bf4c00b0.8e098"
+            ]
+        ]
+    },
+    {
+        "id": "b0bc00b9.f74aa",
+        "type": "function",
+        "z": "800abcfc.45235",
+        "name": "Set counter for P3",
+        "func": "var countP3 = flow.get('countP3')||0;\nvar failP3 = flow.get('failP3')||0;\n\nvar count = 12;\nvar failCount = 0;\nvar failMax = 2;\nvar failRatio = 0.2;\nif (failRatio > Math.random()) {\n    failCount = Math.floor(Math.random() * failMax) + 1;\n}\n\ncountP3 = countP3 + (count - failCount);\nfailP3 = failP3 + failCount;\n\nmsg.payload = {\n    di5: countP3,\n    di6: failP3\n};\n\nflow.set('countP3', countP3)\nflow.set('failP3', failP3)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 320,
+        "wires": [
+            [
+                "f284323f.dc068",
+                "d57b1a23.691878"
+            ]
+        ]
+    },
+    {
+        "id": "aa2c64d.16de298",
+        "type": "switch",
+        "z": "800abcfc.45235",
+        "name": "Check enable",
+        "property": "enable",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "b20fbe4b.2b5d3",
+                "54696eba.14536",
+                "b0bc00b9.f74aa"
+            ]
+        ]
+    },
+    {
+        "id": "4e19b3b2.1c42fc",
+        "type": "inject",
+        "z": "800abcfc.45235",
+        "name": "Set enable",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "dbc1a33f.1a277"
+            ]
+        ]
+    },
+    {
+        "id": "dbc1a33f.1a277",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Set flow enable",
+        "rules": [
+            {
+                "t": "set",
+                "p": "enable",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4e0ca1b8.5beb2",
+        "type": "inject",
+        "z": "800abcfc.45235",
+        "name": "Set disable",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "dbc1a33f.1a277"
+            ]
+        ]
+    },
+    {
+        "id": "4e90322d.22c76c",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Reset P1 fail",
+        "rules": [
+            {
+                "t": "set",
+                "p": "failP1",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b1fb7888.ac3fc8",
+        "type": "mqtt out",
+        "z": "800abcfc.45235",
+        "name": "Send to MQTT broker",
+        "topic": "Advantech/P1/data",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 860,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "52872ff3.28208",
+        "type": "mqtt in",
+        "z": "800abcfc.45235",
+        "name": "Get reset P1 counter",
+        "topic": "Advantech/P1/ctl/di5",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "123b38e2.2feab7",
+        "x": 130,
+        "y": 460,
+        "wires": [
+            [
+                "b8011b75.ed1618"
+            ]
+        ]
+    },
+    {
+        "id": "bf4c00b0.8e098",
+        "type": "mqtt out",
+        "z": "800abcfc.45235",
+        "name": "Send to MQTT broker",
+        "topic": "Advantech/P2/data",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 860,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d57b1a23.691878",
+        "type": "mqtt out",
+        "z": "800abcfc.45235",
+        "name": "Send to MQTT broker",
+        "topic": "Advantech/P3/data",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 860,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "f8ac3c9e.92ebc",
+        "type": "mqtt in",
+        "z": "800abcfc.45235",
+        "name": "Get reset P1 fail",
+        "topic": "Advantech/P1/ctl/di6",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "123b38e2.2feab7",
+        "x": 120,
+        "y": 520,
+        "wires": [
+            [
+                "4e90322d.22c76c"
+            ]
+        ]
+    },
+    {
+        "id": "91ab3f98.2f50e",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Reset P2 counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "countP2",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a08fcaf.b5ce84",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Reset P2 fail",
+        "rules": [
+            {
+                "t": "set",
+                "p": "failP2",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3587a53d.12e00a",
+        "type": "mqtt in",
+        "z": "800abcfc.45235",
+        "name": "Get reset P2 counter",
+        "topic": "Advantech/P2/ctl/di5",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "123b38e2.2feab7",
+        "x": 130,
+        "y": 580,
+        "wires": [
+            [
+                "91ab3f98.2f50e"
+            ]
+        ]
+    },
+    {
+        "id": "7112e4fd.ca625c",
+        "type": "mqtt in",
+        "z": "800abcfc.45235",
+        "name": "Get reset P2 fail",
+        "topic": "Advantech/P2/ctl/di6",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "123b38e2.2feab7",
+        "x": 120,
+        "y": 640,
+        "wires": [
+            [
+                "3a08fcaf.b5ce84"
+            ]
+        ]
+    },
+    {
+        "id": "8ff7d397.35683",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Reset P3 counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "countP3",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc2df645.b54ef8",
+        "type": "change",
+        "z": "800abcfc.45235",
+        "name": "Reset P3 fail",
+        "rules": [
+            {
+                "t": "set",
+                "p": "failP3",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2739feea.a0abc2",
+        "type": "mqtt in",
+        "z": "800abcfc.45235",
+        "name": "Get reset P3 counter",
+        "topic": "Advantech/P3/ctl/di5",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "123b38e2.2feab7",
+        "x": 130,
+        "y": 700,
+        "wires": [
+            [
+                "8ff7d397.35683"
+            ]
+        ]
+    },
+    {
+        "id": "39c30d86.752e42",
+        "type": "mqtt in",
+        "z": "800abcfc.45235",
+        "name": "Get reset P3 fail",
+        "topic": "Advantech/P3/ctl/di6",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "123b38e2.2feab7",
+        "x": 120,
+        "y": 760,
+        "wires": [
+            [
+                "dc2df645.b54ef8"
+            ]
+        ]
+    },
+    {
+        "id": "123b38e2.2feab7",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "1884",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

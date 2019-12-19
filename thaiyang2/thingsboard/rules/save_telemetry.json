@@ -1,0 +1,154 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Save Telemetry",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 3,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set Global Metadata",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "metadata = {\n    sensorType: metadata.ss_sensorType || ''\n};\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 351
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsSwitchNode",
+        "name": "Switch Sensor Type",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "return [metadata.sensorType];"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 550,
+          "layoutY": 150
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Get Attributes",
+        "debugMode": false,
+        "configuration": {
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [
+            "sensorType"
+          ],
+          "latestTsKeyNames": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutX": 275,
+          "layoutY": 151
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Telemetry",
+        "debugMode": false,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 0,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 2,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": [
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "cb9aab80-20a7-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 351,
+          "ruleChainNodeId": "rule-chain-node-6"
+        },
+        "type": "COUNTER"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "cb9aab80-20a7-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 351,
+          "ruleChainNodeId": "rule-chain-node-6"
+        },
+        "type": "COUNTERREFRESH"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "cb9aab80-20a7-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 351,
+          "ruleChainNodeId": "rule-chain-node-6"
+        },
+        "type": "COUNTERFAIL"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "00885270-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 825,
+          "layoutY": 425,
+          "ruleChainNodeId": "rule-chain-node-7"
+        },
+        "type": "COUNTERRESET"
+      },
+      {
+        "fromIndex": 1,
+        "targetRuleChainId": {
+          "entityType": "RULE_CHAIN",
+          "id": "12eba890-20a8-11ea-8e28-ad13bdd4ece3"
+        },
+        "additionalInfo": {
+          "layoutX": 826,
+          "layoutY": 501,
+          "ruleChainNodeId": "rule-chain-node-8"
+        },
+        "type": "COUNTERREPORT"
+      }
+    ]
+  }
+}

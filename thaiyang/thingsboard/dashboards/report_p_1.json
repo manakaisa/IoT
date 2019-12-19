@@ -1,0 +1,220 @@
+{
+  "title": "Report P-1",
+  "configuration": {
+    "widgets": {
+      "0be0622e-576f-9010-072b-8b238c31b9a3": {
+        "isSystemType": false,
+        "bundleAlias": "x_widgets",
+        "typeAlias": "daily_report_tabs_",
+        "type": "timeseries",
+        "title": "New widget",
+        "sizeX": 22,
+        "sizeY": 8,
+        "config": {
+          "datasources": [
+            {
+              "type": "entity",
+              "dataKeys": [
+                {
+                  "name": "daily_A",
+                  "type": "timeseries",
+                  "label": "A",
+                  "color": "#2196f3",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.12703779255823666,
+                  "postFuncBody": "return value*100;"
+                },
+                {
+                  "name": "daily_P",
+                  "type": "timeseries",
+                  "label": "P",
+                  "color": "#4caf50",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.5500595391787402,
+                  "postFuncBody": "return value*100;"
+                },
+                {
+                  "name": "daily_Q",
+                  "type": "timeseries",
+                  "label": "Q",
+                  "color": "#f44336",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.5619809792998858,
+                  "postFuncBody": "return value*100;"
+                },
+                {
+                  "name": "daily_OEE",
+                  "type": "timeseries",
+                  "label": "OEE",
+                  "color": "#ffc107",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.5922032094530285,
+                  "postFuncBody": "return value*100;"
+                },
+                {
+                  "name": "daily_productivity",
+                  "type": "timeseries",
+                  "label": "Productivity",
+                  "color": "#607d8b",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.7978080308429636
+                },
+                {
+                  "name": "daily_planCount",
+                  "type": "timeseries",
+                  "label": "Plan",
+                  "color": "#9c27b0",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.30304039558478224
+                },
+                {
+                  "name": "daily_count",
+                  "type": "timeseries",
+                  "label": "Actual",
+                  "color": "#8bc34a",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.4233385240486498
+                },
+                {
+                  "name": "daily_countFail",
+                  "type": "timeseries",
+                  "label": "Fail",
+                  "color": "#3f51b5",
+                  "settings": {
+                    "useCellStyleFunction": false,
+                    "useCellContentFunction": false
+                  },
+                  "_hash": 0.9956730451369444
+                }
+              ],
+              "entityAliasId": "d8aeece8-67ff-d7f0-8573-6683d9093d29"
+            }
+          ],
+          "timewindow": {
+            "realtime": {
+              "interval": 5000,
+              "timewindowMs": 60000
+            },
+            "aggregation": {
+              "type": "NONE",
+              "limit": 100
+            }
+          },
+          "showTitle": true,
+          "backgroundColor": "#fff",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "padding": "8px",
+          "settings": {
+            "displayPagination": true,
+            "defaultPageSize": 10
+          },
+          "title": "Report",
+          "dropShadow": true,
+          "enableFullscreen": true,
+          "titleStyle": {
+            "fontSize": "16px",
+            "fontWeight": 400
+          },
+          "mobileHeight": null,
+          "widgetStyle": {},
+          "useDashboardTimewindow": true,
+          "showLegend": false,
+          "actions": {},
+          "units": "",
+          "decimals": null,
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": null,
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
+        },
+        "id": "0be0622e-576f-9010-072b-8b238c31b9a3"
+      }
+    },
+    "states": {
+      "default": {
+        "name": "Report P1",
+        "root": true,
+        "layouts": {
+          "main": {
+            "widgets": {
+              "0be0622e-576f-9010-072b-8b238c31b9a3": {
+                "sizeX": 22,
+                "sizeY": 8,
+                "mobileHeight": null,
+                "row": 0,
+                "col": 0
+              }
+            },
+            "gridSettings": {
+              "backgroundColor": "#eeeeee",
+              "color": "rgba(0,0,0,0.870588)",
+              "columns": 24,
+              "margins": [
+                10,
+                10
+              ],
+              "backgroundSizeMode": "100%"
+            }
+          }
+        }
+      }
+    },
+    "entityAliases": {
+      "d8aeece8-67ff-d7f0-8573-6683d9093d29": {
+        "id": "d8aeece8-67ff-d7f0-8573-6683d9093d29",
+        "alias": "P-1",
+        "filter": {
+          "type": "singleEntity",
+          "resolveMultiple": false,
+          "singleEntity": {
+            "entityType": "ASSET",
+            "id": "2ba93f70-20ab-11ea-8e28-ad13bdd4ece3"
+          }
+        }
+      }
+    },
+    "timewindow": {
+      "realtime": {
+        "interval": 7200000,
+        "timewindowMs": 604800000
+      },
+      "aggregation": {
+        "type": "NONE",
+        "limit": 5000
+      }
+    },
+    "settings": {
+      "stateControllerId": "entity",
+      "showTitle": false,
+      "showDashboardsSelect": true,
+      "showEntitiesSelect": true,
+      "showDashboardTimewindow": true,
+      "showDashboardExport": true,
+      "toolbarAlwaysOpen": true
+    }
+  },
+  "name": "Report P-1"
+}

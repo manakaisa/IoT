@@ -1,15 +1,15 @@
 {
-  "title": "Report P1",
+  "title": "Report P-1",
   "configuration": {
     "widgets": {
-      "325ba2fe-692a-7de9-be87-f25e359b913c": {
+      "0be0622e-576f-9010-072b-8b238c31b9a3": {
         "isSystemType": false,
-        "bundleAlias": "thai_yang",
-        "typeAlias": "report",
+        "bundleAlias": "x_widgets",
+        "typeAlias": "daily_report_tabs_",
         "type": "timeseries",
         "title": "New widget",
-        "sizeX": 23,
-        "sizeY": 9,
+        "sizeX": 22,
+        "sizeY": 8,
         "config": {
           "datasources": [
             {
@@ -24,8 +24,9 @@
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.811462166937007,
-                  "postFuncBody": "return value*100;"
+                  "_hash": 0.12703779255823666,
+                  "postFuncBody": "return value*100;",
+                  "decimals": 2
                 },
                 {
                   "name": "daily_P",
@@ -36,8 +37,9 @@
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.33969690472489966,
-                  "postFuncBody": "return value*100;"
+                  "_hash": 0.5500595391787402,
+                  "postFuncBody": "return value*100;",
+                  "decimals": 2
                 },
                 {
                   "name": "daily_Q",
@@ -48,8 +50,9 @@
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.958097865819967,
-                  "postFuncBody": "return value*100;"
+                  "_hash": 0.5619809792998858,
+                  "postFuncBody": "return value*100;",
+                  "decimals": 2
                 },
                 {
                   "name": "daily_OEE",
@@ -60,8 +63,9 @@
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.2231713061084286,
-                  "postFuncBody": "return value*100;"
+                  "_hash": 0.5922032094530285,
+                  "postFuncBody": "return value*100;",
+                  "decimals": 2
                 },
                 {
                   "name": "daily_productivity",
@@ -72,30 +76,30 @@
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.42948010676086845,
-                  "postFuncBody": "return value;"
+                  "_hash": 0.7978080308429636,
+                  "decimals": 2
                 },
                 {
                   "name": "daily_planCount",
                   "type": "timeseries",
-                  "label": "Actual",
+                  "label": "Plan",
                   "color": "#9c27b0",
                   "settings": {
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.14931280505358435
+                  "_hash": 0.30304039558478224
                 },
                 {
                   "name": "daily_count",
                   "type": "timeseries",
-                  "label": "Count",
+                  "label": "Actual",
                   "color": "#8bc34a",
                   "settings": {
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.7843428870175349
+                  "_hash": 0.4233385240486498
                 },
                 {
                   "name": "daily_countFail",
@@ -106,7 +110,7 @@
                     "useCellStyleFunction": false,
                     "useCellContentFunction": false
                   },
-                  "_hash": 0.20116334970185323
+                  "_hash": 0.9956730451369444
                 }
               ],
               "entityAliasId": "d8aeece8-67ff-d7f0-8573-6683d9093d29"
@@ -139,14 +143,19 @@
           },
           "mobileHeight": null,
           "widgetStyle": {},
-          "useDashboardTimewindow": false,
+          "useDashboardTimewindow": true,
           "showLegend": false,
           "actions": {},
           "units": "",
           "decimals": null,
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": null,
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
-        "id": "325ba2fe-692a-7de9-be87-f25e359b913c"
+        "id": "0be0622e-576f-9010-072b-8b238c31b9a3"
       }
     },
     "states": {
@@ -156,9 +165,9 @@
         "layouts": {
           "main": {
             "widgets": {
-              "325ba2fe-692a-7de9-be87-f25e359b913c": {
-                "sizeX": 23,
-                "sizeY": 9,
+              "0be0622e-576f-9010-072b-8b238c31b9a3": {
+                "sizeX": 22,
+                "sizeY": 8,
                 "mobileHeight": null,
                 "row": 0,
                 "col": 0
@@ -187,7 +196,7 @@
           "resolveMultiple": false,
           "singleEntity": {
             "entityType": "ASSET",
-            "id": "1e026b10-14e6-11ea-81b5-6d765094e5ef"
+            "id": "2ba93f70-20ab-11ea-8e28-ad13bdd4ece3"
           }
         }
       }
@@ -195,11 +204,11 @@
     "timewindow": {
       "realtime": {
         "interval": 7200000,
-        "timewindowMs": 2592000000
+        "timewindowMs": 604800000
       },
       "aggregation": {
         "type": "NONE",
-        "limit": 1000
+        "limit": 5000
       }
     },
     "settings": {
@@ -212,5 +221,5 @@
       "toolbarAlwaysOpen": true
     }
   },
-  "name": "Report P1"
+  "name": "Report P-1"
 }

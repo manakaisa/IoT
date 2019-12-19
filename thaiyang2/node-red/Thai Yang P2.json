@@ -1,0 +1,290 @@
+[
+    {
+        "id": "a17e22b1.5a298",
+        "type": "tab",
+        "label": "Thai Yang P2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "692b8231.d64e7c",
+        "type": "mqtt in",
+        "z": "a17e22b1.5a298",
+        "name": "Get sensor data ",
+        "topic": "Advantech/P2/data",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "123b38e2.2feab7",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "d4709806.f0de58",
+                "8aaec243.702"
+            ]
+        ]
+    },
+    {
+        "id": "d4709806.f0de58",
+        "type": "function",
+        "z": "a17e22b1.5a298",
+        "name": "Get counter",
+        "func": "var inputName = flow.get('inputCounter');\nvar product_id = flow.get('product_id');\n\nmsg.payload = {\n    product_id: product_id,\n    count: msg.payload[inputName]\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 310,
+        "y": 140,
+        "wires": [
+            [
+                "86375ac7.976438"
+            ]
+        ]
+    },
+    {
+        "id": "bfa32606.312228",
+        "type": "inject",
+        "z": "a17e22b1.5a298",
+        "name": "Init",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 110,
+        "y": 60,
+        "wires": [
+            [
+                "a38b1b91.0d9588"
+            ]
+        ]
+    },
+    {
+        "id": "a38b1b91.0d9588",
+        "type": "change",
+        "z": "a17e22b1.5a298",
+        "name": "Set configurations",
+        "rules": [
+            {
+                "t": "set",
+                "p": "inputCounter",
+                "pt": "flow",
+                "to": "di5",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "inputFail",
+                "pt": "flow",
+                "to": "di6",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "product_id",
+                "pt": "flow",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "392e084a.d349b8",
+        "type": "function",
+        "z": "a17e22b1.5a298",
+        "name": "Drop unchanged",
+        "func": "var previous_value = flow.get('previous_counter');\n\nif(msg.payload.count === previous_value) {\n    return null;\n}\n    \nflow.set('previous_counter', msg.payload.count);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 140,
+        "wires": [
+            [
+                "2cf51d05.65e742",
+                "ae84c0f9.8c07"
+            ]
+        ]
+    },
+    {
+        "id": "2cf51d05.65e742",
+        "type": "mqtt out",
+        "z": "a17e22b1.5a298",
+        "name": "Save counter",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "19aa06e1.4e6689",
+        "x": 870,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e983e357.fdc37",
+        "type": "mqtt out",
+        "z": "a17e22b1.5a298",
+        "name": "Save fail",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "2730f43c.bc4acc",
+        "x": 860,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "4250138b.6b4f5c",
+        "type": "function",
+        "z": "a17e22b1.5a298",
+        "name": "Drop unchanged",
+        "func": "var previous_value = flow.get('previous_fail');\n\nif(msg.payload.countFail === previous_value) {\n    return null;\n}\n\nflow.set('previous_fail', msg.payload.countFail);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 670,
+        "y": 200,
+        "wires": [
+            [
+                "e983e357.fdc37",
+                "ae84c0f9.8c07"
+            ]
+        ]
+    },
+    {
+        "id": "8aaec243.702",
+        "type": "function",
+        "z": "a17e22b1.5a298",
+        "name": "Get fail",
+        "func": "var inputName = flow.get('inputFail');\nvar product_id = flow.get('product_id');\n\nmsg.payload = {\n    product_id: product_id,\n    countFail: msg.payload[inputName]\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 200,
+        "wires": [
+            [
+                "da1164f0.4d9658"
+            ]
+        ]
+    },
+    {
+        "id": "86375ac7.976438",
+        "type": "function",
+        "z": "a17e22b1.5a298",
+        "name": "Drop zero",
+        "func": "if(msg.payload.count === 0) {\n    flow.set('previous_counter', 0);\n    \n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "392e084a.d349b8"
+            ]
+        ]
+    },
+    {
+        "id": "da1164f0.4d9658",
+        "type": "function",
+        "z": "a17e22b1.5a298",
+        "name": "Drop zero",
+        "func": "if(msg.payload.countFail === 0) {\n    flow.set('previous_fail', 0);\n    \n    return null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "4250138b.6b4f5c"
+            ]
+        ]
+    },
+    {
+        "id": "ae84c0f9.8c07",
+        "type": "debug",
+        "z": "a17e22b1.5a298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 870,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "123b38e2.2feab7",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "1884",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "19aa06e1.4e6689",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost - Counter",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "2730f43c.bc4acc",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost - Fail",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

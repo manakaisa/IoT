@@ -51,6 +51,7 @@
   export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/thingsboard
   export SPRING_DATASOURCE_USERNAME=postgres
   export SPRING_DATASOURCE_PASSWORD=<password>
+  export UPDATES_ENABLED=false
   ```
 
 ### Rule Chains

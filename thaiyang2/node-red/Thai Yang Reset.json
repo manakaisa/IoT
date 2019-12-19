@@ -1,0 +1,239 @@
+[
+    {
+        "id": "decf7435.216d88",
+        "type": "tab",
+        "label": "Thai Yang Reset",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "21facc48.d398f4",
+        "type": "inject",
+        "z": "decf7435.216d88",
+        "name": "Reset at 00:00",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 140,
+        "y": 60,
+        "wires": [
+            [
+                "8eade70b.0c82d8",
+                "d2a9ae4e.81823"
+            ]
+        ]
+    },
+    {
+        "id": "7b2e2654.ba0e58",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset P1 counter sensor",
+        "topic": "Advantech/P1/ctl/di5",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 610,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8eade70b.0c82d8",
+        "type": "change",
+        "z": "decf7435.216d88",
+        "name": "Set sensor message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"v\":1}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 60,
+        "wires": [
+            [
+                "7b2e2654.ba0e58",
+                "7452d44e.f0cd7c",
+                "ac999623.670bc8",
+                "bc786435.0244a8",
+                "7c935148.3c51",
+                "de04e783.631ee8"
+            ]
+        ]
+    },
+    {
+        "id": "d2a9ae4e.81823",
+        "type": "change",
+        "z": "decf7435.216d88",
+        "name": "Set reset message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"reset\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 440,
+        "wires": [
+            [
+                "81c9c3bc.197fd",
+                "e115fbd9.5c32f8"
+            ]
+        ]
+    },
+    {
+        "id": "81c9c3bc.197fd",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset counter",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "236b5252.d167de",
+        "x": 580,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "7452d44e.f0cd7c",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset P1 fail sensor",
+        "topic": "Advantech/P1/ctl/di6",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 600,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ac999623.670bc8",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset P2 counter sensor",
+        "topic": "Advantech/P2/ctl/di5",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 610,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "bc786435.0244a8",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset P2 fail sensor",
+        "topic": "Advantech/P2/ctl/di6",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 600,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "7c935148.3c51",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset P3 counter sensor",
+        "topic": "Advantech/P3/ctl/di5",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 610,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "de04e783.631ee8",
+        "type": "mqtt out",
+        "z": "decf7435.216d88",
+        "name": "Reset P3 fail sensor",
+        "topic": "Advantech/P3/ctl/di6",
+        "qos": "",
+        "retain": "",
+        "broker": "123b38e2.2feab7",
+        "x": 600,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e115fbd9.5c32f8",
+        "type": "debug",
+        "z": "decf7435.216d88",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "123b38e2.2feab7",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "1884",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "236b5252.d167de",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost - Reset",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

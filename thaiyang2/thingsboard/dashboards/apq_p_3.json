@@ -1,5 +1,5 @@
 {
-  "title": "APQ P1",
+  "title": "APQ P-3",
   "configuration": {
     "widgets": {
       "37b20f82-0b18-575a-ffe2-e17c465b3235": {
@@ -34,7 +34,7 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#ff5722",
+          "backgroundColor": "#c06c84",
           "color": "rgba(255, 255, 255, 0.87)",
           "padding": "16px",
           "settings": {
@@ -53,7 +53,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "37b20f82-0b18-575a-ffe2-e17c465b3235"
       },
@@ -89,7 +94,7 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#7cdf2a",
+          "backgroundColor": "#f67280",
           "color": "rgba(255, 255, 255, 0.87)",
           "padding": "16px",
           "settings": {
@@ -108,7 +113,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "37650903-c0c7-cbdb-ef43-0ca28b936f2c"
       },
@@ -144,7 +154,7 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#fee421",
+          "backgroundColor": "#f8b195",
           "color": "rgba(255, 255, 255, 0.87)",
           "padding": "16px",
           "settings": {
@@ -163,7 +173,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "b24b0c0f-47fb-bb0d-ee71-89b6fca27358"
       },
@@ -199,7 +214,7 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "rgba(0, 15, 255, 0.8)",
+          "backgroundColor": "#018383",
           "color": "rgba(255, 255, 255, 0.87)",
           "padding": "16px",
           "settings": {
@@ -218,7 +233,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "7c571615-cf32-e37a-8fd0-4d3d7775f30e"
       },
@@ -241,8 +261,7 @@
                   "label": "Productivity",
                   "color": "#2196f3",
                   "settings": {},
-                  "_hash": 0.5976960776184788,
-                  "postFuncBody": "return value*100;"
+                  "_hash": 0.5976960776184788
                 }
               ],
               "entityAliasId": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0"
@@ -254,7 +273,7 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#ac21fe",
+          "backgroundColor": "#02a8a8",
           "color": "rgba(255, 255, 255, 0.87)",
           "padding": "16px",
           "settings": {
@@ -273,7 +292,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "d551ec6b-2205-6e0a-27c7-3572d48fcc4a"
       },
@@ -308,8 +332,8 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#fffeff",
-          "color": "rgba(1, 0, 0, 0.87)",
+          "backgroundColor": "#32407b",
+          "color": "rgb(255, 255, 255)",
           "padding": "16px",
           "settings": {
             "labelPosition": "top"
@@ -327,7 +351,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "f11555cd-db79-1d53-732f-f0dac5f6a326"
       },
@@ -362,8 +391,8 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#feffff",
-          "color": "rgba(1, 0, 0, 0.87)",
+          "backgroundColor": "#151965",
+          "color": "rgb(255, 255, 255)",
           "padding": "16px",
           "settings": {
             "labelPosition": "top"
@@ -381,7 +410,12 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "53cfba75-e946-4a32-1fb5-3e12f51e363a"
       },
@@ -416,8 +450,8 @@
             }
           },
           "showTitle": false,
-          "backgroundColor": "#fffffe",
-          "color": "rgba(1, 0, 0, 0.87)",
+          "backgroundColor": "#515585",
+          "color": "rgb(255, 255, 255)",
           "padding": "16px",
           "settings": {
             "labelPosition": "top"
@@ -435,14 +469,19 @@
           "showLegend": false,
           "widgetStyle": {},
           "actions": {},
-          "displayTimewindow": true
+          "displayTimewindow": true,
+          "showTitleIcon": false,
+          "titleIcon": "more_horiz",
+          "iconColor": "rgba(0, 0, 0, 0.87)",
+          "iconSize": "24px",
+          "titleTooltip": ""
         },
         "id": "ef02d412-3cd7-836d-9430-2ecf7eeb7977"
       }
     },
     "states": {
       "default": {
-        "name": "APQ P1",
+        "name": "APQ P3",
         "root": true,
         "layouts": {
           "main": {
@@ -513,36 +552,25 @@
     "entityAliases": {
       "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0": {
         "id": "ebc4c8cd-bf4e-5ff1-5f6e-263b31aae3c0",
-        "alias": "P-1",
+        "alias": "P-3",
         "filter": {
           "type": "singleEntity",
           "resolveMultiple": false,
           "singleEntity": {
             "entityType": "ASSET",
-            "id": "1e026b10-14e6-11ea-81b5-6d765094e5ef"
+            "id": "386019a0-20ab-11ea-8e28-ad13bdd4ece3"
           }
         }
       }
     },
     "timewindow": {
-      "displayValue": "",
-      "selectedTab": 0,
       "realtime": {
         "interval": 1000,
         "timewindowMs": 60000
       },
-      "history": {
-        "historyType": 0,
-        "interval": 1000,
-        "timewindowMs": 60000,
-        "fixedTimewindow": {
-          "startTimeMs": 1575801361814,
-          "endTimeMs": 1575887761814
-        }
-      },
       "aggregation": {
-        "type": "AVG",
-        "limit": 25000
+        "type": "NONE",
+        "limit": 1000
       }
     },
     "settings": {
@@ -555,5 +583,5 @@
       "toolbarAlwaysOpen": true
     }
   },
-  "name": "APQ P1"
+  "name": "APQ P-3"
 }

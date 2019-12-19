@@ -1,0 +1,106 @@
+[
+    {
+        "id": "510cc13f.00701",
+        "type": "tab",
+        "label": "Thai Yang Report",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "96209078.e8a6f",
+        "type": "inject",
+        "z": "510cc13f.00701",
+        "name": "Report at 23:00",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "00 23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 60,
+        "wires": [
+            [
+                "f3cc226a.4ad3a"
+            ]
+        ]
+    },
+    {
+        "id": "f3cc226a.4ad3a",
+        "type": "change",
+        "z": "510cc13f.00701",
+        "name": "Set report message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"report\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 60,
+        "wires": [
+            [
+                "213a5e8a.8c8242",
+                "3d246b48.ab7964"
+            ]
+        ]
+    },
+    {
+        "id": "213a5e8a.8c8242",
+        "type": "mqtt out",
+        "z": "510cc13f.00701",
+        "name": "Report counter",
+        "topic": "v1/devices/me/telemetry",
+        "qos": "",
+        "retain": "",
+        "broker": "9fc33d37.916fb",
+        "x": 580,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "3d246b48.ab7964",
+        "type": "debug",
+        "z": "510cc13f.00701",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9fc33d37.916fb",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "localhost - Report",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
